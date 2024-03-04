@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Button, SectionList, Text, TouchableOpacity } from 'react-native';
-import { DataWeek1, DataWeek2 } from './Data'; // Import data from separate file
-import { styles } from './Styles'; // Import styles from separate file
+import { DataWeek1, DataWeek2 } from '../data/Data'; // Import data from separate file
+import { styles } from '../styles/Styles'; // Import styles from separate file
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 const HomeScreen = ({ navigation }) => {
