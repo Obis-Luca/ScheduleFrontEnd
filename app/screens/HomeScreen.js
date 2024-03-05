@@ -33,20 +33,31 @@ const HomeScreen = ({ navigation }) => {
   return (
     <TouchableWithoutFeedback onPress={handleOutsidePress}>
       <View style={{ flex: 1 }}>
+
+
+        {/* Button pentru weeks */}
         <View style={styles.buttonContainer}>
           <Button
             title={showBothWeeks ? "Week 1" : "Week 2"}
             onPress={toggleWeeks}
-            color="#a5d6a7" // Adjust color to blend with the rest
+            color="#a5d6a7" 
           />
         </View>
+
+
         <View style={{ flex: 1 }}>
+
+
+          {/* Lista cu ore */}
           <SectionList
             ref={sectionListRef}
             style={{ width: '100%' }}
             sections={dataToShow}
             keyExtractor={(item, index) => item + index}
             renderItem={({ item }) => (
+
+
+              // Button pentru dropdown
               <TouchableOpacity onPress={() => toggleItem(item)}>
                 <View style={styles.item}>
                   <Text style={styles.title}>{item}</Text>
@@ -59,15 +70,26 @@ const HomeScreen = ({ navigation }) => {
                   <Icon name={expandedItem === item ? "angle-up" : "angle-down"} size={20} color="#000" style={{ marginLeft: 10 }} />
                 </View>
               </TouchableOpacity>
+
+
             )}
             renderSectionHeader={({ section: { title } }) => (
               <Text style={styles.dayHeader}>{title}</Text>
             )}
           />
+
+
+
         </View>
+
+
+        {/* Button pentru add hours */}
         <TouchableOpacity style={styles.addButton} onPress={addHour}>
           <Icon name="plus" size={24} color="#fff" />
         </TouchableOpacity>
+
+
+
       </View>
     </TouchableWithoutFeedback>
   );
