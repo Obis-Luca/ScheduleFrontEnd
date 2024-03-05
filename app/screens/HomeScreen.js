@@ -4,13 +4,13 @@ import { DataWeek1, DataWeek2 } from '../data/Data'; // Import data from separat
 import { styles } from '../styles/Styles'; // Import styles from separate file
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-const HomeScreen = ({ navigation }) => {
+const HomeScreen = () => {
   const [showBothWeeks, setShowBothWeeks] = useState(false);
   const [expandedItem, setExpandedItem] = useState(null);
 
   const toggleWeeks = () => {
     setShowBothWeeks(prevState => !prevState);
-    setExpandedItem(null); // Close dropdown when switching weeks
+    setExpandedItem(null); 
   };
 
   const toggleItem = (item) => {
@@ -31,18 +31,13 @@ const HomeScreen = ({ navigation }) => {
   };
 
   return (
-    <TouchableWithoutFeedback onPress={handleOutsidePress}>
       <View style={{ flex: 1 }}>
 
 
+
         {/* Button pentru weeks */}
-        <View style={styles.buttonContainer}>
-          <Button
-            title={showBothWeeks ? "Week 1" : "Week 2"}
-            onPress={toggleWeeks}
-            color="#a5d6a7" 
-          />
-        </View>
+        <View style={styles.buttonContainer}><Button title={showBothWeeks ? "Week 1" : "Week 2"} onPress={toggleWeeks} /></View>
+
 
 
         <View style={{ flex: 1 }}>
@@ -75,23 +70,18 @@ const HomeScreen = ({ navigation }) => {
             )}
             renderSectionHeader={({ section: { title } }) => (
               <Text style={styles.dayHeader}>{title}</Text>
+              
             )}
           />
-
-
-
         </View>
 
 
-        {/* Button pentru add hours */}
-        <TouchableOpacity style={styles.addButton} onPress={addHour}>
-          <Icon name="plus" size={24} color="#fff" />
-        </TouchableOpacity>
 
+        {/* Button pentru add hours */}
+        <TouchableOpacity style={styles.addButton} onPress={addHour}><Icon name="plus" size={24} color="#fff" /></TouchableOpacity>
 
 
       </View>
-    </TouchableWithoutFeedback>
   );
 };
 
