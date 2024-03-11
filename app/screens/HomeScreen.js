@@ -15,7 +15,6 @@ const HomeScreen = () => {
 
   const toggleItem = (item) => {
     setExpandedItem(prevItem => (prevItem === item ? null : item));
-    
   };
 
   const addHour = () => {
@@ -41,8 +40,6 @@ const HomeScreen = () => {
 
 
         <View style={{ flex: 1 }}>
-
-
           {/* Lista cu ore */}
           <SectionList
             ref={sectionListRef}
@@ -52,17 +49,22 @@ const HomeScreen = () => {
             renderItem={({ item }) => (
 
 
-              // Button pentru dropdown
-              <TouchableOpacity onPress={() => toggleItem(item)}>
+              // O ora din Orar
+              <TouchableOpacity onPress={() => toggleItem(item.course_name)}>
                 <View style={styles.item}>
-                  <Text style={styles.title}>{item}</Text>
-                  {expandedItem === item && (
-                    <View style={styles.dropdownContent}>
-                      {/* Render your extra information here */}
-                      <Text>Extra information for {item}</Text>
+                  <Text style={styles.title}>{item.course_name}</Text>
+
+                    <View style={styles.div_for_hour_and_dropdownArrow}>
+                      <Text style={styles.title}>{item.course_hour}</Text>
+                      {expandedItem === item && (
+                        <View style={styles.dropdownContent}>
+                          {/* Render your extra information here */}
+                          <Text>Extra information for {item.course_name}</Text>
+                        </View>
+                      )}
+                      <Icon name={expandedItem === item ? "angle-up" : "angle-down"} size={20} color="#000" style={{ marginLeft: 10 }} />
                     </View>
-                  )}
-                  <Icon name={expandedItem === item ? "angle-up" : "angle-down"} size={20} color="#000" style={{ marginLeft: 10 }} />
+
                 </View>
               </TouchableOpacity>
 
