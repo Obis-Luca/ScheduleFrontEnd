@@ -6,8 +6,6 @@ import HomeScreen from './app/screens/HomeScreen';
 import SettingsScreen from './app/screens/SettingsScreen';
 import ChoosePage from './app/screens/ChoosePage';
 
-
-
 export default function MyApp()  {
     const Drawer = createDrawerNavigator();
 
