@@ -2,36 +2,37 @@ import { StyleSheet } from 'react-native';
 
 
 export const styles = StyleSheet.create({
-    item: {
-      flex: 1,
+  itemContainer: {
+    backgroundColor: '#e8eaf6',
+    padding: 15,
+    marginVertical: 6,
+    marginHorizontal: 10,
+    borderRadius: 5,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.05,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  itemHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center', // Ensure content is centered vertically
+  },
+    dayHeader: {
       flexDirection: 'row',
       justifyContent: 'space-between',
-      backgroundColor: '#e8eaf6', // Light indigo color
-      padding: 15,
-      marginVertical: 6,
-      marginHorizontal: 10,
-      borderRadius: 5,
-      shadowColor: '#000',
-      shadowOffset: { width: 0, height: 2 },
-      shadowOpacity: 0.05,
-      shadowRadius: 3.84,
-      elevation: 5,
-    },
-    dayHeader: {
+      alignItems: 'center',
+
       fontSize: 28,
       backgroundColor: '#c5cae9', // Slightly darker indigo for contrast
       color: '#212121', // Dark text color for better readability
-      padding: 10,
+      padding: 5,
       paddingHorizontal: 15,
       marginVertical: 5,
       marginHorizontal: 10,
       borderRadius: 5,
       fontWeight: 'bold',
-      shadowColor: '#000',
-      shadowOffset: { width: 0, height: 2 },
-      shadowOpacity: 0.05,
-      shadowRadius: 3.84,
-      elevation: 5,
     },
     title: {
       fontSize: 20,
@@ -60,5 +61,11 @@ export const styles = StyleSheet.create({
       flex: 1,
       flexDirection: 'row',
       justifyContent: 'flex-end',
-    }
+    },
+    dropdown: {
+      flex: 1,
+      flexDirection: 'row',
+      justifyContent: 'space-around',
+      marginTop: 10, 
+    },
   });
