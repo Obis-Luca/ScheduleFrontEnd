@@ -5,11 +5,11 @@ import { styles } from '../styles/Styles'; // Import styles from separate file
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 const HomeScreen = () => {
-  const [showBothWeeks, setShowBothWeeks] = useState(false);
+  const [weekShown, setweekShown] = useState(false);
   const [expandedItem, setExpandedItem] = useState(null);
 
   const toggleWeeks = () => {
-    setShowBothWeeks(prevState => !prevState);
+    setweekShown(prevState => !prevState);
     setExpandedItem(null); 
   };
 
@@ -22,7 +22,7 @@ const HomeScreen = () => {
     setExpandedItem(null);
   };
 
-  const dataToShow = showBothWeeks ? DataWeek2 : DataWeek1;
+  const dataToShow = weekShown ? DataWeek2 : DataWeek1;
   const sectionListRef = useRef(null);
 
   const handleOutsidePress = () => {
@@ -35,7 +35,7 @@ const HomeScreen = () => {
 
 
         {/* Button pentru weeks */}
-        <View style={styles.buttonContainer}><Button title={showBothWeeks ? "Week 1" : "Week 2"} onPress={toggleWeeks} /></View>
+        <View style={styles.buttonContainer}><Button title={weekShown ? "Week 1" : "Week 2"} onPress={toggleWeeks} /></View>
 
 
 
@@ -50,17 +50,26 @@ const HomeScreen = () => {
 
 
               // O ora din Orar
-              <TouchableOpacity onPress={() => toggleItem(item.course_name)}>
+              <TouchableOpacity onPress={() => toggleItem(item)}>
                 <View style={styles.item}>
                   <Text style={styles.title}>{item.course_name}</Text>
 
                     <View style={styles.div_for_hour_and_dropdownArrow}>
                       <Text style={styles.title}>{item.course_hour}</Text>
                       {expandedItem === item && (
-                        <View style={styles.dropdownContent}>
-                          {/* Render your extra information here */}
-                          <Text>Extra information for {item.course_name}</Text>
-                        </View>
+
+
+
+
+                          <View style={styles.dropdownContent}>
+                            {/* Render your extra information here */}
+                            <Text>Extra information for {item.course_name}</Text>
+                          </View>
+
+
+
+
+
                       )}
                       <Icon name={expandedItem === item ? "angle-up" : "angle-down"} size={20} color="#000" style={{ marginLeft: 10 }} />
                     </View>
