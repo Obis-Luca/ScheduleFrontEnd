@@ -3,6 +3,9 @@ import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
     item: {
+      flex: 1,
+      flexDirection: 'row',
+      justifyContent: 'space-between',
       backgroundColor: '#e8eaf6', // Light indigo color
       padding: 15,
       marginVertical: 6,
@@ -53,4 +56,9 @@ export const styles = StyleSheet.create({
       elevation: 3, // Add elevation for a shadow effect (Android)
       zIndex: 999, // Make sure it appears on top of other content
     },
+    div_for_hour_and_dropdownArrow: {
+      flex: 1,
+      flexDirection: 'row',
+      justifyContent: 'flex-end',
+    }
   });
