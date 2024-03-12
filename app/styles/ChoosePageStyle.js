@@ -8,10 +8,14 @@ const styles = StyleSheet.create({
         backgroundColor: '#e8e2e2',
         flex: 1,
         flexDirection: "column",
+
         width: "100%"
     },
     alldropdowns: {
         marginTop: 10,
+        alignItems: "center",
+        justifyContent: "center",
+
 
     },
     dropdownButton: {

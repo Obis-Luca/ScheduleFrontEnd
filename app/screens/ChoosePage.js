@@ -1,19 +1,22 @@
 import { StatusBar } from 'expo-status-bar';
 import styles from '../styles/ChoosePageStyle';
 import React, { useState, useEffect } from 'react';
+import { SelectList } from 'react-native-dropdown-select-list'
+import { useColorScheme } from 'react-native';
+
+
 import {
     View,
     Button,
     TouchableOpacity,
 } from 'react-native';
-import DropDownPicker from 'react-native-dropdown-picker';
 import { Icon1 } from '../config/Icons';
 
 const ChoosePage = ({ navigation }) => {
 
     const handleSubmit = () => {
         // Check if all options are selected
-        if (selectedFaculty && selectedSpecialization && selectedGroup && selectedSemigroup) {
+        if (selectedFaculty && selectedSpecialization && selectedGroup) {
             // Send data to the backend
             fetch('https://your-django-backend-url/api/submit-data', {
                 method: 'POST',
@@ -24,7 +27,6 @@ const ChoosePage = ({ navigation }) => {
                     faculty: selectedFaculty,
                     specialization: selectedSpecialization,
                     group: selectedGroup,
-                    semigroup: selectedSemigroup
                 })
             })
                 .then(response => {
@@ -47,8 +49,7 @@ const ChoosePage = ({ navigation }) => {
     };
 
 
-
-    const [showFacultyDropdown, setShowFacultyDropdown] = useState(false);
+    const [showFacultyDropdown, setShowFacultyDropdown] = useState(true);
     const [showSpecializationDropdown, setShowSpecializationDropdown] = useState(false);
     const [showGroupDropdown, setShowGroupDropdown] = useState(false);
     const [showSemigroupDropdown, setShowSemigroupDropdown] = useState(false);
@@ -57,70 +58,57 @@ const ChoosePage = ({ navigation }) => {
     const [selectedFaculty, setSelectedFaculty] = useState(null);
     const [selectedSpecialization, setSelectedSpecialization] = useState(null);
     const [selectedGroup, setSelectedGroup] = useState(null);
-    const [selectedSemigroup, setSelectedSemigroup] = useState(null);
 
     const [faculties, setFaculties] = useState([]);
     const [specializations, setSpecializations] = useState([]);
     const [groups, setGroups] = useState([]);
-    const [semigroups, setSemigroups] = useState([]);
+
+
+    // const theme = useColorScheme();
+    // const isDarkTheme = theme === 'dark';
 
     useEffect(() => {
-        // Fetch faculties data from Django backend
-        fetch('https://your-django-backend-url/api/faculties/')
+        fetch(`http://192.168.19.122:8000/api/faculties/`)
             .then(response => response.json())
             .then(data => {
-                // Update state with fetched faculties
-                setFaculties(data);
+                const formattedFaculties = data.map(faculty => ({ key: faculty.id.toString(), value: faculty.name }));
+                setFaculties(formattedFaculties);
             })
             .catch(error => {
                 console.error('Error fetching faculties:', error);
             });
     }, []);
 
-    useEffect(() => {
-        // Fetch specializations data from Django backend
-        if (selectedFaculty) {
-            fetch(`https://your-django-backend-url/api/specializations/?faculty=${selectedFaculty}`)
-                .then(response => response.json())
-                .then(data => {
-                    // Update state with fetched specializations
-                    setSpecializations(data);
-                })
-                .catch(error => {
-                    console.error('Error fetching specializations:', error);
-                });
-        }
-    }, [selectedFaculty]);
 
-    useEffect(() => {
-        // Fetch groups data from Django backend
-        if (selectedSpecialization) {
-            fetch(`https://your-django-backend-url/api/groups/?specialization=${selectedSpecialization}`)
-                .then(response => response.json())
-                .then(data => {
-                    // Update state with fetched groups
-                    setGroups(data);
-                })
-                .catch(error => {
-                    console.error('Error fetching groups:', error);
-                });
-        }
-    }, [selectedSpecialization]);
+    const fetchSpecializations = (facultyId) => {
+        fetch(`http://192.168.19.122:8000/api/specialisation_filter/?faculty_id=${selectedFaculty}`)
+            .then(response => response.json())
+            .then(data => {
+                console.log(data)
+                // console.log(data)
+                const formattedSpecializations = data.map(specialization => ({ key: specialization.id.toString(), value: specialization.name }));
+                setSpecializations(formattedSpecializations);
+            })
+            .catch(error => {
+                console.error('Error fetching specializations:', error);
+            });
+    }
 
-    useEffect(() => {
-        // Fetch semigroups data from Django backend
-        if (selectedGroup) {
-            fetch(`https://your-django-backend-url/api/semigroups/?group=${selectedGroup}`)
-                .then(response => response.json())
-                .then(data => {
-                    // Update state with fetched semigroups
-                    setSemigroups(data);
-                })
-                .catch(error => {
-                    console.error('Error fetching semigroups:', error);
-                });
-        }
-    }, [selectedGroup]);
+
+
+    const fetchGroups = (groupID) => {
+        fetch(`http://192.168.19.122:8000/api/groups_filter/?specialisation_id=${selectedSpecialization}`)
+            .then(response => response.json())
+            .then(data => {
+                console.log(data)
+                const formattedGroups = data.map(group => ({ key: group.id.toString(), value: group.nr }));
+                setGroups(formattedGroups);
+            })
+            .catch(error => {
+                console.error('Error fetching specializations:', error);
+            });
+    }
+
 
 
     return (
@@ -133,62 +121,91 @@ const ChoosePage = ({ navigation }) => {
                 </TouchableOpacity>
             </View>
 
-            <View style={styles.buttonsContainer}>
-                <Button title="Semestru" onPress={() => setShowFacultyDropdown(true)} />
-
             <View style={styles.alldropdowns}>
-
                 {showFacultyDropdown && (
-                    <DropDownPicker style={styles.dropdownButton}
-                        items={faculties.map(faculty => ({ label: faculty.name, value: faculty.id }))}
-                        onChangeItem={item => {
-                            setSelectedFaculty(item.value);
-                            setShowSpecializationDropdown(true);
+                    <SelectList
+                        boxStyles={{
+                            marginTop: 20,
+                            marginBottom: 10,
+                            padding: 10,
+                            borderRadius: 25,
+                            backgroundColor: '#f0f0f0',
+                            shadowColor: '#000',
+                            shadowOffset: { width: 3, height: 2 },
+                            shadowOpacity: 0.3,
+                            shadowRadius: 2,
+                            elevation: 5,
                         }}
-                        placeholder="Select Faculty"
+                        placeholder={"Selecteaza facultatea"}
+                        data={faculties}
+                        save="id"
+                        setSelected={setSelectedFaculty}
+
+                        onSelect={() => {
+                            // console.log(selectedFaculty)
+                            fetchSpecializations(selectedFaculty)
+                            setShowSpecializationDropdown(true)
+
+                            // setFaculties()
+                        }}
                     />
                 )}
 
                 {showSpecializationDropdown && (
-                    <DropDownPicker style={styles.dropdownButton}
-                        items={specializations.map(specialization => ({ label: specialization.name, value: specialization.id }))}
-                        onChangeItem={item => {
-                            setSelectedSpecialization(item.value);
-                            setShowGroupDropdown(true);
+                    <SelectList
+                        boxStyles={{
+                            marginTop: 20,
+                            marginBottom: 10,
+                            padding: 10,
+                            borderRadius: 25,
+                            backgroundColor: '#f0f0f0',
+                            shadowColor: '#000',
+                            shadowOffset: { width: 0, height: 2 },
+                            shadowOpacity: 0.3,
+                            shadowRadius: 2,
+                            elevation: 5,
                         }}
-                        placeholder="Select Specialization"
+                        placeholder={"Selecteaza specializarea"}
+                        data={specializations}
+                        save="id"
+                        onSelect={() => {
+                            fetchGroups()
+
+                            setShowGroupDropdown(true)
+                        }}
+                        setSelected={setSelectedSpecialization}
                     />
                 )}
 
                 {showGroupDropdown && (
-                    <DropDownPicker style={styles.dropdownButton}
-                        items={groups.map(group => ({ label: group.name, value: group.id }))}
-                        onChangeItem={item => {
-                            setSelectedGroup(item.value);
-                            setShowSemigroupDropdown(true);
+                    <SelectList
+                        boxStyles={{
+                            marginTop: 20,
+                            marginBottom: 10,
+                            padding: 10,
+                            borderRadius: 25,
+                            backgroundColor: '#f0f0f0',
+                            shadowColor: '#000',
+                            shadowOffset: { width: 0, height: 2 },
+                            shadowOpacity: 0.3,
+                            shadowRadius: 2,
+                            elevation: 5,
                         }}
-                        placeholder="Select Group"
+                        placeholder={"Selecteaza grupa"}
+                        data={groups}
+                        save="value"
+                        onSelect={() => setshowSubmitOptionsButton(true)}
+                        setSelected={setSelectedGroup}
                     />
                 )}
 
-                {showSemigroupDropdown && (
-                    <DropDownPicker style={styles.dropdownButton}
-                        items={semigroups.map(semigroup => ({ label: semigroup.name, value: semigroup.id }))}
-                        onChangeItem={item =>{
-                            setSelectedSemigroup(item.value)
-                            setShowSemigroupDropdown(true);
-                    }}
 
-                        placeholder="Select Semigroup"
-                    />
-                )}
-
-            </View>
                 {showSubmitOptionsButton &&(
-                    <Button title="Submit" onPress={handleSubmit} />
+                    <Button title="Submit" onPress={handleSubmit()} />
                     )}
-            </View>
+                </View>
         </View>
     );
+
 };
 export default ChoosePage;
