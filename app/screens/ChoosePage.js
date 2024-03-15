@@ -3,7 +3,8 @@ import styles from '../styles/ChoosePageStyle';
 import React, { useState, useEffect } from 'react';
 import { SelectList } from 'react-native-dropdown-select-list'
 import { useColorScheme } from 'react-native';
-
+import Animated, {FadeIn, FadeInDown} from 'react-native-reanimated';
+import {populateWeeks} from "../data/Data";
 
 import {
     View,
@@ -14,49 +15,26 @@ import { Icon1 } from '../config/Icons';
 
 const ChoosePage = ({ navigation }) => {
 
-    const handleSubmit = () => {
-        // Check if all options are selected
-        if (selectedFaculty && selectedSpecialization && selectedGroup) {
-            // Send data to the backend
-            fetch('https://your-django-backend-url/api/submit-data', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    faculty: selectedFaculty,
-                    specialization: selectedSpecialization,
-                    group: selectedGroup,
-                })
-            })
-                .then(response => {
-                    if (response.ok) {
-                        // Data successfully submitted
-                        Alert.alert('Success', 'Data submitted successfully');
-                    } else {
-                        // Error in submitting data
-                        Alert.alert('Error', 'Failed to submit data');
-                    }
-                })
-                .catch(error => {
-                    console.error('Error submitting data:', error);
-                    Alert.alert('Error', 'Failed to submit data');
-                });
-        } else {
-            // If any option is not selected, show an alert
-            Alert.alert('Incomplete', 'Please select all options');
-        }
-    };
+
 
 
     const [showFacultyDropdown, setShowFacultyDropdown] = useState(true);
     const [showSpecializationDropdown, setShowSpecializationDropdown] = useState(false);
     const [showGroupDropdown, setShowGroupDropdown] = useState(false);
     const [showSemigroupDropdown, setShowSemigroupDropdown] = useState(false);
+    const [showYearDropdown, setshowYearDropdown] = useState(false);
     const [showSubmitOptionsButton, setshowSubmitOptionsButton] = useState(false);
+    const years = [
+        {key:'1', value:'1',},
+        {key:'2', value:'2'},
+        {key:'3', value:'3'},
+
+    ]
+
 
     const [selectedFaculty, setSelectedFaculty] = useState(null);
     const [selectedSpecialization, setSelectedSpecialization] = useState(null);
+    const [selectedYear, setselectedYear] = useState(null);
     const [selectedGroup, setSelectedGroup] = useState(null);
 
     const [faculties, setFaculties] = useState([]);
@@ -68,7 +46,7 @@ const ChoosePage = ({ navigation }) => {
     // const isDarkTheme = theme === 'dark';
 
     useEffect(() => {
-        fetch(`http://192.168.19.122:8000/api/faculties/`)
+        fetch(`http://192.168.1.7:8000/api/faculties/`)
             .then(response => response.json())
             .then(data => {
                 const formattedFaculties = data.map(faculty => ({ key: faculty.id.toString(), value: faculty.name }));
@@ -81,11 +59,11 @@ const ChoosePage = ({ navigation }) => {
 
 
     const fetchSpecializations = (facultyId) => {
-        fetch(`http://192.168.19.122:8000/api/specialisation_filter/?faculty_id=${selectedFaculty}`)
+        console.log(facultyId)
+        fetch(`http://192.168.1.7:8000/api/specialisation_filter/?faculty_id=${selectedFaculty}`)
             .then(response => response.json())
             .then(data => {
-                console.log(data)
-                // console.log(data)
+
                 const formattedSpecializations = data.map(specialization => ({ key: specialization.id.toString(), value: specialization.name }));
                 setSpecializations(formattedSpecializations);
             })
@@ -97,10 +75,9 @@ const ChoosePage = ({ navigation }) => {
 
 
     const fetchGroups = (groupID) => {
-        fetch(`http://192.168.19.122:8000/api/groups_filter/?specialisation_id=${selectedSpecialization}`)
+        fetch(`http://192.168.1.7:8000/api/groups_filter/?specialisation_id=${selectedSpecialization}&year=${selectedYear}`)
             .then(response => response.json())
             .then(data => {
-                console.log(data)
                 const formattedGroups = data.map(group => ({ key: group.id.toString(), value: group.nr }));
                 setGroups(formattedGroups);
             })
@@ -114,41 +91,44 @@ const ChoosePage = ({ navigation }) => {
     return (
         <View style={styles.container}>
             <StatusBar style="auto" />
+            <Animated.View entering = {FadeInDown.duration(1000).springify()}>
+                <View style={styles.iconContainer}>
+                    <TouchableOpacity onPress={() => console.log("BUGUGU")}>
+                        <Icon1 />
+                    </TouchableOpacity>
+                </View>
+            </Animated.View>
 
-            <View style={styles.iconContainer}>
-                <TouchableOpacity onPress={() => console.log("BUGUGU")}>
-                    <Icon1 />
-                </TouchableOpacity>
-            </View>
 
             <View style={styles.alldropdowns}>
                 {showFacultyDropdown && (
-                    <SelectList
-                        boxStyles={{
-                            marginTop: 20,
-                            marginBottom: 10,
-                            padding: 10,
-                            borderRadius: 25,
-                            backgroundColor: '#f0f0f0',
-                            shadowColor: '#000',
-                            shadowOffset: { width: 3, height: 2 },
-                            shadowOpacity: 0.3,
-                            shadowRadius: 2,
-                            elevation: 5,
-                        }}
-                        placeholder={"Selecteaza facultatea"}
-                        data={faculties}
-                        save="id"
-                        setSelected={setSelectedFaculty}
+                        <SelectList
+                            boxStyles={{
+                                marginTop: 20,
+                                marginBottom: 10,
+                                padding: 10,
+                                borderRadius: 25,
+                                backgroundColor: '#f0f0f0',
+                                shadowColor: '#000',
+                                shadowOffset: { width: 3, height: 2 },
+                                shadowOpacity: 0.3,
+                                shadowRadius: 2,
+                                elevation: 5,
+                            }}
+                            placeholder={"Selecteaza facultatea"}
+                            data={faculties}
+                            save="id"
+                            setSelected={setSelectedFaculty}
 
-                        onSelect={() => {
-                            // console.log(selectedFaculty)
-                            fetchSpecializations(selectedFaculty)
-                            setShowSpecializationDropdown(true)
+                            onSelect={() => {
+                                // console.log(selectedFaculty)
+                                fetchSpecializations(selectedFaculty)
+                                setShowSpecializationDropdown(true)
 
-                            // setFaculties()
-                        }}
-                    />
+                                // setFaculties()
+                            }}
+                        />
+
                 )}
 
                 {showSpecializationDropdown && (
@@ -169,13 +149,37 @@ const ChoosePage = ({ navigation }) => {
                         data={specializations}
                         save="id"
                         onSelect={() => {
-                            fetchGroups()
-
-                            setShowGroupDropdown(true)
+                            setshowYearDropdown(true)
                         }}
                         setSelected={setSelectedSpecialization}
                     />
                 )}
+
+                {showYearDropdown && (
+                    <SelectList
+                        boxStyles={{
+                            marginTop: 20,
+                            marginBottom: 10,
+                            padding: 10,
+                            borderRadius: 25,
+                            backgroundColor: '#f0f0f0',
+                            shadowColor: '#000',
+                            shadowOffset: { width: 0, height: 2 },
+                            shadowOpacity: 0.3,
+                            shadowRadius: 2,
+                            elevation: 5,
+                        }}
+                        placeholder={"Selecteaza anul"}
+                        data={years}
+                        save="id"
+                        onSelect={() => {
+                            fetchGroups()
+                            setShowGroupDropdown(true)
+                        }}
+                        setSelected={setselectedYear}
+                    />
+                )}
+
 
                 {showGroupDropdown && (
                     <SelectList
@@ -196,13 +200,14 @@ const ChoosePage = ({ navigation }) => {
                         save="value"
                         onSelect={() => setshowSubmitOptionsButton(true)}
                         setSelected={setSelectedGroup}
+
                     />
+
                 )}
 
 
                 {showSubmitOptionsButton &&(
-                    <Button title="Submit" onPress={handleSubmit()} />
-                    )}
+                    <Button title="Submit" onPress={() => populateWeeks(selectedGroup, selectedSpecialization, selectedYear)} />                    )}
                 </View>
         </View>
     );

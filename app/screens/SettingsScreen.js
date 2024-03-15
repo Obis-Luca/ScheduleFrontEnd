@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Switch, Text } from 'react-native';
 import { darkMode, lightMode } from '../styles/SettingsStyle';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Animated, {FadeInDown} from "react-native-reanimated";
 
 const SettingsScreen = ({ navigation }) => {
     const [theme, setTheme] = useState(false);
@@ -21,20 +22,24 @@ const SettingsScreen = ({ navigation }) => {
     }, []);
 
     return (
-        <View style={theme ? darkMode.bigView : lightMode.bigView}>
-            <View style={{flexDirection: 'row'}}>
-                <Text style={{padding: 20, fontSize: 25}}>Select Theme</Text>
-                <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', transform: [{ scaleX: 2 }, { scaleY:2 }] }}>
-                    <Switch
-                        trackColor={{ false: "#000000", true: "#fdfdfd" }}
-                        thumbColor={theme ? "#000000" : "#f4f3f4"}
-                        ios_backgroundColor="#3e3e3e"
-                        onValueChange={toggleSwitch}
-                        value={theme}
-                    />
+            <View style={theme ? darkMode.bigView : lightMode.bigView}>
+                <View style={{flexDirection: 'row'}}>
+                    <Text style={{padding: 20, fontSize: 25}}>Select Theme</Text>
+                    <Animated.View entering = {FadeInDown.duration(500).springify()}>
+
+                        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', transform: [{ scaleX: 2 }, { scaleY:2 }] }}>
+                            <Switch
+                                trackColor={{ false: "#000000", true: "#fdfdfd" }}
+                                thumbColor={theme ? "#000000" : "#f4f3f4"}
+                                ios_backgroundColor="#3e3e3e"
+                                onValueChange={toggleSwitch}
+                                value={theme}
+                            />
+                        </View>
+                    </Animated.View>
+
                 </View>
             </View>
-        </View>
     );
 };
 
