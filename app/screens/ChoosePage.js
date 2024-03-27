@@ -2,7 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import styles from '../styles/ChoosePageStyle';
 import React, { useState, useEffect } from 'react';
 import { SelectList } from 'react-native-dropdown-select-list'
-import { useColorScheme } from 'react-native';
+import { Alert, useColorScheme } from 'react-native';
 import Animated, {FadeIn, FadeInDown} from 'react-native-reanimated';
 
 import {
@@ -13,8 +13,7 @@ import {
 import { Icon1 } from '../config/Icons';
 import { useNavigation } from '@react-navigation/core';
 
-const ChoosePage = ( {route} ) => {
-    const {DataWeek1, DataWeek2, setDataWeek1, setDataWeek2} = route.params;
+const ChoosePage = (  ) => {
 
 
     const [showFacultyDropdown, setShowFacultyDropdown] = useState(true);
@@ -87,34 +86,32 @@ const ChoosePage = ( {route} ) => {
 
 
     const populateWeeks = (group_id,specialization_id, year) => {
-
-        fetch(`http://127.0.0.1:8000/api/courses_filter/?group_id=${group_id}&specialisation_id=${specialization_id}&year=${year}`)
-            .then(response => response.json())
-            .then(data => {
-                console.log(data);
-
-
-                const updatedDataWeek1 = [];
-                const updatedDataWeek2 = [];
+        alert();
+        // fetch(`http://127.0.0.1:8000/api/courses_filter/?group_id=${group_id}&specialisation_id=${specialization_id}&year=${year}`)
+        //     .then(response => response.json())
+        //     .then(data => {
+        //         Alert();
+        //         const updatedDataWeek1 = [];
+        //         const updatedDataWeek2 = [];
     
-                data.forEach(course => {
-                    if (course.freq === "1") {
-                        updatedDataWeek1.push(course);
-                    } else if (course.freq === "2") {
-                        updatedDataWeek2.push(course);
-                    } else {
-                        updatedDataWeek1.push(course);
-                        updatedDataWeek2.push(course);
-                    }
-                });
-                // Update the state with new data
-                setDataWeek1(updatedDataWeek1);
-                setDataWeek2(updatedDataWeek2);
+        //         data.forEach(course => {
+        //             if (course.freq === "1") {
+        //                 updatedDataWeek1.push(course);
+        //             } else if (course.freq === "2") {
+        //                 updatedDataWeek2.push(course);
+        //             } else {
+        //                 updatedDataWeek1.push(course);
+        //                 updatedDataWeek2.push(course);
+        //             }
+        //         });
+        //         // Update the state with new data
+        //         setDataWeek1(updatedDataWeek1);
+        //         setDataWeek2(updatedDataWeek2);
 
-            })
-            .catch(error => {
-              console.error('Error fetching faculties:', error);
-            });
+        //     })
+        //     .catch(error => {
+        //       console.error('Error fetching faculties:', error);
+        //     });
       }
 
 
