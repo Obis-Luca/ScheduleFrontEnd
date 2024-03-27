@@ -78,6 +78,7 @@ const ChoosePage = ({ navigation }) => {
         fetch(`http://192.168.1.7:8000/api/groups_filter/?specialisation_id=${selectedSpecialization}&year=${selectedYear}`)
             .then(response => response.json())
             .then(data => {
+                console.log("muiu");
                 const formattedGroups = data.map(group => ({ key: group.id.toString(), value: group.nr }));
                 setGroups(formattedGroups);
             })
