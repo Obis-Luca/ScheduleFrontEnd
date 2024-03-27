@@ -46,7 +46,7 @@ const ChoosePage = ({ navigation }) => {
     // const isDarkTheme = theme === 'dark';
 
     useEffect(() => {
-        fetch(`http://192.168.1.7:8000/api/faculties/`)
+        fetch(`http://192.168.182.122:8000/api/faculties/`)
             .then(response => response.json())
             .then(data => {
                 const formattedFaculties = data.map(faculty => ({ key: faculty.id.toString(), value: faculty.name }));
@@ -60,7 +60,7 @@ const ChoosePage = ({ navigation }) => {
 
     const fetchSpecializations = (facultyId) => {
         console.log(facultyId)
-        fetch(`http://192.168.1.7:8000/api/specialisation_filter/?faculty_id=${selectedFaculty}`)
+        fetch(`http://192.168.182.122:8000/api/specialisation_filter/?faculty_id=${selectedFaculty}`)
             .then(response => response.json())
             .then(data => {
 
@@ -75,7 +75,7 @@ const ChoosePage = ({ navigation }) => {
 
 
     const fetchGroups = (groupID) => {
-        fetch(`http://192.168.1.7:8000/api/groups_filter/?specialisation_id=${selectedSpecialization}&year=${selectedYear}`)
+        fetch(`http://192.168.182.122:8000/api/groups_filter/?specialisation_id=${selectedSpecialization}&year=${selectedYear}`)
             .then(response => response.json())
             .then(data => {
                 console.log("muiu");
