@@ -4,7 +4,6 @@ import React, { useState, useEffect } from 'react';
 import { SelectList } from 'react-native-dropdown-select-list'
 import { useColorScheme } from 'react-native';
 import Animated, {FadeIn, FadeInDown} from 'react-native-reanimated';
-import {populateWeeks} from "../data/Data";
 
 import {
     View,
@@ -12,10 +11,10 @@ import {
     TouchableOpacity,
 } from 'react-native';
 import { Icon1 } from '../config/Icons';
+import { useNavigation } from '@react-navigation/core';
 
-const ChoosePage = ({ navigation }) => {
-
-
+const ChoosePage = ( {route} ) => {
+    const {DataWeek1, DataWeek2, setDataWeek1, setDataWeek2} = route.params;
 
 
     const [showFacultyDropdown, setShowFacultyDropdown] = useState(true);
@@ -84,6 +83,42 @@ const ChoosePage = ({ navigation }) => {
                 console.error('Error fetching specializations:', error);
             });
     }
+
+
+
+    const populateWeeks = (group_id,specialization_id, year) => {
+        let d1 = [];
+        let d2 = [];
+        fetch(`http://127.0.0.1:8000/api/courses_filter/?group_id=${group_id}&specialisation_id=${specialization_id}&year=${year}`)
+            .then(response => response.json())
+            .then(data => {
+              data.forEach(course => {
+                // If freq is empty or 'sapt. 1', add to DataWeek1
+                if (course.freq === "1") {
+                  d1.push(course);
+                }
+                // If freq is empty or 'sapt. 2', add to DataWeek2
+                else if (course.freq === "2") {
+                  d2.push(course);
+                }
+                else
+                {
+                  d1.push(course);
+                  d2.push(course);
+                }
+              });
+              
+              setDataWeek1(d1);
+              setDataWeek2(d2);
+      
+            })
+            .catch(error => {
+              console.error('Error fetching faculties:', error);
+            });
+      
+      }
+
+
 
 
 
@@ -206,7 +241,7 @@ const ChoosePage = ({ navigation }) => {
 
 
                 {showSubmitOptionsButton &&(
-                    <Button title="Submit" onPress={() => populateWeeks(selectedGroup, selectedSpecialization, selectedYear)} />                    )}
+                <Button title="Submit" onPress={() => populateWeeks(selectedGroup, selectedSpecialization, selectedYear)} />)}
                 </View>
         </View>
     );

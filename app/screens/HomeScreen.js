@@ -5,9 +5,9 @@ import { styles } from '../styles/Styles'; // Import styles from separate file
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {populateWeeks} from "../data/Data";
 
-const HomeScreen = () => {
-    const DataWeek1 = [];
-    const DataWeek2 = [];
+const HomeScreen = ({ route }) => {
+  const {DataWeek1, DataWeek2, setDataWeek1, setDataWeek2} = route.params;
+
   const [weekShown, setweekShown] = useState(false);
   const [expandedItem, setExpandedItem] = useState(null);
 
