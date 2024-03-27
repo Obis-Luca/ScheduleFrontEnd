@@ -4,7 +4,6 @@ import React, { useState, useEffect } from 'react';
 import { SelectList } from 'react-native-dropdown-select-list'
 import { useColorScheme } from 'react-native';
 import Animated, {FadeIn, FadeInDown} from 'react-native-reanimated';
-import {populateWeeks} from "../data/Data";
 
 import {
     View,
@@ -13,8 +12,43 @@ import {
 } from 'react-native';
 import { Icon1 } from '../config/Icons';
 
-const ChoosePage = ({ navigation }) => {
+const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
+    const populateWeeks = (group_id,specialization_id, year) => {
+        fetch(`http://192.168.182.122:8000/api/courses_filter/?group_id=${group_id}&specialisation_id=${specialization_id}&year=${year}`)
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                let week1Data = [];
+                let week2Data = [];
+                data.forEach(course => {
+                    if (course.freq === "1") {
+                        console.log(course);
+                        week1Data.push(course);
+                    }
+                    else if (course.freq === "2") {
+                        console.log(course);
 
+                        week2Data.push(course);
+                    }
+                    else
+                    {
+                        week1Data.push(course);
+                        week2Data.push(course);
+                    }
+                });
+                if (week1Data) {
+                    setDataWeek1(week1Data);
+                }
+                if (week2Data) {
+                    setDataWeek2(week2Data);
+                }
+
+            })
+            .catch(error => {
+                console.error('Error fetching faculties:', error);
+            });
+    }
+    // rest of your code
 
 
 
@@ -30,7 +64,6 @@ const ChoosePage = ({ navigation }) => {
         {key:'3', value:'3'},
 
     ]
-
 
     const [selectedFaculty, setSelectedFaculty] = useState(null);
     const [selectedSpecialization, setSelectedSpecialization] = useState(null);
