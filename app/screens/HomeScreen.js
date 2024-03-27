@@ -25,9 +25,7 @@ const HomeScreen = () => {
   const dataToShow = weekShown ? DataWeek2 : DataWeek1;
   const sectionListRef = useRef(null);
 
-  const handleOutsidePress = () => {
-    setExpandedItem(null);
-  };
+
 
   return (
       <View style={{ flex: 1 }}>
