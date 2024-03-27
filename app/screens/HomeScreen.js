@@ -3,8 +3,11 @@ import { View, Button, SectionList, Text, TouchableOpacity, TouchableWithoutFeed
 import { DataWeek1, DataWeek2 } from '../data/Data'; // Import data from separate file
 import { styles } from '../styles/Styles'; // Import styles from separate file
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {populateWeeks} from "../data/Data";
 
 const HomeScreen = () => {
+    const DataWeek1 = [];
+    const DataWeek2 = [];
   const [weekShown, setweekShown] = useState(false);
   const [expandedItem, setExpandedItem] = useState(null);
 

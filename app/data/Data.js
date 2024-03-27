@@ -1,237 +1,58 @@
-export const DataWeek1 = [
-  {
-    title: 'Monday',
-    data: [
-      {
-        id: 1,
-        course_day: 'Monday',
-        course_hour: '8:00',
-        freq: '1',
-        room: '308',
-        room_details: 'Fsega',
-        course_type: 'Lab',
-        course_name: 'Object Oriented Programming',
-        professor: 'Imre',
-        group: 1,
-      },
-      {
-        id: 2,
-        course_day: 'Monday',
-        course_hour: '10:00',
-        freq: '1',
-        room: '310',
-        room_details: 'Fsega',
-        course_type: 'Lecture',
-        course_name: 'Data Structures',
-        professor: 'Alex',
-        group: 1,
-      },
-    ]
-  },
-  {
-    title: 'Tuesday',
-    data: [
-      {
-        id: 3,
-        course_day: 'Tuesday',
-        course_hour: '10:00',
-        freq: '1',
-        room: '309',
-        room_details: 'Fsega',
-        course_type: 'Lecture',
-        course_name: 'Algebra',
-        professor: 'John Doe',
-        group: 2,
-      },
-      {
-        id: 4,
-        course_day: 'Tuesday',
-        course_hour: '12:00',
-        freq: '1',
-        room: '322',
-        room_details: 'Fsega',
-        course_type: 'Seminar',
-        course_name: 'Functional Programming',
-        professor: 'John Ion',
-        group: 2,
-      },
-    ]
-  },
-  {
-    title: 'Wednesday',
-    data: [
-      {
-        id: 5,
-        course_day: 'Wednesday',
-        course_hour: '9:00',
-        freq: '1',
-        room: '401',
-        room_details: 'Fsega',
-        course_type: 'Workshop',
-        course_name: 'Web Development',
-        professor: 'Maria',
-        group: 1,
-      },
-      {
-        id: 6,
-        course_day: 'Wednesday',
-        course_hour: '11:00',
-        freq: '1',
-        room: '402',
-        room_details: 'Fsega',
-        course_type: 'Lab',
-        course_name: 'Databases',
-        professor: 'Elena',
-        group: 1,
-      },
-    ]
-  },
-  {
-    title: 'Thursday',
-    data: [
-      {
-        id: 7,
-        course_day: 'Thursday',
-        course_hour: '8:00',
-        freq: '1',
-        room: '500',
-        room_details: 'Fsega',
-        course_type: 'Seminar',
-        course_name: 'Artificial Intelligence',
-        professor: 'Bob',
-        group: 2,
-      },
-      {
-        id: 8,
-        course_day: 'Thursday',
-        course_hour: '10:00',
-        freq: '1',
-        room: '501',
-        room_details: 'Fsega',
-        course_type: 'Lecture',
-        course_name: 'Machine Learning',
-        professor: 'Alice',
-        group: 2,
-      },
-    ]
-  },
-  {
-    title: 'Friday',
-    data: [
-      {
-        id: 9,
-        course_day: 'Friday',
-        course_hour: '12:00',
-        freq: '1',
-        room: '601',
-        room_details: 'Fsega',
-        course_type: 'Lab',
-        course_name: 'Networking',
-        professor: 'George',
-        group: 1,
-      },
-      {
-        id: 10,
-        course_day: 'Friday',
-        course_hour: '14:00',
-        freq: '1',
-        room: '602',
-        room_details: 'Fsega',
-        course_type: 'Workshop',
-        course_name: 'Cybersecurity',
-        professor: 'Diana',
-        group: 1,
-      },
-    ]
-  }
-];
+import {useEffect} from "react";
 
-export const DataWeek2 = [
-  {
-    title: 'Monday',
-    data: [
-      {
-        id: 11,
-        course_day: 'Monday',
-        course_hour: '9:00',
-        freq: '2',
-        room: '701',
-        room_details: 'Fsega',
-        course_type: 'Lab',
-        course_name: 'Cloud Computing',
-        professor: 'Ian',
-        group: 2,
-      },
-      {
-        id: 12,
-        course_day: 'Monday',
-        course_hour: '11:00',
-        freq: '2',
-        room: '702',
-        room_details: 'Fsega',
-        course_type: 'Lecture',
-        course_name: 'Big Data Analytics',
-        professor: 'Karen',
-        group: 2,
-      },
-    ]
-  },
-  {
-    title: 'Tuesday',
-    data: [
-      {
-        id: 13,
-        course_day: 'Tuesday',
-        course_hour: '8:00',
-        freq: '2',
-        room: '801',
-        room_details: 'Fsega',
-        course_type: 'Seminar',
-        course_name: 'Quantum Computing',
-        professor: 'Leo',
-        group: 1,
-      },
-      {
-        id: 14,
-        course_day: 'Tuesday',
-        course_hour: '10:00',
-        freq: '2',
-        room: '802',
-        room_details: 'Fsega',
-        course_type: 'Workshop',
-        course_name: 'Ethical Hacking',
-        professor: 'Mona',
-        group: 1,
-      },
-    ]
-  },
-  {
-    title: 'Wednesday',
-    data: [
-      {
-        id: 15,
-        course_day: 'Wednesday',
-        course_hour: '12:00',
-        freq: '2',
-        room: '901',
-        room_details: 'Fsega',
-        course_type: 'Lab',
-        course_name: 'Virtual Reality',
-        professor: 'Ned',
-        group: 2,
-      },
-      {
-        id: 16,
-        course_day: 'Wednesday',
-        course_hour: '14:00',
-        freq: '2',
-        room: '902',
-        room_details: 'Fsega',
-        course_type: 'Lecture',
-        course_name: 'Game Development',
-        professor: 'Olive',
-        group: 2,
-      },
-    ]
-  },
-];
+// export const handleSubmit = (group_id,specialization_id, year) => {
+//
+//   // Check if all options are selected
+//     fetch(`http://192.168.1.7:8000/api/courses_filter/?group_id=${group_id}&specialisation_id=${specialization_id}&year=${year}`)
+//         .then(response => response.json())
+//         .then(data => {
+//           populateWeeks(data);
+//
+//         })
+//         .catch(error => {
+//           console.error('Error fetching faculties:', error);
+//         });
+//
+// };
+
+let DataWeek1 = [];
+let DataWeek2 = [];
+export const populateWeeks = (group_id,specialization_id, year) => {
+
+  fetch(`http://192.168.1.7:8000/api/courses_filter/?group_id=${group_id}&specialisation_id=${specialization_id}&year=${year}`)
+      .then(response => response.json())
+      .then(data => {
+        data.forEach(course => {
+          // If freq is empty or 'sapt. 1', add to DataWeek1
+          if (course.freq === "1") {
+            DataWeek1.push(course);
+          }
+          // If freq is empty or 'sapt. 2', add to DataWeek2
+          else if (course.freq === "2") {
+            DataWeek2.push(course);
+          }
+          else
+          {
+            DataWeek1.push(course);
+            DataWeek2.push(course);
+          }
+        });
+        return DataWeek1, DataWeek2;
+
+
+      })
+      .catch(error => {
+        console.error('Error fetching faculties:', error);
+      });
+
+}
+
+
+// export let DataWeek1 = [
+//
+//
+// ];
+//
+// export let DataWeek2 = [
+//
+// ];
