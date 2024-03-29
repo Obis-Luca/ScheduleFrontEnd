@@ -13,9 +13,43 @@ import {
 import { Icon1 } from '../config/Icons';
 import { useNavigation } from '@react-navigation/core';
 
+
+function compareData(a, b) {
+
+    const dayIndexMap = {
+        "Luni": 1,
+        "Marti": 2,
+        "Miercuri": 3,
+        "Joi": 4,
+        "Vineri": 5
+    };
+
+    // Get the indices of the days
+    const indexDayA = dayIndexMap[a.course_day];
+    const indexDayB = dayIndexMap[b.course_day];
+    
+    // Compare days by index
+    if (indexDayA !== indexDayB) {
+        return indexDayA - indexDayB;
+    }
+    
+    // If days are equal, compare hours
+    const [startHourA, endHourA] = a.course_hour.split('-').map(hour => parseInt(hour));
+    const [startHourB, endHourB] = b.course_hour.split('-').map(hour => parseInt(hour));
+
+    if (startHourA !== startHourB) {
+        return startHourA - startHourB;
+    } else {
+        return endHourA - endHourB;
+    }
+}
+
+
+
+
 const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
     const populateWeeks = (group_id,specialization_id, year) => {
-        fetch(`http://192.168.182.122:8000/api/courses_filter/?group_id=${group_id}&specialisation_id=${specialization_id}&year=${year}`)
+        fetch(`http://127.0.0.1:8000/api/courses_filter/?group_id=${group_id}&specialisation_id=${specialization_id}&year=${year}`)
             .then(response => response.json())
             .then(data => {
                 console.log(data);
@@ -36,6 +70,10 @@ const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
                         week1Data.push(course);
                         week2Data.push(course);
                     }
+
+                week1Data.sort(compareData);
+                week2Data.sort(compareData);
+
                 });
                 if (week1Data) {
                     setDataWeek1(week1Data);
@@ -79,7 +117,7 @@ const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
     // const isDarkTheme = theme === 'dark';
 
     useEffect(() => {
-        fetch(`http://192.168.182.122:8000/api/faculties/`)
+        fetch(`http://127.0.0.1:8000/api/faculties/`)
 
             .then(response => response.json())
             .then(data => {
@@ -94,7 +132,7 @@ const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
 
     const fetchSpecializations = (facultyId) => {
         console.log(facultyId)
-        fetch(`http://192.168.182.122:8000/api/specialisation_filter/?faculty_id=${selectedFaculty}`)
+        fetch(`http://127.0.0.1:8000/api/specialisation_filter/?faculty_id=${selectedFaculty}`)
             .then(response => response.json())
             .then(data => {
 
@@ -109,7 +147,7 @@ const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
 
 
     const fetchGroups = (groupID) => {
-        fetch(`http://192.168.182.122:8000/api/groups_filter/?specialisation_id=${selectedSpecialization}&year=${selectedYear}`)
+        fetch(`http://127.0.0.1:8000/api/groups_filter/?specialisation_id=${selectedSpecialization}&year=${selectedYear}`)
             .then(response => response.json())
             .then(data => {
                 console.log("muiu");
