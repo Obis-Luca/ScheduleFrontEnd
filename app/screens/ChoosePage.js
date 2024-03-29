@@ -21,11 +21,11 @@ const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
                 let week1Data = [];
                 let week2Data = [];
                 data.forEach(course => {
-                    if (course.freq === "1") {
+                    if (course.freq === "sapt. 1") {
                         console.log(course);
                         week1Data.push(course);
                     }
-                    else if (course.freq === "2") {
+                    else if (course.freq === "sapt. 2") {
                         console.log(course);
 
                         week2Data.push(course);
