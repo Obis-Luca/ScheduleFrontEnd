@@ -1,19 +1,15 @@
 import { StatusBar } from 'expo-status-bar';
-import styles from '../styles/ChoosePageStyle';
+import {darkStyle, lightStyle} from '../styles/ChoosePageStyle';
 import React, { useState, useEffect } from 'react';
 import { SelectList } from 'react-native-dropdown-select-list'
-import { useColorScheme } from 'react-native';
 import Animated, {FadeIn, FadeInDown} from 'react-native-reanimated';
-
-import {
-    View,
-    Button,
-    TouchableOpacity,
-} from 'react-native';
+import {View, Button, TouchableOpacity,} from 'react-native';
 import { Icon1 } from '../config/Icons';
-import { useNavigation } from '@react-navigation/core';
+import { useTheme } from '../config/ThemeContext';
 
 const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
+    const { theme } = useTheme();
+
     const populateWeeks = (group_id,specialization_id, year) => {
         fetch(`http://192.168.182.122:8000/api/courses_filter/?group_id=${group_id}&specialisation_id=${specialization_id}&year=${year}`)
             .then(response => response.json())
@@ -74,10 +70,6 @@ const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
     const [specializations, setSpecializations] = useState([]);
     const [groups, setGroups] = useState([]);
 
-
-    // const theme = useColorScheme();
-    // const isDarkTheme = theme === 'dark';
-
     useEffect(() => {
         fetch(`http://192.168.182.122:8000/api/faculties/`)
 
@@ -107,7 +99,6 @@ const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
     }
 
 
-
     const fetchGroups = (groupID) => {
         fetch(`http://192.168.182.122:8000/api/groups_filter/?specialisation_id=${selectedSpecialization}&year=${selectedYear}`)
             .then(response => response.json())
@@ -121,22 +112,22 @@ const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
             });
     }
 
-
-
+    // {theme ? lightStyle.container : darkStyle.container}
 
     return (
-        <View style={styles.container}>
+        <View style={theme === 'dark' ? darkStyle.container : lightStyle.container}>
             <StatusBar style="auto" />
             <Animated.View entering = {FadeInDown.duration(1000).springify()}>
-                <View style={styles.iconContainer}>
-                    <TouchableOpacity onPress={() => console.log("BUGUGU")}>
+                <View style={theme === 'dark' ? darkStyle.iconContainer: lightStyle.iconContainer }>
+                    <TouchableOpacity>
                         <Icon1 />
                     </TouchableOpacity>
                 </View>
             </Animated.View>
 
 
-            <View style={styles.alldropdowns}>
+
+            <View style={theme === 'dark' ? darkStyle.alldropdowns :lightStyle.alldropdowns}>
                 {showFacultyDropdown && (
                         <SelectList
                             boxStyles={{
@@ -157,11 +148,8 @@ const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
                             setSelected={setSelectedFaculty}
 
                             onSelect={() => {
-                                // console.log(selectedFaculty)
                                 fetchSpecializations(selectedFaculty)
                                 setShowSpecializationDropdown(true)
-
-                                // setFaculties()
                             }}
                         />
 
@@ -236,9 +224,7 @@ const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
                         save="value"
                         onSelect={() => setshowSubmitOptionsButton(true)}
                         setSelected={setSelectedGroup}
-
                     />
-
                 )}
 
 

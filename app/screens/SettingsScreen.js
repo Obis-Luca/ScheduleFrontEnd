@@ -1,45 +1,29 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { View, Switch, Text } from 'react-native';
 import { darkMode, lightMode } from '../styles/SettingsStyle';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import Animated, {FadeInDown} from "react-native-reanimated";
+import { useTheme } from '../config/ThemeContext';
 
 const SettingsScreen = ({ navigation }) => {
-    const [theme, setTheme] = useState(false);
-
-    const toggleSwitch = async () => {
-        const newTheme = !theme;
-        setTheme(newTheme);
-        await AsyncStorage.setItem('theme', newTheme ? 'dark' : 'light');
-    };
-
-    useEffect(() => {
-        const loadTheme = async () => {
-            const savedTheme = await AsyncStorage.getItem('theme');
-            setTheme(savedTheme === 'dark');
-        };
-        loadTheme();
-    }, []);
+    const { theme, toggleTheme } = useTheme();
 
     return (
-            <View style={theme ? darkMode.bigView : lightMode.bigView}>
-                <View style={{flexDirection: 'row'}}>
-                    <Text style={{padding: 20, fontSize: 25}}>Select Theme</Text>
-                    <Animated.View entering = {FadeInDown.duration(500).springify()}>
-
-                        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', transform: [{ scaleX: 2 }, { scaleY:2 }] }}>
-                            <Switch
-                                trackColor={{ false: "#000000", true: "#fdfdfd" }}
-                                thumbColor={theme ? "#000000" : "#f4f3f4"}
-                                ios_backgroundColor="#3e3e3e"
-                                onValueChange={toggleSwitch}
-                                value={theme}
-                            />
-                        </View>
-                    </Animated.View>
-
-                </View>
+        <View style={theme === 'dark' ? darkMode.bigView : lightMode.bigView}>
+            <View style={{flexDirection: 'row'}}>
+                <Text style={{padding: 20, fontSize: 20}}>Select Theme</Text>
+                <Animated.View entering = {FadeInDown.duration(500).springify()}>
+                    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', marginLeft: 120 ,transform: [{ scaleX: 1.5 }, { scaleY:1.5 }] }}>
+                        <Switch
+                            trackColor={{ false: "#000000", true: "#fdfdfd" }}
+                            thumbColor={theme === 'dark' ? "#000000" : "#f4f3f4"}
+                            ios_backgroundColor="#3e3e3e"
+                            onValueChange={toggleTheme}
+                            value={theme === 'dark'}
+                        />
+                    </View>
+                </Animated.View>
             </View>
+        </View>
     );
 };
 

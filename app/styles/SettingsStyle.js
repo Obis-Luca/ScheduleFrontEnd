@@ -3,17 +3,17 @@ import { StyleSheet } from "react-native";
 const darkMode = StyleSheet.create({
         bigView: {
             backgroundColor: 'black',
-            marginTop: 50 ,
+            marginTop: 0 ,
             flexDirection: 'column'
-        },
-}
 
-)
+        },
+
+})
 
 const lightMode = StyleSheet.create({
     bigView: {
         backgroundColor: 'white',
-        marginTop: 50 ,
+        marginTop: 0 ,
         flexDirection: 'column'
     },
 })
