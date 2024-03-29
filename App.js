@@ -28,6 +28,5 @@ export default function MyApp()  {
                 </Drawer.Navigator>
             </NavigationContainer>
         </ThemeProvider>
-
     );
 };

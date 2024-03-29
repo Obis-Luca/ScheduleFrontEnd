@@ -10,8 +10,36 @@ import { useTheme } from '../config/ThemeContext';
 const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
     const { theme } = useTheme();
 
+
+function compareData(a, b) {
+
+    const dayIndexMap = {
+        "Luni": 1,
+        "Marti": 2,
+        "Miercuri": 3,
+        "Joi": 4,
+        "Vineri": 5
+    };
+
+    const indexDayA = dayIndexMap[a.course_day];
+    const indexDayB = dayIndexMap[b.course_day];
+    
+    if (indexDayA !== indexDayB) {
+        return indexDayA - indexDayB;
+    }
+        const [startHourA, endHourA] = a.course_hour.split('-').map(hour => parseInt(hour));
+    const [startHourB, endHourB] = b.course_hour.split('-').map(hour => parseInt(hour));
+
+    if (startHourA !== startHourB) {
+        return startHourA - startHourB;
+    } else {
+        return endHourA - endHourB;
+    }
+}
+
+const ChoosePage = ({ navigator, setDataWeek1, setDataWeek2 }) => {
     const populateWeeks = (group_id,specialization_id, year) => {
-        fetch(`http://192.168.182.122:8000/api/courses_filter/?group_id=${group_id}&specialisation_id=${specialization_id}&year=${year}`)
+        fetch(`http://127.0.0.1:8000/api/courses_filter/?group_id=${group_id}&specialisation_id=${specialization_id}&year=${year}`)
             .then(response => response.json())
             .then(data => {
                 console.log(data);
@@ -32,6 +60,10 @@ const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
                         week1Data.push(course);
                         week2Data.push(course);
                     }
+
+                week1Data.sort(compareData);
+                week2Data.sort(compareData);
+
                 });
                 if (week1Data) {
                     setDataWeek1(week1Data);
@@ -39,7 +71,7 @@ const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
                 if (week2Data) {
                     setDataWeek2(week2Data);
                 }
-
+                navigator.navigate('Home');
             })
             .catch(error => {
                 console.error('Error fetching faculties:', error);
@@ -71,7 +103,7 @@ const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
     const [groups, setGroups] = useState([]);
 
     useEffect(() => {
-        fetch(`http://192.168.182.122:8000/api/faculties/`)
+        fetch(`http://127.0.0.1:8000/api/faculties/`)
 
             .then(response => response.json())
             .then(data => {
@@ -86,7 +118,7 @@ const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
 
     const fetchSpecializations = (facultyId) => {
         console.log(facultyId)
-        fetch(`http://192.168.182.122:8000/api/specialisation_filter/?faculty_id=${selectedFaculty}`)
+        fetch(`http://127.0.0.1:8000/api/specialisation_filter/?faculty_id=${selectedFaculty}`)
             .then(response => response.json())
             .then(data => {
 
@@ -100,7 +132,7 @@ const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
 
 
     const fetchGroups = (groupID) => {
-        fetch(`http://192.168.182.122:8000/api/groups_filter/?specialisation_id=${selectedSpecialization}&year=${selectedYear}`)
+        fetch(`http://127.0.0.1:8000/api/groups_filter/?specialisation_id=${selectedSpecialization}&year=${selectedYear}`)
             .then(response => response.json())
             .then(data => {
                 console.log("muiu");
@@ -112,7 +144,6 @@ const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
             });
     }
 
-    // {theme ? lightStyle.container : darkStyle.container}
 
     return (
         <View style={theme === 'dark' ? darkStyle.container : lightStyle.container}>
