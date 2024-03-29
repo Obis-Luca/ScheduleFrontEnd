@@ -1,4 +1,5 @@
 import {useEffect} from "react";
+import { DataWeek1, DataWeek2 } from "../screens/HomeScreen";
 
 // export const handleSubmit = (group_id,specialization_id, year) => {
 //
@@ -15,18 +16,16 @@ import {useEffect} from "react";
 //
 // };
 
-let DataWeek1 = [];
-let DataWeek2 = [];
 export const populateWeeks = (group_id,specialization_id, year) => {
 
-  fetch(`http://192.168.1.7:8000/api/courses_filter/?group_id=${group_id}&specialisation_id=${specialization_id}&year=${year}`)
+  fetch(`http://127.0.0.1:8000/api/courses_filter/?group_id=${group_id}&specialisation_id=${specialization_id}&year=${year}`)
       .then(response => response.json())
       .then(data => {
           console.log(data);
         data.forEach(course => {
           // If freq is empty or 'sapt. 1', add to DataWeek1
           if (course.freq === "1") {
-            DataWeek1.push(course);
+            setDataWeek
           }
           // If freq is empty or 'sapt. 2', add to DataWeek2
           else if (course.freq === "2") {

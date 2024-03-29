@@ -11,6 +11,7 @@ import {
     TouchableOpacity,
 } from 'react-native';
 import { Icon1 } from '../config/Icons';
+import { useNavigation } from '@react-navigation/core';
 
 const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
     const populateWeeks = (group_id,specialization_id, year) => {
@@ -48,7 +49,6 @@ const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
                 console.error('Error fetching faculties:', error);
             });
     }
-    // rest of your code
 
 
 
@@ -80,6 +80,7 @@ const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
 
     useEffect(() => {
         fetch(`http://192.168.182.122:8000/api/faculties/`)
+
             .then(response => response.json())
             .then(data => {
                 const formattedFaculties = data.map(faculty => ({ key: faculty.id.toString(), value: faculty.name }));
@@ -119,6 +120,41 @@ const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
                 console.error('Error fetching specializations:', error);
             });
     }
+
+
+
+    const populateWeeks = (group_id,specialization_id, year) => {
+
+        fetch(`http://127.0.0.1:8000/api/courses_filter/?group_id=${group_id}&specialisation_id=${specialization_id}&year=${year}`)
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+
+
+                const updatedDataWeek1 = [];
+                const updatedDataWeek2 = [];
+    
+                data.forEach(course => {
+                    if (course.freq === "1") {
+                        updatedDataWeek1.push(course);
+                    } else if (course.freq === "2") {
+                        updatedDataWeek2.push(course);
+                    } else {
+                        updatedDataWeek1.push(course);
+                        updatedDataWeek2.push(course);
+                    }
+                });
+                // Update the state with new data
+                setDataWeek1(updatedDataWeek1);
+                setDataWeek2(updatedDataWeek2);
+
+            })
+            .catch(error => {
+              console.error('Error fetching faculties:', error);
+            });
+      }
+
+
 
 
 
@@ -241,7 +277,7 @@ const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
 
 
                 {showSubmitOptionsButton &&(
-                    <Button title="Submit" onPress={() => populateWeeks(selectedGroup, selectedSpecialization, selectedYear)} />                    )}
+                <Button title="Submit" onPress={() => populateWeeks(selectedGroup, selectedSpecialization, selectedYear)} />)}
                 </View>
         </View>
     );

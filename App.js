@@ -6,6 +6,8 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import HomeScreen from './app/screens/HomeScreen';
 import SettingsScreen from './app/screens/SettingsScreen';
 import ChoosePage from './app/screens/ChoosePage';
+import { useState } from 'react';
+
 
 export default function MyApp()  {
     const Drawer = createDrawerNavigator();
