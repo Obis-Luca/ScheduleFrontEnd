@@ -1,15 +1,15 @@
 import { StatusBar } from 'expo-status-bar';
-import styles from '../styles/ChoosePageStyle';
+import {darkStyle, lightStyle} from '../styles/ChoosePageStyle';
 import React, { useState, useEffect } from 'react';
 import { SelectList } from 'react-native-dropdown-select-list'
 import Animated, {FadeIn, FadeInDown} from 'react-native-reanimated';
-
-import {
-    View,
-    Button,
-    TouchableOpacity,
-} from 'react-native';
+import {View, Button, TouchableOpacity,} from 'react-native';
 import { Icon1 } from '../config/Icons';
+import { useTheme } from '../config/ThemeContext';
+
+const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
+    const { theme } = useTheme();
+
 
 function compareData(a, b) {
 
@@ -21,17 +21,13 @@ function compareData(a, b) {
         "Vineri": 5
     };
 
-    // Get the indices of the days
     const indexDayA = dayIndexMap[a.course_day];
     const indexDayB = dayIndexMap[b.course_day];
     
-    // Compare days by index
     if (indexDayA !== indexDayB) {
         return indexDayA - indexDayB;
     }
-    
-    // If days are equal, compare hours
-    const [startHourA, endHourA] = a.course_hour.split('-').map(hour => parseInt(hour));
+        const [startHourA, endHourA] = a.course_hour.split('-').map(hour => parseInt(hour));
     const [startHourB, endHourB] = b.course_hour.split('-').map(hour => parseInt(hour));
 
     if (startHourA !== startHourB) {
@@ -106,10 +102,6 @@ const ChoosePage = ({ navigator, setDataWeek1, setDataWeek2 }) => {
     const [specializations, setSpecializations] = useState([]);
     const [groups, setGroups] = useState([]);
 
-
-    // const theme = useColorScheme();
-    // const isDarkTheme = theme === 'dark';
-
     useEffect(() => {
         fetch(`http://127.0.0.1:8000/api/faculties/`)
 
@@ -139,7 +131,6 @@ const ChoosePage = ({ navigator, setDataWeek1, setDataWeek2 }) => {
     }
 
 
-
     const fetchGroups = (groupID) => {
         fetch(`http://127.0.0.1:8000/api/groups_filter/?specialisation_id=${selectedSpecialization}&year=${selectedYear}`)
             .then(response => response.json())
@@ -154,21 +145,20 @@ const ChoosePage = ({ navigator, setDataWeek1, setDataWeek2 }) => {
     }
 
 
-
-
     return (
-        <View style={styles.container}>
+        <View style={theme === 'dark' ? darkStyle.container : lightStyle.container}>
             <StatusBar style="auto" />
             <Animated.View entering = {FadeInDown.duration(1000).springify()}>
-                <View style={styles.iconContainer}>
-                    <TouchableOpacity onPress={() => console.log("BUGUGU")}>
+                <View style={theme === 'dark' ? darkStyle.iconContainer: lightStyle.iconContainer }>
+                    <TouchableOpacity>
                         <Icon1 />
                     </TouchableOpacity>
                 </View>
             </Animated.View>
 
 
-            <View style={styles.alldropdowns}>
+
+            <View style={theme === 'dark' ? darkStyle.alldropdowns :lightStyle.alldropdowns}>
                 {showFacultyDropdown && (
                         <SelectList
                             boxStyles={{
@@ -189,11 +179,8 @@ const ChoosePage = ({ navigator, setDataWeek1, setDataWeek2 }) => {
                             setSelected={setSelectedFaculty}
 
                             onSelect={() => {
-                                // console.log(selectedFaculty)
                                 fetchSpecializations(selectedFaculty)
                                 setShowSpecializationDropdown(true)
-
-                                // setFaculties()
                             }}
                         />
 
@@ -268,9 +255,7 @@ const ChoosePage = ({ navigator, setDataWeek1, setDataWeek2 }) => {
                         save="value"
                         onSelect={() => setshowSubmitOptionsButton(true)}
                         setSelected={setSelectedGroup}
-
                     />
-
                 )}
 
 
