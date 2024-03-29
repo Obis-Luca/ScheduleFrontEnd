@@ -21,6 +21,7 @@ export const populateWeeks = (group_id,specialization_id, year) => {
   fetch(`http://127.0.0.1:8000/api/courses_filter/?group_id=${group_id}&specialisation_id=${specialization_id}&year=${year}`)
       .then(response => response.json())
       .then(data => {
+          console.log(data);
         data.forEach(course => {
           // If freq is empty or 'sapt. 1', add to DataWeek1
           if (course.freq === "1") {

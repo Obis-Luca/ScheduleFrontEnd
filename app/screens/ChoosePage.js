@@ -13,8 +13,43 @@ import {
 import { Icon1 } from '../config/Icons';
 import { useNavigation } from '@react-navigation/core';
 
-const ChoosePage = ( {route} ) => {
-    const {DataWeek1, DataWeek2, setDataWeek1, setDataWeek2} = route.params;
+const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
+    const populateWeeks = (group_id,specialization_id, year) => {
+        fetch(`http://192.168.182.122:8000/api/courses_filter/?group_id=${group_id}&specialisation_id=${specialization_id}&year=${year}`)
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                let week1Data = [];
+                let week2Data = [];
+                data.forEach(course => {
+                    if (course.freq === "sapt. 1") {
+                        console.log(course);
+                        week1Data.push(course);
+                    }
+                    else if (course.freq === "sapt. 2") {
+                        console.log(course);
+
+                        week2Data.push(course);
+                    }
+                    else
+                    {
+                        week1Data.push(course);
+                        week2Data.push(course);
+                    }
+                });
+                if (week1Data) {
+                    setDataWeek1(week1Data);
+                }
+                if (week2Data) {
+                    setDataWeek2(week2Data);
+                }
+
+            })
+            .catch(error => {
+                console.error('Error fetching faculties:', error);
+            });
+    }
+
 
 
     const [showFacultyDropdown, setShowFacultyDropdown] = useState(true);
@@ -30,7 +65,6 @@ const ChoosePage = ( {route} ) => {
 
     ]
 
-
     const [selectedFaculty, setSelectedFaculty] = useState(null);
     const [selectedSpecialization, setSelectedSpecialization] = useState(null);
     const [selectedYear, setselectedYear] = useState(null);
@@ -45,7 +79,8 @@ const ChoosePage = ( {route} ) => {
     // const isDarkTheme = theme === 'dark';
 
     useEffect(() => {
-        fetch(`http://127.0.0.1:8000/api/faculties/`)
+        fetch(`http://192.168.182.122:8000/api/faculties/`)
+
             .then(response => response.json())
             .then(data => {
                 const formattedFaculties = data.map(faculty => ({ key: faculty.id.toString(), value: faculty.name }));
@@ -58,7 +93,8 @@ const ChoosePage = ( {route} ) => {
 
 
     const fetchSpecializations = (facultyId) => {
-        fetch(`http://127.0.0.1:8000/api/specialisation_filter/?faculty_id=${selectedFaculty}`)
+        console.log(facultyId)
+        fetch(`http://192.168.182.122:8000/api/specialisation_filter/?faculty_id=${selectedFaculty}`)
             .then(response => response.json())
             .then(data => {
 
@@ -73,9 +109,10 @@ const ChoosePage = ( {route} ) => {
 
 
     const fetchGroups = (groupID) => {
-        fetch(`http://127.0.0.1:8000/api/groups_filter/?specialisation_id=${selectedSpecialization}`)
+        fetch(`http://192.168.182.122:8000/api/groups_filter/?specialisation_id=${selectedSpecialization}&year=${selectedYear}`)
             .then(response => response.json())
             .then(data => {
+                console.log("muiu");
                 const formattedGroups = data.map(group => ({ key: group.id.toString(), value: group.nr }));
                 setGroups(formattedGroups);
             })
