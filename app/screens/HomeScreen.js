@@ -8,6 +8,22 @@ const HomeScreen = ({ DataWeek1, DataWeek2 }) => {
     const [expandedItem, setExpandedItem] = useState(null);
     const [dataToShow, setDataToShow] = useState([]);
 
+    const handleRemoveCourse = (itemToRemove) => {
+        const updatedDataToShow = dataToShow.map(section => ({
+            ...section,
+            data: section.data.filter(item => item !== itemToRemove)
+        }));
+    
+        // Update the state with the filtered data
+        setDataToShow(updatedDataToShow);
+    
+        // Close the expanded item if it's the item being removed
+        if (expandedItem === itemToRemove) {
+            setExpandedItem(null);
+        }
+    };
+
+
     useEffect(() => {
         const formatDataForSectionList = (data) => {
             const groupedByDay = data.reduce((groups, item) => {
@@ -67,13 +83,17 @@ const HomeScreen = ({ DataWeek1, DataWeek2 }) => {
 
                                 <View style={styles.itemHeader}>
                                     <Text style={styles.title}>{item.course_name}</Text>
-
+                                    
                                     <View style={styles.div_for_hour_and_dropdownArrow}>
                                         <Text style={styles.title}>{item.course_hour}</Text>
                                         <Icon name={expandedItem === item ? "angle-up" : "angle-down"} size={20} color="#000" style={{ marginLeft: 10 }} />
                                     </View>
+                                    
+                                    <TouchableOpacity onPress={() => handleRemoveCourse(item)}>
+                                        <Icon name="times" size={20} color="#d3d3d3" style={{ marginLeft: 40, opacity:50 }}/>
+                                    </TouchableOpacity>
                                 </View>
-
+                                
                                 {expandedItem === item && (
                                     <View style={styles.dropdown}>
                                         <Text>{item.course_type}</Text>
@@ -82,6 +102,8 @@ const HomeScreen = ({ DataWeek1, DataWeek2 }) => {
                                         <Text>{item.professor}</Text>
                                     </View>
                                 )}
+                                
+                                
                             </View>
                         </TouchableOpacity>
                     )}
