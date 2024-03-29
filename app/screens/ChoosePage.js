@@ -11,7 +11,6 @@ import {
 } from 'react-native';
 import { Icon1 } from '../config/Icons';
 
-
 function compareData(a, b) {
 
     const dayIndexMap = {
@@ -41,9 +40,6 @@ function compareData(a, b) {
         return endHourA - endHourB;
     }
 }
-
-
-
 
 const ChoosePage = ({ navigator, setDataWeek1, setDataWeek2 }) => {
     const populateWeeks = (group_id,specialization_id, year) => {
