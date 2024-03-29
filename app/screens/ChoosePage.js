@@ -2,7 +2,6 @@ import { StatusBar } from 'expo-status-bar';
 import styles from '../styles/ChoosePageStyle';
 import React, { useState, useEffect } from 'react';
 import { SelectList } from 'react-native-dropdown-select-list'
-import { useColorScheme } from 'react-native';
 import Animated, {FadeIn, FadeInDown} from 'react-native-reanimated';
 
 import {
@@ -11,7 +10,6 @@ import {
     TouchableOpacity,
 } from 'react-native';
 import { Icon1 } from '../config/Icons';
-import { useNavigation } from '@react-navigation/core';
 
 
 function compareData(a, b) {
@@ -47,7 +45,7 @@ function compareData(a, b) {
 
 
 
-const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
+const ChoosePage = ({ navigator, setDataWeek1, setDataWeek2 }) => {
     const populateWeeks = (group_id,specialization_id, year) => {
         fetch(`http://127.0.0.1:8000/api/courses_filter/?group_id=${group_id}&specialisation_id=${specialization_id}&year=${year}`)
             .then(response => response.json())
@@ -81,7 +79,7 @@ const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
                 if (week2Data) {
                     setDataWeek2(week2Data);
                 }
-
+                navigator.navigate('Home');
             })
             .catch(error => {
                 console.error('Error fetching faculties:', error);

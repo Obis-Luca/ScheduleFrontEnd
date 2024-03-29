@@ -20,7 +20,7 @@ export default function MyApp()  {
                     {props => <HomeScreen {...props} DataWeek1={DataWeek1} DataWeek2={DataWeek2} />}
                 </Drawer.Screen>
                 <Drawer.Screen name="ChoosePage">
-                    {props => <ChoosePage {...props} setDataWeek1={setDataWeek1} setDataWeek2={setDataWeek2} />}
+                    {props => <ChoosePage {...props} navigator={props.navigation} setDataWeek1={setDataWeek1} setDataWeek2={setDataWeek2} />}
                 </Drawer.Screen>
                 <Drawer.Screen name="Settings" component={SettingsScreen} />
             </Drawer.Navigator>
