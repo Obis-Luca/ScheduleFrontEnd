@@ -1,61 +1,49 @@
 import { StatusBar } from 'expo-status-bar';
-import styles from '../styles/ChoosePageStyle';
+import {darkStyle, lightStyle, boxStyles} from '../styles/ChoosePageStyle';
 import React, { useState, useEffect } from 'react';
 import { SelectList } from 'react-native-dropdown-select-list'
-import { useColorScheme } from 'react-native';
 import Animated, {FadeIn, FadeInDown} from 'react-native-reanimated';
-
-import {
-    View,
-    Button,
-    TouchableOpacity,
-} from 'react-native';
+import {View, Button, TouchableOpacity,} from 'react-native';
 import { Icon1 } from '../config/Icons';
-import { useNavigation } from '@react-navigation/core';
+import { useTheme } from '../config/ThemeContext';
+import {useNavigation} from "@react-navigation/native";
+
+
+
+function compareData(a, b) {
+
+    const dayIndexMap = {
+        "Luni": 1,
+        "Marti": 2,
+        "Miercuri": 3,
+        "Joi": 4,
+        "Vineri": 5
+    };
+
+    const indexDayA = dayIndexMap[a.course_day];
+    const indexDayB = dayIndexMap[b.course_day];
+    
+    if (indexDayA !== indexDayB) 
+        return indexDayA - indexDayB;
+    
+    const [startHourA, endHourA] = a.course_hour.split('-').map(hour => parseInt(hour));
+    const [startHourB, endHourB] = b.course_hour.split('-').map(hour => parseInt(hour));
+
+    if (startHourA !== startHourB) 
+        return startHourA - startHourB;
+    else 
+        return endHourA - endHourB;
+    
+}
 
 const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
-    const populateWeeks = (group_id,specialization_id, year) => {
-        fetch(`http://127.0.0.1:8000/api/courses_filter/?group_id=${group_id}&specialisation_id=${specialization_id}&year=${year}`)
-            .then(response => response.json())
-            .then(data => {
-                console.log(data);
-                let week1Data = [];
-                let week2Data = [];
-                data.forEach(course => {
-                    if (course.freq === "sapt. 1") {
-                        console.log(course);
-                        week1Data.push(course);
-                    }
-                    else if (course.freq === "sapt. 2") {
-                        console.log(course);
+    const { theme } = useTheme();
+    const navigation = useNavigation();
 
-                        week2Data.push(course);
-                    }
-                    else
-                    {
-                        week1Data.push(course);
-                        week2Data.push(course);
-                    }
-                });
-                if (week1Data) {
-                    setDataWeek1(week1Data);
-                }
-                if (week2Data) {
-                    setDataWeek2(week2Data);
-                }
-
-            })
-            .catch(error => {
-                console.error('Error fetching faculties:', error);
-            });
-    }
-
-
-
+    
     const [showFacultyDropdown, setShowFacultyDropdown] = useState(true);
     const [showSpecializationDropdown, setShowSpecializationDropdown] = useState(false);
     const [showGroupDropdown, setShowGroupDropdown] = useState(false);
-    const [showSemigroupDropdown, setShowSemigroupDropdown] = useState(false);
     const [showYearDropdown, setshowYearDropdown] = useState(false);
     const [showSubmitOptionsButton, setshowSubmitOptionsButton] = useState(false);
     const years = [
@@ -69,17 +57,52 @@ const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
     const [selectedSpecialization, setSelectedSpecialization] = useState(null);
     const [selectedYear, setselectedYear] = useState(null);
     const [selectedGroup, setSelectedGroup] = useState(null);
-
     const [faculties, setFaculties] = useState([]);
     const [specializations, setSpecializations] = useState([]);
     const [groups, setGroups] = useState([]);
 
 
-    // const theme = useColorScheme();
-    // const isDarkTheme = theme === 'dark';
+    const populateWeeks = (group_id,specialization_id, year) => {
+        fetch(`http://172.20.10.2:8000/api/courses_filter/?group_id=${group_id}&specialisation_id=${specialization_id}&year=${year}`)
+            .then(response => response.json())
+            .then(data => {
+                let week1Data = [];
+                let week2Data = [];
+                data.forEach(course => {
+                    if (course.freq === "sapt. 1") {
+                        week1Data.push(course);
+                    }
+                    else if (course.freq === "sapt. 2") {
+                        week2Data.push(course);
+                    }
+                    else
+                    {
+                        week1Data.push(course);
+                        week2Data.push(course);
+                    }
+
+                week1Data.sort(compareData);
+                week2Data.sort(compareData);
+
+                });
+                if (week1Data) {
+                    setDataWeek1(week1Data);
+                }
+                if (week2Data) {
+                    setDataWeek2(week2Data);
+                }
+                navigation.navigate('Home')
+            })
+            .catch(error => {
+                console.error('Error fetching faculties:', error);
+            });
+    }
+
+
+
 
     useEffect(() => {
-        fetch(`http://127.0.0.1:8000/api/faculties/`)
+        fetch(`http://172.20.10.2:8000/api/faculties/`)
 
             .then(response => response.json())
             .then(data => {
@@ -93,8 +116,7 @@ const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
 
 
     const fetchSpecializations = (facultyId) => {
-        console.log(facultyId)
-        fetch(`http://127.0.0.1:8000/api/specialisation_filter/?faculty_id=${selectedFaculty}`)
+        fetch(`http://172.20.10.2:8000/api/specialisation_filter/?faculty_id=${selectedFaculty}`)
             .then(response => response.json())
             .then(data => {
 
@@ -107,12 +129,10 @@ const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
     }
 
 
-
     const fetchGroups = (groupID) => {
-        fetch(`http://127.0.0.1:8000/api/groups_filter/?specialisation_id=${selectedSpecialization}&year=${selectedYear}`)
+        fetch(`http://172.20.10.2:8000/api/groups_filter/?specialisation_id=${selectedSpecialization}&year=${selectedYear}`)
             .then(response => response.json())
             .then(data => {
-                console.log("muiu");
                 const formattedGroups = data.map(group => ({ key: group.id.toString(), value: group.nr }));
                 setGroups(formattedGroups);
             })
@@ -122,21 +142,20 @@ const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
     }
 
 
-
-
     return (
-        <View style={styles.container}>
+        <View style={theme === 'dark' ? darkStyle.container : lightStyle.container}>
             <StatusBar style="auto" />
             <Animated.View entering = {FadeInDown.duration(1000).springify()}>
-                <View style={styles.iconContainer}>
-                    <TouchableOpacity onPress={() => console.log("BUGUGU")}>
+                <View style={theme === 'dark' ? darkStyle.iconContainer: lightStyle.iconContainer }>
+                    <TouchableOpacity>
                         <Icon1 />
                     </TouchableOpacity>
                 </View>
             </Animated.View>
 
 
-            <View style={styles.alldropdowns}>
+
+            <View style={theme === 'dark' ? darkStyle.alldropdowns :lightStyle.alldropdowns}>
                 {showFacultyDropdown && (
                         <SelectList
                             boxStyles={{
@@ -157,11 +176,8 @@ const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
                             setSelected={setSelectedFaculty}
 
                             onSelect={() => {
-                                // console.log(selectedFaculty)
                                 fetchSpecializations(selectedFaculty)
                                 setShowSpecializationDropdown(true)
-
-                                // setFaculties()
                             }}
                         />
 
@@ -236,9 +252,7 @@ const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
                         save="value"
                         onSelect={() => setshowSubmitOptionsButton(true)}
                         setSelected={setSelectedGroup}
-
                     />
-
                 )}
 
 
