@@ -6,6 +6,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import HomeScreen from './app/screens/HomeScreen';
 import SettingsScreen from './app/screens/SettingsScreen';
 import ChoosePage from './app/screens/ChoosePage';
+import ExamsScreen from './app/screens/ExamsScreen';
 import { ThemeProvider } from './app/config/ThemeContext';
 
 
@@ -25,6 +26,8 @@ export default function MyApp()  {
                         {props => <ChoosePage {...props} setDataWeek1={setDataWeek1} setDataWeek2={setDataWeek2} />}
                     </Drawer.Screen>
                     <Drawer.Screen name="Settings" component={SettingsScreen} />
+                    <Drawer.Screen name="Exams" component={ExamsScreen} />
+
                 </Drawer.Navigator>
             </NavigationContainer>
         </ThemeProvider>
