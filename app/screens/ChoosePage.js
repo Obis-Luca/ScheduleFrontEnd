@@ -59,7 +59,7 @@ const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
     const [groups, setGroups] = useState([]);
 
     const populateWeeks = (group_id,specialization_id, year) => {
-        fetch(`http://172.20.10.2:8000/api/courses_filter/?group_id=${group_id}&specialisation_id=${specialization_id}&year=${year}`)
+        fetch(`http://127.0.0.1:8000/api/courses_filter/?group_id=${group_id}&specialisation_id=${specialization_id}&year=${year}`)
             .then(response => response.json())
             .then(data => {
                 let week1Data = [];
@@ -94,29 +94,29 @@ const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
             });
     }
 
-    const [showFacultyDropdown, setShowFacultyDropdown] = useState(true);
-    const [showSpecializationDropdown, setShowSpecializationDropdown] = useState(false);
-    const [showGroupDropdown, setShowGroupDropdown] = useState(false);
-    const [showSemigroupDropdown, setShowSemigroupDropdown] = useState(false);
-    const [showYearDropdown, setshowYearDropdown] = useState(false);
-    const [showSubmitOptionsButton, setshowSubmitOptionsButton] = useState(false);
-    const years = [
-        {key:'1', value:'1',},
-        {key:'2', value:'2'},
-        {key:'3', value:'3'},
+    // const [showFacultyDropdown, setShowFacultyDropdown] = useState(true);
+    // const [showSpecializationDropdown, setShowSpecializationDropdown] = useState(false);
+    // const [showGroupDropdown, setShowGroupDropdown] = useState(false);
+    // const [showSemigroupDropdown, setShowSemigroupDropdown] = useState(false);
+    // const [showYearDropdown, setshowYearDropdown] = useState(false);
+    // const [showSubmitOptionsButton, setshowSubmitOptionsButton] = useState(false);
+    // const years = [
+    //     {key:'1', value:'1',},
+    //     {key:'2', value:'2'},
+    //     {key:'3', value:'3'},
 
-    ]
+    // ]
 
-    const [selectedFaculty, setSelectedFaculty] = useState(null);
-    const [selectedSpecialization, setSelectedSpecialization] = useState(null);
-    const [selectedYear, setselectedYear] = useState(null);
-    const [selectedGroup, setSelectedGroup] = useState(null);
+    // const [selectedFaculty, setSelectedFaculty] = useState(null);
+    // const [selectedSpecialization, setSelectedSpecialization] = useState(null);
+    // const [selectedYear, setselectedYear] = useState(null);
+    // const [selectedGroup, setSelectedGroup] = useState(null);
 
-    const [faculties, setFaculties] = useState([]);
-    const [specializations, setSpecializations] = useState([]);
-    const [groups, setGroups] = useState([]);
+    // const [faculties, setFaculties] = useState([]);
+    // const [specializations, setSpecializations] = useState([]);
+    // const [groups, setGroups] = useState([]);
     useEffect(() => {
-        fetch(`http://172.20.10.2:8000/api/faculties/`)
+        fetch(`http://127.0.0.1:8000/api/faculties/`)
 
             .then(response => response.json())
             .then(data => {
@@ -130,7 +130,7 @@ const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
 
 
     const fetchSpecializations = (facultyId) => {
-        fetch(`http://172.20.10.2:8000/api/specialisation_filter/?faculty_id=${selectedFaculty}`)
+        fetch(`http://127.0.0.1:8000/api/specialisation_filter/?faculty_id=${selectedFaculty}`)
             .then(response => response.json())
             .then(data => {
 
@@ -144,7 +144,7 @@ const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
 
 
     const fetchGroups = (groupID) => {
-        fetch(`http://172.20.10.2:8000/api/groups_filter/?specialisation_id=${selectedSpecialization}&year=${selectedYear}`)
+        fetch(`http://127.0.0.1:8000/api/groups_filter/?specialisation_id=${selectedSpecialization}&year=${selectedYear}`)
             .then(response => response.json())
             .then(data => {
                 const formattedGroups = data.map(group => ({ key: group.id.toString(), value: group.nr }));

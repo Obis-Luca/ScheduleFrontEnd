@@ -39,20 +39,6 @@ const HomeScreen = ({ DataWeek1, DataWeek2 }) => {
         }
     };
 
-    const handleRemoveCourse = (itemToRemove) => {
-        const updatedDataToShow = dataToShow.map(section => ({
-            ...section,
-            data: section.data.filter(item => item !== itemToRemove)
-        }));
-    
-        // Update the state with the filtered data
-        setDataToShow(updatedDataToShow);
-    
-        // Close the expanded item if it's the item being removed
-        if (expandedItem === itemToRemove) {
-            setExpandedItem(null);
-        }
-    };
 
 
     useEffect(() => {
@@ -98,6 +84,7 @@ const HomeScreen = ({ DataWeek1, DataWeek2 }) => {
     };
 
     return (
+        
         <View style={{ flex: 1 }}>
 
             <View style={theme === 'dark' ? darkStyle.buttonContainer : lightStyle.buttonContainer}><Button title={weekShown ? "Week 1" : "Week 2"} onPress={toggleWeeks} /></View>
@@ -108,7 +95,6 @@ const HomeScreen = ({ DataWeek1, DataWeek2 }) => {
             </View>
         ) : (
         <View style={{ flex: 1 }}>
-            <View style={theme === 'dark' ? darkStyle.buttonContainer : lightStyle.buttonContainer}><Button title={weekShown ? "Week 1" : "Week 2"} onPress={toggleWeeks} /></View>
             <View style={{ flex: 1 }}>
                 <SectionList
                     ref={sectionListRef}
@@ -167,7 +153,7 @@ const HomeScreen = ({ DataWeek1, DataWeek2 }) => {
             <TouchableOpacity style={theme === 'dark' ? darkStyle.addButton : lightStyle.addButton} onPress={addHour}><Icon name="plus" size={24} color="#fff" /></TouchableOpacity>
         </View>
         )}
-    </>
+        </View>
     );
 };
 
