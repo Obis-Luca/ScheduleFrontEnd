@@ -8,7 +8,6 @@ import { useNavigation } from '@react-navigation/native';
 const HomeScreen = ({ DataWeek1, DataWeek2 }) => {
     const navigation = useNavigation();
     const { theme, toggleSwitch } = useTheme();
-
     const [weekShown, setweekShown] = useState(false);
     const [expandedItem, setExpandedItem] = useState(null);
     const [dataToShow, setDataToShow] = useState([]);
@@ -39,6 +38,22 @@ const HomeScreen = ({ DataWeek1, DataWeek2 }) => {
             setConfirmDelete(true);
         }
     };
+
+    const handleRemoveCourse = (itemToRemove) => {
+        const updatedDataToShow = dataToShow.map(section => ({
+            ...section,
+            data: section.data.filter(item => item !== itemToRemove)
+        }));
+    
+        // Update the state with the filtered data
+        setDataToShow(updatedDataToShow);
+    
+        // Close the expanded item if it's the item being removed
+        if (expandedItem === itemToRemove) {
+            setExpandedItem(null);
+        }
+    };
+
 
     useEffect(() => {
         const formatDataForSectionList = (data) => {
@@ -83,7 +98,9 @@ const HomeScreen = ({ DataWeek1, DataWeek2 }) => {
     };
 
     return (
-        <>
+        <View style={{ flex: 1 }}>
+
+            <View style={theme === 'dark' ? darkStyle.buttonContainer : lightStyle.buttonContainer}><Button title={weekShown ? "Week 1" : "Week 2"} onPress={toggleWeeks} /></View>
 
         {DataWeek1.length === 0 ? (
             <View style={middleButton.middleBtn}>
@@ -109,7 +126,7 @@ const HomeScreen = ({ DataWeek1, DataWeek2 }) => {
                                         <Text style={theme === 'dark' ? darkStyle.title : lightStyle.title}>{item.course_hour}</Text>
                                         <Icon name={expandedItem === item ? "angle-up" : "angle-down"} size={20} color="#000" style={{ marginLeft: 10 }} />
                                     </View>
-                                    
+
                                     {/* Conditional rendering of confirmation icons */}
                                     {confirmDelete && (
                                         <View style={{ flexDirection: 'row' }}>

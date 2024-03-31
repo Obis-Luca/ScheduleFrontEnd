@@ -1,8 +1,6 @@
 import { StyleSheet } from 'react-native';
-
 export const middleButton = StyleSheet.create({
   middleBtn: { flex: 1, justifyContent: 'center', alignItems: 'center' }});
-  
 export const lightStyle = StyleSheet.create({
   itemContainer: {
     backgroundColor: '#e8eaf6',

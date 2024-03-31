@@ -7,9 +7,6 @@ import {View, Button, TouchableOpacity,} from 'react-native';
 import { Icon1 } from '../config/Icons';
 import { useTheme } from '../config/ThemeContext';
 import {useNavigation} from "@react-navigation/native";
-
-
-
 function compareData(a, b) {
 
     const dayIndexMap = {
@@ -61,7 +58,6 @@ const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
     const [specializations, setSpecializations] = useState([]);
     const [groups, setGroups] = useState([]);
 
-
     const populateWeeks = (group_id,specialization_id, year) => {
         fetch(`http://172.20.10.2:8000/api/courses_filter/?group_id=${group_id}&specialisation_id=${specialization_id}&year=${year}`)
             .then(response => response.json())
@@ -98,9 +94,27 @@ const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
             });
     }
 
+    const [showFacultyDropdown, setShowFacultyDropdown] = useState(true);
+    const [showSpecializationDropdown, setShowSpecializationDropdown] = useState(false);
+    const [showGroupDropdown, setShowGroupDropdown] = useState(false);
+    const [showSemigroupDropdown, setShowSemigroupDropdown] = useState(false);
+    const [showYearDropdown, setshowYearDropdown] = useState(false);
+    const [showSubmitOptionsButton, setshowSubmitOptionsButton] = useState(false);
+    const years = [
+        {key:'1', value:'1',},
+        {key:'2', value:'2'},
+        {key:'3', value:'3'},
 
+    ]
 
+    const [selectedFaculty, setSelectedFaculty] = useState(null);
+    const [selectedSpecialization, setSelectedSpecialization] = useState(null);
+    const [selectedYear, setselectedYear] = useState(null);
+    const [selectedGroup, setSelectedGroup] = useState(null);
 
+    const [faculties, setFaculties] = useState([]);
+    const [specializations, setSpecializations] = useState([]);
+    const [groups, setGroups] = useState([]);
     useEffect(() => {
         fetch(`http://172.20.10.2:8000/api/faculties/`)
 
