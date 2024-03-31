@@ -7,7 +7,7 @@ export const lightStyle = StyleSheet.create({
     padding: 15,
     marginVertical: 6,
     marginHorizontal: 10,
-    borderRadius: 5,
+    borderRadius: 40,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.05,
@@ -23,7 +23,6 @@ export const lightStyle = StyleSheet.create({
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
-
       fontSize: 28,
       backgroundColor: '#c5cae9',
       color: '#212121',
@@ -34,6 +33,7 @@ export const lightStyle = StyleSheet.create({
       fontWeight: 'bold',
     },
     title: {
+      width:200,
       fontSize: 20,
       color: '#424242',
     },
@@ -57,15 +57,24 @@ export const lightStyle = StyleSheet.create({
       zIndex: 999,
     },
     div_for_hour_and_dropdownArrow: {
+      marginLeft:10,
       flex: 1,
       flexDirection: 'row',
       justifyContent: 'flex-end',
     },
+    hour:{
+      fontSize:20,
+    },
     dropdown: {
+      borderTopWidth:3,
+      borderTopStartRadius:5,
+      borderTopEndRadius:5,
+      borderTopColor: 'lightgrey',
+      padding:10,
       flex: 1,
       flexDirection: 'row',
       justifyContent: 'space-around',
-      marginTop: 10, 
+      marginTop: 20
     },
   });
 
@@ -104,6 +113,7 @@ export const darkStyle = StyleSheet.create({
     fontWeight: 'bold',
   },
   title: {
+    width:200,
     fontSize: 20,
     color: '#2f2f2f',
   },
@@ -130,6 +140,9 @@ export const darkStyle = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'flex-end',
+  },
+  hour:{
+    fontSize:20,
   },
   dropdown: {
     flex: 1,

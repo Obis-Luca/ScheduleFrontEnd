@@ -133,7 +133,7 @@ const HomeScreen = ({ DataWeek1, DataWeek2 }) => {
                                     <Text style={theme === 'dark' ? darkStyle.title : lightStyle.title}>{item.course_name}</Text>
 
                                     <View style={theme === 'dark' ? darkStyle.div_for_hour_and_dropdownArrow : lightStyle.div_for_hour_and_dropdownArrow}>
-                                        <Text style={theme === 'dark' ? darkStyle.title : lightStyle.title}>{item.course_hour}</Text>
+                                        <Text style={theme === 'dark' ? darkStyle.hour : lightStyle.hour}>{item.course_hour}</Text>
                                         <Icon name={expandedItem === item ? "angle-up" : "angle-down"} size={20} color="#000" style={{ marginLeft: 10 }} />
                                     </View>
 
@@ -150,9 +150,10 @@ const HomeScreen = ({ DataWeek1, DataWeek2 }) => {
                                     )}
                                     {!confirmDelete && (
                                         <TouchableOpacity onPress={() => handleRemoveCourse(item)}>
-                                            <Icon name="times" size={20} color="#d3d3d3" style={{ marginLeft: 40 }}/>
+                                            <Icon name="times" size={20} color="#d3d3d3" style={{ marginLeft: 10 }}/>
                                         </TouchableOpacity>
                                     )}
+
                                     </View> 
                                 {expandedItem === item && (
                                     <View style={theme === 'dark' ? darkStyle.dropdown : lightStyle.dropdown}>
