@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { View, Button, SectionList, Text, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
-import { lightStyle,darkStyle,middleButton } from '../styles/HomePageStyles';
+import { View, Button, SectionList, Text, TouchableOpacity, TouchableWithoutFeedback,Modal, Linking,StyleSheet } from 'react-native';
+import { lightStyle,darkStyle,middleButton,modalstyles } from '../styles/HomePageStyles';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { useTheme } from '../config/ThemeContext';
 import { useNavigation } from '@react-navigation/native';
@@ -13,6 +13,7 @@ const HomeScreen = ({ DataWeek1, DataWeek2 }) => {
     const [dataToShow, setDataToShow] = useState([]);
     const [confirmDelete, setConfirmDelete] = useState(false); // New state for confirmation
     const [itemToRemove, setItemToRemove] = useState(null); // New state to store item to remove
+    const [isModalVisible, setIsModalVisible] = useState(false);
 
     const handleRemoveCourse = (item) => {
         if (confirmDelete && item === itemToRemove) {
@@ -39,6 +40,30 @@ const HomeScreen = ({ DataWeek1, DataWeek2 }) => {
         }
     };
 
+    const handleOpenMaps = () => {
+        const location = 'Universitatea+Babeș-Bolyai+din+Cluj-Napoca'; // Replace with your location
+    
+        Linking.canOpenURL(`https://maps.apple.com/?q=${location}`).then(supported => {
+            if (!supported) {
+              console.log('Maps app is not available.');
+            } else {
+                console.log('Maps app available');
+              setIsModalVisible(true);
+            }
+          });
+        };
+      
+        const handleModalConfirm = () => {
+          setIsModalVisible(false);
+          const location = 'Universitatea+Babeș-Bolyai+din+Cluj-Napoca'; // Replace with your location
+          Linking.openURL(`https://maps.apple.com/?q=${location}`);
+        };
+      
+        const handleModalCancel = () => {
+          setIsModalVisible(false);
+        };
+      
+          
 
 
     useEffect(() => {
@@ -83,18 +108,17 @@ const HomeScreen = ({ DataWeek1, DataWeek2 }) => {
         setExpandedItem(null);
     };
 
+    
     return (
         
         <View style={{ flex: 1 }}>
-
-            <View style={theme === 'dark' ? darkStyle.buttonContainer : lightStyle.buttonContainer}><Button title={weekShown ? "Week 1" : "Week 2"} onPress={toggleWeeks} /></View>
-
         {DataWeek1.length === 0 ? (
             <View style={middleButton.middleBtn}>
                 <Button title="Choose your schedule!" onPress={() => navigation.navigate('ChoosePage')}></Button>
             </View>
         ) : (
         <View style={{ flex: 1 }}>
+            <View style={theme === 'dark' ? darkStyle.buttonContainer : lightStyle.buttonContainer}><Button title={weekShown ? "Week 1" : "Week 2"} onPress={toggleWeeks} /></View>
             <View style={{ flex: 1 }}>
                 <SectionList
                     ref={sectionListRef}
@@ -129,12 +153,36 @@ const HomeScreen = ({ DataWeek1, DataWeek2 }) => {
                                             <Icon name="times" size={20} color="#d3d3d3" style={{ marginLeft: 40 }}/>
                                         </TouchableOpacity>
                                     )}
-                                </View>
-                                
+                                    </View> 
                                 {expandedItem === item && (
                                     <View style={theme === 'dark' ? darkStyle.dropdown : lightStyle.dropdown}>
                                         <Text>{item.course_type}</Text>
-                                        <Text>{item.room}</Text>
+                                        <View>
+                                        <TouchableOpacity onPress={() => setIsModalVisible(true)} style={{ flexDirection: 'row' }}>
+                                            <Text>{item.room}</Text>
+                                            <Icon name="map-pin" style={modalstyles.icon} />
+                                        </TouchableOpacity>
+                                        <Modal
+                                            animationType="slide"
+                                            transparent={true}
+                                            visible={isModalVisible}
+                                            onRequestClose={() => setIsModalVisible(false)}
+                                        >
+                                            <View style={modalstyles.centeredView}>
+                                            <View style={modalstyles.modalView}>
+                                                <Text style={modalstyles.modalText}>Do you want to open Maps to view the location?</Text>
+                                                <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginTop: 20 }}>
+                                                <TouchableOpacity style={{ ...modalstyles.button, backgroundColor: '#2196F3' }} onPress={handleModalConfirm}>
+                                                    <Text style={modalstyles.textStyle}>Open</Text>
+                                                </TouchableOpacity>
+                                                <TouchableOpacity style={{ ...modalstyles.button, backgroundColor: '#FF0000' }} onPress={handleModalCancel}>
+                                                    <Text style={modalstyles.textStyle}>Cancel</Text>
+                                                </TouchableOpacity>
+                                                </View>
+                                            </View>
+                                            </View>
+                                        </Modal>
+                                        </View>
                                         <Text>{item.professor}</Text>
                                     </View>
                                 )}

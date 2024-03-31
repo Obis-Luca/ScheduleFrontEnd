@@ -93,28 +93,6 @@ const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
                 console.error('Error fetching faculties:', error);
             });
     }
-
-    // const [showFacultyDropdown, setShowFacultyDropdown] = useState(true);
-    // const [showSpecializationDropdown, setShowSpecializationDropdown] = useState(false);
-    // const [showGroupDropdown, setShowGroupDropdown] = useState(false);
-    // const [showSemigroupDropdown, setShowSemigroupDropdown] = useState(false);
-    // const [showYearDropdown, setshowYearDropdown] = useState(false);
-    // const [showSubmitOptionsButton, setshowSubmitOptionsButton] = useState(false);
-    // const years = [
-    //     {key:'1', value:'1',},
-    //     {key:'2', value:'2'},
-    //     {key:'3', value:'3'},
-
-    // ]
-
-    // const [selectedFaculty, setSelectedFaculty] = useState(null);
-    // const [selectedSpecialization, setSelectedSpecialization] = useState(null);
-    // const [selectedYear, setselectedYear] = useState(null);
-    // const [selectedGroup, setSelectedGroup] = useState(null);
-
-    // const [faculties, setFaculties] = useState([]);
-    // const [specializations, setSpecializations] = useState([]);
-    // const [groups, setGroups] = useState([]);
     useEffect(() => {
         fetch(`http://127.0.0.1:8000/api/faculties/`)
 
