@@ -18,15 +18,15 @@ export default function MyApp()  {
     return (
         <ThemeProvider>
             <NavigationContainer>
-                <Drawer.Navigator initialRouteName="Home">
-                    <Drawer.Screen name="Home">
+                <Drawer.Navigator initialRouteName="Acasa">
+                    <Drawer.Screen name="Acasa">
                         {props => <HomeScreen {...props} DataWeek1={DataWeek1} DataWeek2={DataWeek2} />}
                     </Drawer.Screen>
-                    <Drawer.Screen name="ChoosePage">
+                    <Drawer.Screen name="Alege orar">
                         {props => <ChoosePage {...props} setDataWeek1={setDataWeek1} setDataWeek2={setDataWeek2} />}
                     </Drawer.Screen>
-                    <Drawer.Screen name="Settings" component={SettingsScreen} />
-                    <Drawer.Screen name="Exams" component={ExamsScreen} />
+                    <Drawer.Screen name="Setari" component={SettingsScreen} />
+                    <Drawer.Screen name="Examene" component={ExamsScreen} />
 
                 </Drawer.Navigator>
             </NavigationContainer>
