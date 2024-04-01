@@ -111,8 +111,10 @@ const HomeScreen = ({ DataWeek1, DataWeek2 }) => {
     
     return (
         
-        <View style={{ flex: 1 }}>
+        <View style={{ flex: 1, backgroundColor: "#ffffff" }}>
         {DataWeek1.length === 0 ? (
+
+
             <View style={middleButton.middleBtn}>
                 <Button title="Choose your schedule!" onPress={() => navigation.navigate('ChoosePage')}></Button>
             </View>

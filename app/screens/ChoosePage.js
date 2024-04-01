@@ -87,7 +87,7 @@ const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
                 if (week2Data) {
                     setDataWeek2(week2Data);
                 }
-                navigation.navigate('Home')
+                navigation.navigate('Acasa')
             })
             .catch(error => {
                 console.error('Error fetching faculties:', error);

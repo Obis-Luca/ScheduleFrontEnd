@@ -10,7 +10,7 @@ const SettingsScreen = ({ navigation }) => {
     return (
         <View style={theme === 'dark' ? darkMode.bigView : lightMode.bigView}>
             <View style={{flexDirection: 'row'}}>
-                <Text style={{padding: 20, fontSize: 20}}>Select Theme</Text>
+                <Text style={{padding: 20, fontSize: 20}}>Alege tema</Text>
                 <Animated.View entering = {FadeInDown.duration(500).springify()}>
                     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', marginLeft: 120 ,transform: [{ scaleX: 1.5 }, { scaleY:1.5 }] }}>
                         <Switch

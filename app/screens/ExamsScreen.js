@@ -5,18 +5,22 @@ import { useTheme } from '../config/ThemeContext';
 import Icon from "react-native-vector-icons/FontAwesome";
 import Modal from 'react-native-modal';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import {Calendar, Clock, Blackboard, CustomSvgComponent, Bell, Pen, TrashCan} from '../config/Icons';
+import {Calendar, Clock, Blackboard, CustomSvgComponent, Bell, Pen, TrashCan, LocationPin} from '../config/Icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import { Vibration } from 'react-native';
-import PushNotification from 'react-native-push-notification';
+// import PushNotification from 'react-native-push-notification';
+import Animated, {FadeInDown} from "react-native-reanimated";
+
+
 const ExamsScreen = () => {
+
 
     const { theme } = useTheme();
     const [date, setDate] = useState(new Date());
     const [time, setTime] = useState(new Date());
-    const [dateDisplay, setDateDisplay] = useState('Choose date');
-    const [timeDisplay, setTimeDisplay] = useState('Choose time');
+    const [dateDisplay, setDateDisplay] = useState('Alege data');
+    const [timeDisplay, setTimeDisplay] = useState('Alege ora');
     const [roomNumber, setRoomNumber] = useState('');
     const [modalVisible, setModalVisible] = useState(false);
     const [inputText, setInputText] = useState('');
@@ -27,24 +31,53 @@ const ExamsScreen = () => {
     const [notificationModalVisible, setNotificationModalVisible] = useState(false);
 
 
+
+    const [inputTextError, setInputTextError] = useState('');
+    const [dateDisplayError, setDateDisplayError] = useState('');
+    const [timeDisplayError, setTimeDisplayError] = useState('');
+    const [roomNumberError, setRoomNumberError] = useState('');
+
+
+
+    const validateFields = () => {
+        let isValid = true;
+
+        if (inputText.trim() === '') {
+            setInputTextError('Please enter the exam name.');
+            isValid = false;
+        } else {
+            setInputTextError('');
+        }
+
+        if (dateDisplay === 'Alege data' || dateDisplay === 'Choose date') {
+            setDateDisplayError('Please select a date.');
+            isValid = false;
+        } else {
+            setDateDisplayError('');
+        }
+
+        if (timeDisplay === 'Alege ora' || timeDisplay === 'Choose time') {
+            setTimeDisplayError('Please select a time.');
+            isValid = false;
+        } else {
+            setTimeDisplayError('');
+        }
+
+        if (roomNumber.trim() === '') {
+            setRoomNumberError('Please enter the room number.');
+            isValid = false;
+        } else {
+            setRoomNumberError('');
+        }
+
+        return isValid;
+    };
+
+
     const handleBellPress = () => {
         setNotificationModalVisible(true);
     };
-    // PushNotification.configure({
-    //     onNotification: function(notification) {
-    //         console.log('LOCAL NOTIFICATION ==>', notification);
-    //     },
-    //     popInitialNotification: true,
-    //     requestPermissions: true
-    // });
 
-    // const scheduleNotification = (date, message) => {
-    //     PushNotification.localNotificationSchedule({
-    //         message: message,
-    //         date: date,
-    //         allowWhileIdle: true, // (optional) set notification to work while on doze, default: false
-    //     });
-    // };
 
     const editExam = (index) => {
         const exam = exams[index];
@@ -74,28 +107,31 @@ const ExamsScreen = () => {
 
 
     const addExam = async () => {
-        const newExam = {
-            name: inputText,
-            date: dateDisplay,
-            time: timeDisplay,
-            room: roomNumber
+        if (!validateFields()) {
+            const newExam = {
+                id: Math.random().toString(),  // Add a unique id
+                name: inputText,
+                date: dateDisplay,
+                time: timeDisplay,
+                room: roomNumber
 
-        };
-        let updatedExams;
-        if (editingExamIndex !== null) {
-            updatedExams = [...exams];
-            updatedExams[editingExamIndex] = newExam;
-        } else {
-            updatedExams = [...exams, newExam];
+            };
+            let updatedExams;
+            if (editingExamIndex !== null) {
+                updatedExams = [...exams];
+                updatedExams[editingExamIndex] = newExam;
+            } else {
+                updatedExams = [...exams, newExam];
+            }
+            setExams(updatedExams);
+            setInputText('');
+            setRoomNumber('');
+            setDateDisplay('Choose date');
+            setTimeDisplay('Choose time');
+            setModalVisible(false);
+            setEditingExamIndex(null);
+            await AsyncStorage.setItem('exams', JSON.stringify(updatedExams)); // Save exams to AsyncStorage
         }
-        setExams(updatedExams);
-        setInputText('');
-        setRoomNumber('');
-        setDateDisplay('Choose date');
-        setTimeDisplay('Choose time');
-        setModalVisible(false);
-        setEditingExamIndex(null);
-        await AsyncStorage.setItem('exams', JSON.stringify(updatedExams)); // Save exams to AsyncStorage
     };
     const onChangeDate = (event, selectedDate) => {
         const currentDate = selectedDate || date;
@@ -112,16 +148,19 @@ const ExamsScreen = () => {
     };
 
     return(
-        <View style={{flex:1}}>
+        <View style={{flex:1, backgroundColor: "#ffffff"}}>
             <ScrollView>
                 {exams.length === 0 ? (
-                    // <Image
-                    //     style={{ width: 200, height: 200, alignSelf: 'center' }}
-                    //     source={require('../images/pngtree-pink-watercolor-brushes-171474-png-image_1733978.jpg')}
-                    // />
+                    // <Animated.View entering = {FadeInDown.duration(500).springify()}>
+                        <Animated.View entering = {FadeInDown.duration(800).springify()}>
 
-                    // <CustomSvgComponent/>
-                    <Text style={{textAlign: 'center', marginTop: 20}}>No exams added yet</Text>
+                            <Image
+                                style={{ width: 170, height: 170, alignSelf: 'center' , marginTop: 220, justifyContent: "center"}}
+                                source={require('../images/blackboard-svgrepo-com.png')}
+                            />
+                            <Text style={{color:'black', textAlign: "center",alignItems: "center", marginTop: 20, fontSize: 20, fontWeight: "bold"}}>{"No added exams.."}</Text>
+                        </Animated.View>
+
                 ) : (
                     exams.map((exam, index) => {
                         const renderRightActions = () => (
@@ -142,17 +181,24 @@ const ExamsScreen = () => {
                             </View>
                         );
                         return (
-                            <View style={{marginTop: 15}}>
-                                <Swipeable key={index} renderRightActions={renderRightActions} friction={1} onSwipeableWillOpen={() => Vibration.vibrate([0,50])}>
+                            <View style={{marginTop: 15}} key = {exam.id}>
+                                <Swipeable key={exam.id} renderRightActions={renderRightActions} friction={1} onSwipeableWillOpen={() => Vibration.vibrate([0,50])}>
                                     <View style={{marginLeft: 15,marginRight: 15, marginTop: 10, padding: 13, backgroundColor: '#ddd', borderRadius: 20}}>
-                                        <Text>{exam.name}</Text>
-                                        <Text>{exam.date}</Text>
-                                        <Text>{exam.time}</Text>
-                                        <Text>{exam.room}</Text>
+                                        <View style={{margin: 2,padding: 20,backgroundColor: '#c2bfbf', borderRadius: 20}}>
+                                            <Text>{exam.name}</Text>
+                                        </View>
 
-                                        <TouchableOpacity onPress={handleBellPress}>
-                                            <Bell/>
-                                        </TouchableOpacity>
+                                        <View style={{flexDirection: "row", marginLeft: 10, marginTop: 10}}>
+                                                    <Text style={{marginRight: 10, marginTop: 5}}>{exam.date}</Text>
+                                                    <Text  style={{marginRight: 10, marginTop: 5}}>{exam.time}</Text>
+                                                    <Text  style={{marginRight: 10, marginTop: 5}}>{exam.room}</Text>
+                                            <TouchableOpacity style={{marginLeft: 100}}  onPress={handleBellPress}>
+                                                <Bell/>
+                                            </TouchableOpacity>
+                                        </View>
+
+
+
                                     </View>
                                 </Swipeable>
                             </View>
@@ -195,9 +241,11 @@ const ExamsScreen = () => {
                     <TextInput
                         style={{ height: 40, borderColor: 'gray', borderWidth: 1, borderRadius: 10, paddingLeft: 10, marginTop: 10}}
                         onChangeText={text => setInputText(text)}
-                        placeholder={"Enter exam name"}
+                        placeholder={"Introdu numele examenului"}
                         value={inputText}
                     />
+                    {/*<Text style={{color: 'red'}}>{inputTextError}</Text>*/}
+
                     <View style={{flexDirection: "row",  marginTop:20}}>
 
                         <TouchableOpacity
@@ -207,6 +255,7 @@ const ExamsScreen = () => {
                         >
                             <Text>{dateDisplay}</Text>
                         </TouchableOpacity>
+
                         <View style={{marginLeft: 20}}>
                             <Calendar/>
                         </View>
@@ -242,20 +291,27 @@ const ExamsScreen = () => {
                             onChange={onChangeTime}
                         />
                     )}
+                    {/*<View style={{flexDirection: "row",  marginTop:20}}>*/}
+                    <View style={{flexDirection: "row", marginTop: 20}}>
+                        <TextInput
+                            style={{height: 40,width:250, borderColor: 'gray', borderWidth: 1, borderRadius: 10, paddingLeft: 10, justifyContent: 'center'}}
+                            onChangeText={text => setRoomNumber(text)}
+                            placeholder={"Introdu locatia"}
+                            value={roomNumber}
+                        />
+                        <View style={{marginLeft: 20}}>
+                            <LocationPin/>
+                        </View>
 
-                    <TextInput
-                        style={{ height: 40, borderColor: 'gray', borderWidth: 1, borderRadius: 10, paddingLeft: 10, marginTop: 20}}
-                        onChangeText={text => setRoomNumber(text)}
-                        placeholder={"Enter room number"}
-                        value={roomNumber}
-                    />
+                    </View>
+
+                    {/*<View/>*/}
                     <View style={{marginTop: 80, alignItems: "center"}}>
                         <TouchableOpacity
-                            style={{height: 40,width: 100,borderColor: 'gray', borderWidth: 1, borderRadius: 10, paddingLeft: 10, justifyContent: 'center', backgroundColor: '#479030', alignItems: "center"}}
+                            style={{height: 40, width: 100, borderColor: 'gray', borderWidth: 1, borderRadius: 10, backgroundColor: '#b5efa2', justifyContent: 'center', alignItems: 'center'}}
                             onPress={() => addExam()}
                         >
-                            <Text style={{color:'black', textAlign: "center",alignItems: "center"}}>{"Add exam"}</Text>
-
+                            <Text style={{color:'black', textAlign: "center"}}>{"Adauga examen"}</Text>
                         </TouchableOpacity>
                     </View>
                 </View>

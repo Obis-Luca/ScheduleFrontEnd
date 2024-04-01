@@ -5,7 +5,7 @@ export const lightStyle = StyleSheet.create({
 
 
     container: {
-        backgroundColor: '#e8e2e2',
+        backgroundColor: '#ffffff',
         flex: 1,
         flexDirection: "column",
 
