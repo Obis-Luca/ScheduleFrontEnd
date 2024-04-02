@@ -116,7 +116,7 @@ const HomeScreen = ({ DataWeek1, DataWeek2 }) => {
 
 
             <View style={middleButton.middleBtn}>
-                <Button title="Choose your schedule!" onPress={() => navigation.navigate('ChoosePage')}></Button>
+                <Button title="Choose your schedule!" onPress={() => navigation.navigate('Alege orar')}></Button>
             </View>
         ) : (
         <View style={{ flex: 1 }}>

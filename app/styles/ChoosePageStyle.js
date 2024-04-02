@@ -59,20 +59,25 @@ export const lightStyle = StyleSheet.create({
 
 export const darkStyle = StyleSheet.create({
 
-
+    background: {
+        flex: 1,
+        resizeMode: 'stretch',
+        justifyContent: 'center',
+        alignItems: 'center',
+      },
+    
     container: {
-        backgroundColor: '#c00606',
+        // backgroundColor: '#c00607',
         flex: 1,
         flexDirection: "column",
 
         width: "100%"
     },
     alldropdowns: {
+        border: 50,
         marginTop: 10,
         alignItems: "center",
         justifyContent: "center",
-
-
     },
     dropdownButton: {
         marginBottom: 10,

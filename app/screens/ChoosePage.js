@@ -3,7 +3,7 @@ import {darkStyle, lightStyle, boxStyles} from '../styles/ChoosePageStyle';
 import React, { useState, useEffect } from 'react';
 import { SelectList } from 'react-native-dropdown-select-list'
 import Animated, {FadeIn, FadeInDown} from 'react-native-reanimated';
-import {View, Button, TouchableOpacity,} from 'react-native';
+import {View, Button, TouchableOpacity,ImageBackground} from 'react-native';
 import { Icon1 } from '../config/Icons';
 import { useTheme } from '../config/ThemeContext';
 import {useNavigation} from "@react-navigation/native";
@@ -59,7 +59,7 @@ const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
     const [groups, setGroups] = useState([]);
 
     const populateWeeks = (group_id,specialization_id, year) => {
-        fetch(`http://192.168.182.122:8000/api/courses_filter/?group_id=${group_id}&specialisation_id=${specialization_id}&year=${year}`)
+        fetch(`http://10.0.4.96:8000/api/courses_filter/?group_id=${group_id}&specialisation_id=${specialization_id}&year=${year}`)
             .then(response => response.json())
             .then(data => {
                 let week1Data = [];
@@ -94,7 +94,7 @@ const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
             });
     }
     useEffect(() => {
-        fetch(`http://192.168.182.122:8000/api/faculties/`)
+        fetch(`http://10.0.4.96:8000/api/faculties/`)
 
             .then(response => response.json())
             .then(data => {
@@ -108,7 +108,8 @@ const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
 
 
     const fetchSpecializations = (facultyId) => {
-        fetch(`http://192.168.182.122:8000/api/specialisation_filter/?faculty_id=${selectedFaculty}`)
+        
+        fetch(`http://10.0.4.96:8000/api/specialisation_filter/?faculty_id=${selectedFaculty}`)
             .then(response => response.json())
             .then(data => {
 
@@ -122,7 +123,7 @@ const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
 
 
     const fetchGroups = (groupID) => {
-        fetch(`http://192.168.182.122:8000/api/groups_filter/?specialisation_id=${selectedSpecialization}&year=${selectedYear}`)
+        fetch(`http://10.0.4.96:8000/api/groups_filter/?specialisation_id=${selectedSpecialization}&year=${selectedYear}`)
             .then(response => response.json())
             .then(data => {
                 const formattedGroups = data.map(group => ({ key: group.id.toString(), value: group.nr }));
@@ -135,6 +136,12 @@ const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
 
 
     return (
+        <ImageBackground 
+        source={{ uri: 'https://img.freepik.com/free-vector/dark-gradient-background-with-copy-space_53876-99548.jpg' }}
+        style={darkStyle.background}
+        >
+
+
         <View style={theme === 'dark' ? darkStyle.container : lightStyle.container}>
             <StatusBar style="auto" />
             <Animated.View entering = {FadeInDown.duration(1000).springify()}>
@@ -161,6 +168,9 @@ const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
                                 shadowOpacity: 0.3,
                                 shadowRadius: 2,
                                 elevation: 5,
+                            }}
+                            dropdownStyles={{
+                                backgroundColor: '#f0f0f0',
                             }}
                             placeholder={"Selecteaza facultatea"}
                             data={faculties}
@@ -189,6 +199,9 @@ const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
                             shadowRadius: 2,
                             elevation: 5,
                         }}
+                        dropdownStyles={{
+                            backgroundColor: '#f0f0f0',
+                        }}
                         placeholder={"Selecteaza specializarea"}
                         data={specializations}
                         save="id"
@@ -212,6 +225,9 @@ const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
                             shadowOpacity: 0.3,
                             shadowRadius: 2,
                             elevation: 5,
+                        }}
+                        dropdownStyles={{
+                            backgroundColor: '#f0f0f0',
                         }}
                         placeholder={"Selecteaza anul"}
                         data={years}
@@ -239,6 +255,9 @@ const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
                             shadowRadius: 2,
                             elevation: 5,
                         }}
+                        dropdownStyles={{
+                            backgroundColor: '#f0f0f0',
+                        }}
                         placeholder={"Selecteaza grupa"}
                         data={groups}
                         save="value"
@@ -252,6 +271,7 @@ const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
                 <Button title="Submit" onPress={() => populateWeeks(selectedGroup, selectedSpecialization, selectedYear)} />)}
                 </View>
         </View>
+        </ImageBackground>
     );
 
 };
