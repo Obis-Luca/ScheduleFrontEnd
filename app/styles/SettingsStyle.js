@@ -2,7 +2,7 @@ import { StyleSheet } from "react-native";
 // import {white} from "react-native-paper/lib/typescript/styles/themes/v2/colors";
 const darkMode = StyleSheet.create({
         bigView: {
-            backgroundColor: 'black',
+            backgroundColor: 'green',
             marginTop: 0 ,
             flexDirection: 'column'
 

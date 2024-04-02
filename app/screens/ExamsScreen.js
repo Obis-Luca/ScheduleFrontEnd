@@ -10,7 +10,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import { Vibration } from 'react-native';
 // import PushNotification from 'react-native-push-notification';
-import Animated, {FadeInDown} from "react-native-reanimated";
+import Animated, {FadeInDown, FadeInRight} from "react-native-reanimated";
 
 
 const ExamsScreen = () => {
@@ -107,14 +107,13 @@ const ExamsScreen = () => {
 
 
     const addExam = async () => {
-        if (!validateFields()) {
+        if (validateFields()) {
             const newExam = {
                 id: Math.random().toString(),  // Add a unique id
                 name: inputText,
                 date: dateDisplay,
                 time: timeDisplay,
                 room: roomNumber
-
             };
             let updatedExams;
             if (editingExamIndex !== null) {
@@ -164,21 +163,25 @@ const ExamsScreen = () => {
                 ) : (
                     exams.map((exam, index) => {
                         const renderRightActions = () => (
-                            <View style={{marginRight: 10, marginTop: 10, padding: 10, backgroundColor: '#afafaf', borderTopLeftRadius: 20, borderBottomLeftRadius: 20}}>
-                                <View style={{marginTop: 9}}>
-                                    <View>
-                                        <TouchableOpacity onPress={() => editExam(index)}>
-                                             <Pen/>
-                                         </TouchableOpacity>
-                                    </View>
+                            // <Animated.View entering = {FadeInRight.duration(2000).springify(200)}>
+                                <View style={{marginRight: 10, marginTop: 10, padding: 10, backgroundColor: '#afafaf', borderTopLeftRadius: 20, borderBottomLeftRadius: 20}}>
+                                    <View style={{marginTop: 9}}>
+                                        <View>
+                                            <TouchableOpacity onPress={() => editExam(index)}>
+                                                <Pen/>
+                                            </TouchableOpacity>
+                                        </View>
 
-                                    <View style={{marginTop: 18}}>
-                                        <TouchableOpacity onPress={() => deleteExam(index)}>
-                                            <TrashCan/>
-                                        </TouchableOpacity>
+                                        <View style={{marginTop: 18}}>
+                                            <TouchableOpacity onPress={() => deleteExam(index)}>
+                                                <TrashCan/>
+                                            </TouchableOpacity>
+                                        </View>
                                     </View>
                                 </View>
-                            </View>
+
+                            // </Animated.View>
+
                         );
                         return (
                             <View style={{marginTop: 15}} key = {exam.id}>
@@ -192,7 +195,7 @@ const ExamsScreen = () => {
                                                     <Text style={{marginRight: 10, marginTop: 5}}>{exam.date}</Text>
                                                     <Text  style={{marginRight: 10, marginTop: 5}}>{exam.time}</Text>
                                                     <Text  style={{marginRight: 10, marginTop: 5}}>{exam.room}</Text>
-                                            <TouchableOpacity style={{marginLeft: 100}}  onPress={handleBellPress}>
+                                            <TouchableOpacity style={{marginLeft: 130}}  onPress={handleBellPress}>
                                                 <Bell/>
                                             </TouchableOpacity>
                                         </View>
@@ -219,7 +222,7 @@ const ExamsScreen = () => {
                 isVisible={notificationModalVisible}
                 onBackdropPress={() => setNotificationModalVisible(false)}
             >
-                <View style={theme === 'dark' ? darkStyle.modalPopUp : lightStyle.modalPopUp}>
+                <View style={theme === 'dark' ? darkStyle.modalNotificationPopUp : lightStyle.modalNotificationPopUp}>
                     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', marginLeft: 120 ,transform: [{ scaleX: 1.5 }, { scaleY:1.5 }] }}>
                         <Switch
                             trackColor={{ false: "#000000", true: "#fdfdfd" }}
