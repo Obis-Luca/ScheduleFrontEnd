@@ -59,7 +59,7 @@ const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
     const [groups, setGroups] = useState([]);
 
     const populateWeeks = (group_id,specialization_id, year) => {
-        fetch(`http://10.0.4.96:8000/api/courses_filter/?group_id=${group_id}&specialisation_id=${specialization_id}&year=${year}`)
+        fetch(`http://192.168.182.122:8000/api/courses_filter/?group_id=${group_id}&specialisation_id=${specialization_id}&year=${year}`)
             .then(response => response.json())
             .then(data => {
                 let week1Data = [];
@@ -94,7 +94,7 @@ const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
             });
     }
     useEffect(() => {
-        fetch(`http://10.0.4.96:8000/api/faculties/`)
+        fetch(`http://192.168.182.122:8000/api/faculties/`)
 
             .then(response => response.json())
             .then(data => {
@@ -109,7 +109,7 @@ const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
 
     const fetchSpecializations = (facultyId) => {
         
-        fetch(`http://10.0.4.96:8000/api/specialisation_filter/?faculty_id=${selectedFaculty}`)
+        fetch(`http://192.168.182.122:8000/api/specialisation_filter/?faculty_id=${selectedFaculty}`)
             .then(response => response.json())
             .then(data => {
 
@@ -123,7 +123,7 @@ const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
 
 
     const fetchGroups = (groupID) => {
-        fetch(`http://10.0.4.96:8000/api/groups_filter/?specialisation_id=${selectedSpecialization}&year=${selectedYear}`)
+        fetch(`http://192.168.182.122:8000/api/groups_filter/?specialisation_id=${selectedSpecialization}&year=${selectedYear}`)
             .then(response => response.json())
             .then(data => {
                 const formattedGroups = data.map(group => ({ key: group.id.toString(), value: group.nr }));
@@ -144,13 +144,13 @@ const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
 
         <View style={theme === 'dark' ? darkStyle.container : lightStyle.container}>
             <StatusBar style="auto" />
-            <Animated.View entering = {FadeInDown.duration(1000).springify()}>
-                <View style={theme === 'dark' ? darkStyle.iconContainer: lightStyle.iconContainer }>
-                    <TouchableOpacity>
-                        <Icon1 />
-                    </TouchableOpacity>
-                </View>
-            </Animated.View>
+            {/*<Animated.View entering = {FadeInDown.duration(1000).springify()}>*/}
+            {/*    <View style={theme === 'dark' ? darkStyle.iconContainer: lightStyle.iconContainer }>*/}
+            {/*        <TouchableOpacity>*/}
+            {/*            <Icon1 />*/}
+            {/*        </TouchableOpacity>*/}
+            {/*    </View>*/}
+            {/*</Animated.View>*/}
 
 
 
@@ -182,7 +182,6 @@ const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
                                 setShowSpecializationDropdown(true)
                             }}
                         />
-
                 )}
 
                 {showSpecializationDropdown && (
