@@ -147,7 +147,7 @@ const ExamsScreen = () => {
     };
 
     return(
-        <View style={{flex:1, backgroundColor: "#ffffff"}}>
+        <View style={{flex:1, backgroundColor: theme === 'dark' ?  '#000000':'#FFFFFF'}}>
             <ScrollView>
                 {exams.length === 0 ? (
                     // <Animated.View entering = {FadeInDown.duration(500).springify()}>
@@ -164,7 +164,7 @@ const ExamsScreen = () => {
                     exams.map((exam, index) => {
                         const renderRightActions = () => (
                             // <Animated.View entering = {FadeInRight.duration(2000).springify(200)}>
-                                <View style={{marginRight: 10, marginTop: 10, padding: 10, backgroundColor: '#afafaf', borderTopLeftRadius: 20, borderBottomLeftRadius: 20}}>
+                                <View style={{marginRight: 10, marginTop: 10, padding: 10, backgroundColor  : theme === 'dark' ? '#012A4A' :'#A9D6E5', borderTopLeftRadius: 20, borderBottomLeftRadius: 20}}>
                                     <View style={{marginTop: 9}}>
                                         <View>
                                             <TouchableOpacity onPress={() => editExam(index)}>
@@ -186,15 +186,15 @@ const ExamsScreen = () => {
                         return (
                             <View style={{marginTop: 15}} key = {exam.id}>
                                 <Swipeable key={exam.id} renderRightActions={renderRightActions} friction={1} onSwipeableWillOpen={() => Vibration.vibrate([0,50])}>
-                                    <View style={{marginLeft: 15,marginRight: 15, marginTop: 10, padding: 13, backgroundColor: '#ddd', borderRadius: 20}}>
-                                        <View style={{margin: 2,padding: 20,backgroundColor: '#c2bfbf', borderRadius: 20}}>
-                                            <Text>{exam.name}</Text>
+                                    <View style={{marginLeft: 15,marginRight: 15, marginTop: 10, padding: 13, backgroundColor  : theme === 'dark' ? '#012A4A' :'#89C2D9',  borderRadius: 20}}>
+                                        <View style={{margin: 2,padding: 20,backgroundColor  : theme === 'dark' ? '#013A63' :'#A9D6E5', borderRadius: 20}}>
+                                            <Text style={{color: theme === 'dark' ? '#FFFFFF' :'#000000',}}>{exam.name}</Text>
                                         </View>
 
-                                        <View style={{flexDirection: "row", marginLeft: 10, marginTop: 10}}>
-                                                    <Text style={{marginRight: 10, marginTop: 5}}>{exam.date}</Text>
-                                                    <Text  style={{marginRight: 10, marginTop: 5}}>{exam.time}</Text>
-                                                    <Text  style={{marginRight: 10, marginTop: 5}}>{exam.room}</Text>
+                                        <View style={{flexDirection: "row", marginLeft: 10, marginTop: 10,color: theme === 'dark' ? '#FFFFFF' :'#000000',}}>
+                                                    <Text style={{marginRight: 10, marginTop: 5, color: theme === 'dark' ? '#FFFFFF' :'#000000',}}>{exam.date}</Text>
+                                                    <Text  style={{marginRight: 10, marginTop: 5, color: theme === 'dark' ? '#FFFFFF' :'#000000',}}>{exam.time}</Text>
+                                                    <Text  style={{marginRight: 10, marginTop: 5, color: theme === 'dark' ? '#FFFFFF' :'#000000',}}>{exam.room}</Text>
                                             <TouchableOpacity style={{marginLeft: 130}}  onPress={handleBellPress}>
                                                 <Bell/>
                                             </TouchableOpacity>

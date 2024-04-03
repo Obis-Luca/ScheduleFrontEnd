@@ -1,22 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
-import {
-    View,
-    Button,
-    SectionList,
-    Text,
-    TouchableOpacity,
-    TouchableWithoutFeedback,
-    Modal,
-    Linking,
-    StyleSheet,
-    Image
-} from 'react-native';
+import { View, Button, SectionList, Text, TouchableOpacity, TouchableWithoutFeedback,Modal, Linking,StyleSheet } from 'react-native';
 import { lightStyle,darkStyle,middleButton,modalstyles } from '../styles/HomePageStyles';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { useTheme } from '../config/ThemeContext';
 import { useNavigation } from '@react-navigation/native';
-import {CalendarHome} from '../config/Icons';
-import Animated, {FadeInDown} from "react-native-reanimated";
 
 const HomeScreen = ({ DataWeek1, DataWeek2 }) => {
     const navigation = useNavigation();
@@ -124,27 +111,13 @@ const HomeScreen = ({ DataWeek1, DataWeek2 }) => {
     
     return (
         
-        <View style={{ flex: 1, backgroundColor: "#ffffff" }}>
-            <TouchableOpacity
-                style={theme === 'dark' ? darkStyle.addButton : lightStyle.addButton}
-                onPress={() => navigation.navigate('Alege orar')}
-            >
-                <Icon name="plus" size={24} color="#fff" />
-            </TouchableOpacity>
+        <View style={{ flex: 1, backgroundColor: theme === 'dark' ?  '#000000': '#FFFFFF'}}>
         {DataWeek1.length === 0 ? (
-            <Animated.View entering = {FadeInDown.duration(800).springify()}>
-
-                <Image
-                    style={{ width: 170, height: 170, alignSelf: 'center' , marginTop: 220, justifyContent: "center"}}
-                    source={require('../images/calendar-svgrepo-com.png')}
-                />
-                <Text style={{color:'black', textAlign: "center",alignItems: "center", marginTop: 20, fontSize: 20, fontWeight: "bold"}}>{"No added hours.."}</Text>
-            </Animated.View>
 
 
-            // <View style={middleButton.middleBtn}>
-            //     <Button title="Choose your schedule!" onPress={() => navigation.navigate('Alege orar')}></Button>
-            // </View>
+            <View style={middleButton.middleBtn}>
+                <Button title="Choose your schedule!" onPress={() => navigation.navigate('Alege orar')}></Button>
+            </View>
         ) : (
         <View style={{ flex: 1 }}>
             <View style={theme === 'dark' ? darkStyle.buttonContainer : lightStyle.buttonContainer}><Button title={weekShown ? "Week 1" : "Week 2"} onPress={toggleWeeks} /></View>
@@ -163,7 +136,7 @@ const HomeScreen = ({ DataWeek1, DataWeek2 }) => {
 
                                     <View style={theme === 'dark' ? darkStyle.div_for_hour_and_dropdownArrow : lightStyle.div_for_hour_and_dropdownArrow}>
                                         <Text style={theme === 'dark' ? darkStyle.hour : lightStyle.hour}>{item.course_hour}</Text>
-                                        <Icon name={expandedItem === item ? "angle-up" : "angle-down"} size={20} color="#000" style={{ marginLeft: 10 }} />
+                                        <Icon name={expandedItem === item ? "angle-up" : "angle-down"} size={20} style={{ marginLeft: 10,color: theme === 'dark' ? '#FFFFFF' :'#000000', }} />
                                     </View>
 
                                     {/* Conditional rendering of confirmation icons */}
@@ -179,17 +152,17 @@ const HomeScreen = ({ DataWeek1, DataWeek2 }) => {
                                     )}
                                     {!confirmDelete && (
                                         <TouchableOpacity onPress={() => handleRemoveCourse(item)}>
-                                            <Icon name="times" size={20} color="#d3d3d3" style={{ marginLeft: 10 }}/>
+                                            <Icon name="times" size={20}  style={{ marginLeft: 10,color: theme === 'dark' ? '#FFFFFF' :'#8f8f8f',  }}/>
                                         </TouchableOpacity>
                                     )}
 
                                     </View> 
                                 {expandedItem === item && (
                                     <View style={theme === 'dark' ? darkStyle.dropdown : lightStyle.dropdown}>
-                                        <Text>{item.course_type}</Text>
+                                        <Text style={{color: theme === 'dark' ? '#FFFFFF' :'#000000',}}>{item.course_type}</Text>
                                         <View>
                                         <TouchableOpacity onPress={() => setIsModalVisible(true)} style={{ flexDirection: 'row' }}>
-                                            <Text>{item.room}</Text>
+                                            <Text style={{color: theme === 'dark' ? '#FFFFFF' :'#000000',}}>{item.room}</Text>
                                             <Icon name="map-pin" style={modalstyles.icon} />
                                         </TouchableOpacity>
                                         <Modal
@@ -213,7 +186,7 @@ const HomeScreen = ({ DataWeek1, DataWeek2 }) => {
                                             </View>
                                         </Modal>
                                         </View>
-                                        <Text>{item.professor}</Text>
+                                        <Text style={{color: theme === 'dark' ? '#FFFFFF' :'#000000',}}>{item.professor}</Text>
                                     </View>
                                 )}
                                 

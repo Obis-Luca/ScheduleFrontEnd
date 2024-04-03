@@ -3,10 +3,11 @@ export const middleButton = StyleSheet.create({
   middleBtn: { flex: 1, justifyContent: 'center', alignItems: 'center' }});
 export const lightStyle = StyleSheet.create({
   itemContainer: {
-    backgroundColor: '#e8eaf6',
+    backgroundColor: '#A9D6E5',
     padding: 15,
     marginVertical: 6,
     marginHorizontal: 10,
+    
     borderRadius: 40,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
@@ -24,8 +25,8 @@ export const lightStyle = StyleSheet.create({
       justifyContent: 'space-between',
       alignItems: 'center',
       fontSize: 28,
-      backgroundColor: '#c5cae9',
-      color: '#212121',
+      backgroundColor: '#468FAF',
+      color: '#000000',
       paddingHorizontal: 15,
       marginVertical: 5,
       marginHorizontal: 10,
@@ -35,13 +36,13 @@ export const lightStyle = StyleSheet.create({
     title: {
       width:200,
       fontSize: 20,
-      color: '#424242',
+      color: '#000000',
     },
     buttonContainer: {
       paddingHorizontal: 20,
       marginTop: 20,
       borderRadius: 10,
-      backgroundColor: '#dcedc8',
+      backgroundColor: '#A9D6E5',
     },
     addButton: {
       position: 'absolute',
@@ -49,7 +50,7 @@ export const lightStyle = StyleSheet.create({
       right: 20,
       width: 50,
       height: 50,
-      backgroundColor: '#3f51b5',
+      backgroundColor: '#468FAF',
       borderRadius: 20,
       justifyContent: 'center',
       alignItems: 'center',
@@ -69,7 +70,7 @@ export const lightStyle = StyleSheet.create({
       borderTopWidth:3,
       borderTopStartRadius:5,
       borderTopEndRadius:5,
-      borderTopColor: 'lightgrey',
+      borderTopColor: '#ffffff',
       padding:10,
       flex: 1,
       flexDirection: 'row',
@@ -81,7 +82,7 @@ export const lightStyle = StyleSheet.create({
 
 export const darkStyle = StyleSheet.create({
   itemContainer: {
-    backgroundColor: '#9c9da8',
+    backgroundColor: '#012A4A',
     padding: 15,
     marginVertical: 6,
     marginHorizontal: 10,
@@ -91,20 +92,21 @@ export const darkStyle = StyleSheet.create({
     shadowOpacity: 0.05,
     shadowRadius: 3.84,
     elevation: 5,
+    color:'#FFFFFF',
   },
   itemHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    color:'#FFFFFF',
   },
   dayHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-
+    color:'#FFFFFF',
     fontSize: 28,
-    backgroundColor: '#8b8fa8',
-    color: '#0c0c0c',
+    backgroundColor: '#2A6F97',
     padding: 5,
     paddingHorizontal: 15,
     marginVertical: 5,
@@ -115,13 +117,13 @@ export const darkStyle = StyleSheet.create({
   title: {
     width:200,
     fontSize: 20,
-    color: '#2f2f2f',
+    color:'#FFFFFF',
   },
   buttonContainer: {
     paddingHorizontal: 20,
     marginTop: 20,
     borderRadius: 10,
-    backgroundColor: '#a3b095',
+    backgroundColor: '#012A4A',
   },
   addButton: {
     position: 'absolute',
@@ -129,7 +131,7 @@ export const darkStyle = StyleSheet.create({
     right: 20,
     width: 50,
     height: 50,
-    backgroundColor: '#293377',
+    backgroundColor: '#2A6F97',
     borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center',
@@ -137,18 +139,27 @@ export const darkStyle = StyleSheet.create({
     zIndex: 999,
   },
   div_for_hour_and_dropdownArrow: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
+    marginLeft:10,
+      flex: 1,
+      flexDirection: 'row',
+      justifyContent: 'flex-end',
+      color:'#FFFFFF',
   },
   hour:{
     fontSize:20,
+    color:'#FFFFFF',
   },
   dropdown: {
+    borderTopWidth:3,
+    borderTopStartRadius:5,
+    borderTopEndRadius:5,
+    borderTopColor: '#FFFFFF',
+    padding:10,
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-around',
-    marginTop: 10,
+    marginTop: 20
+    
   },
 });
 
@@ -180,6 +191,7 @@ export const modalstyles = StyleSheet.create({
       height: 24,
       marginLeft: 5,
       marginTop:3,
+      color:'red',
     },
   button: {
     borderRadius: 20,

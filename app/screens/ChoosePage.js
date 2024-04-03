@@ -59,7 +59,7 @@ const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
     const [groups, setGroups] = useState([]);
 
     const populateWeeks = (group_id,specialization_id, year) => {
-        fetch(`http://192.168.182.122:8000/api/courses_filter/?group_id=${group_id}&specialisation_id=${specialization_id}&year=${year}`)
+        fetch(`http://192.168.1.130:8000/api/courses_filter/?group_id=${group_id}&specialisation_id=${specialization_id}&year=${year}`)
             .then(response => response.json())
             .then(data => {
                 let week1Data = [];
@@ -94,7 +94,7 @@ const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
             });
     }
     useEffect(() => {
-        fetch(`http://192.168.182.122:8000/api/faculties/`)
+        fetch(`http://192.168.1.130:8000/api/faculties/`)
 
             .then(response => response.json())
             .then(data => {
@@ -109,7 +109,7 @@ const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
 
     const fetchSpecializations = (facultyId) => {
         
-        fetch(`http://192.168.182.122:8000/api/specialisation_filter/?faculty_id=${selectedFaculty}`)
+        fetch(`http://192.168.1.130:8000/api/specialisation_filter/?faculty_id=${selectedFaculty}`)
             .then(response => response.json())
             .then(data => {
 
@@ -123,7 +123,7 @@ const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
 
 
     const fetchGroups = (groupID) => {
-        fetch(`http://192.168.182.122:8000/api/groups_filter/?specialisation_id=${selectedSpecialization}&year=${selectedYear}`)
+        fetch(`http://192.168.1.130:8000/api/groups_filter/?specialisation_id=${selectedSpecialization}&year=${selectedYear}`)
             .then(response => response.json())
             .then(data => {
                 const formattedGroups = data.map(group => ({ key: group.id.toString(), value: group.nr }));
@@ -136,12 +136,6 @@ const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
 
 
     return (
-        <ImageBackground 
-        source={{ uri: 'https://img.freepik.com/free-vector/dark-gradient-background-with-copy-space_53876-99548.jpg' }}
-        style={darkStyle.background}
-        >
-
-
         <View style={theme === 'dark' ? darkStyle.container : lightStyle.container}>
             <StatusBar style="auto" />
             {/*<Animated.View entering = {FadeInDown.duration(1000).springify()}>*/}
@@ -162,7 +156,7 @@ const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
                                 marginBottom: 10,
                                 padding: 10,
                                 borderRadius: 25,
-                                backgroundColor: '#f0f0f0',
+                                backgroundColor: theme === 'dark' ? '#012A4A' :'#A9D6E5',
                                 shadowColor: '#000',
                                 shadowOffset: { width: 3, height: 2 },
                                 shadowOpacity: 0.3,
@@ -170,7 +164,14 @@ const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
                                 elevation: 5,
                             }}
                             dropdownStyles={{
-                                backgroundColor: '#f0f0f0',
+                                backgroundColor: theme === 'dark' ? '#012A4A' :'#A9D6E5',
+                            }}
+
+                            inputStyles={{
+                                color: theme === 'dark' ? '#FFFFFF' :'#000000',
+                            }}
+                            dropdownTextStyles={{
+                                color: theme === 'dark' ? '#FFFFFF' :'#000000',
                             }}
                             placeholder={"Selecteaza facultatea"}
                             data={faculties}
@@ -191,7 +192,7 @@ const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
                             marginBottom: 10,
                             padding: 10,
                             borderRadius: 25,
-                            backgroundColor: '#f0f0f0',
+                            backgroundColor: theme === 'dark' ? '#012A4A' :'#A9D6E5',
                             shadowColor: '#000',
                             shadowOffset: { width: 0, height: 2 },
                             shadowOpacity: 0.3,
@@ -199,7 +200,13 @@ const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
                             elevation: 5,
                         }}
                         dropdownStyles={{
-                            backgroundColor: '#f0f0f0',
+                            backgroundColor: theme === 'dark' ? '#012A4A' :'#A9D6E5',
+                        }}
+                        inputStyles={{
+                            color: theme === 'dark' ? '#FFFFFF' :'#000000',
+                        }}
+                        dropdownTextStyles={{
+                            color: theme === 'dark' ? '#FFFFFF' :'#000000',
                         }}
                         placeholder={"Selecteaza specializarea"}
                         data={specializations}
@@ -218,7 +225,7 @@ const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
                             marginBottom: 10,
                             padding: 10,
                             borderRadius: 25,
-                            backgroundColor: '#f0f0f0',
+                            backgroundColor: theme === 'dark' ? '#012A4A' :'#A9D6E5',
                             shadowColor: '#000',
                             shadowOffset: { width: 0, height: 2 },
                             shadowOpacity: 0.3,
@@ -226,7 +233,13 @@ const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
                             elevation: 5,
                         }}
                         dropdownStyles={{
-                            backgroundColor: '#f0f0f0',
+                            backgroundColor: theme === 'dark' ? '#012A4A' :'#A9D6E5',
+                        }}
+                        inputStyles={{
+                            color: theme === 'dark' ? '#FFFFFF' :'#000000',
+                        }}
+                        dropdownTextStyles={{
+                            color: theme === 'dark' ? '#FFFFFF' :'#000000',
                         }}
                         placeholder={"Selecteaza anul"}
                         data={years}
@@ -247,15 +260,23 @@ const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
                             marginBottom: 10,
                             padding: 10,
                             borderRadius: 25,
-                            backgroundColor: '#f0f0f0',
+                            backgroundColor: theme === 'dark' ? '#012A4A' :'#A9D6E5',
                             shadowColor: '#000',
                             shadowOffset: { width: 0, height: 2 },
                             shadowOpacity: 0.3,
                             shadowRadius: 2,
                             elevation: 5,
+                            
                         }}
                         dropdownStyles={{
-                            backgroundColor: '#f0f0f0',
+                            backgroundColor: theme === 'dark' ? '#012A4A' :'#A9D6E5',
+                        }}
+                        
+                        inputStyles={{
+                            color: theme === 'dark' ? '#FFFFFF' :'#000000',
+                        }}
+                        dropdownTextStyles={{
+                            color: theme === 'dark' ? '#FFFFFF' :'#000000',
                         }}
                         placeholder={"Selecteaza grupa"}
                         data={groups}
@@ -270,7 +291,6 @@ const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
                 <Button title="Submit" onPress={() => populateWeeks(selectedGroup, selectedSpecialization, selectedYear)} />)}
                 </View>
         </View>
-        </ImageBackground>
     );
 
 };

@@ -2,7 +2,7 @@ import { StyleSheet } from "react-native";
 // import {white} from "react-native-paper/lib/typescript/styles/themes/v2/colors";
 const darkMode = StyleSheet.create({
         bigView: {
-            backgroundColor: 'green',
+            backgroundColor: '#012A4A',
             marginTop: 0 ,
             flexDirection: 'column'
 
@@ -12,7 +12,7 @@ const darkMode = StyleSheet.create({
 
 const lightMode = StyleSheet.create({
     bigView: {
-        backgroundColor: 'white',
+        backgroundColor: '#A9D6E5',
         marginTop: 0 ,
         flexDirection: 'column'
     },
