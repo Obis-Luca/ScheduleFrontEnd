@@ -5,7 +5,7 @@ export const lightStyle = StyleSheet.create({
 
 
     container: {
-        backgroundColor: '#ffffff',
+        // backgroundColor: '#89C2D9',
         flex: 1,
         flexDirection: "column",
 
@@ -67,7 +67,7 @@ export const darkStyle = StyleSheet.create({
       },
     
     container: {
-        // backgroundColor: '#c00607',
+        backgroundColor: '#000000',
         flex: 1,
         flexDirection: "column",
 
