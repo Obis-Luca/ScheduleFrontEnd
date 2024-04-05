@@ -1,9 +1,21 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { View, Button, SectionList, Text, TouchableOpacity, TouchableWithoutFeedback,Modal, Linking,StyleSheet } from 'react-native';
+import {
+    View,
+    Button,
+    SectionList,
+    Text,
+    TouchableOpacity,
+    TouchableWithoutFeedback,
+    Modal,
+    Linking,
+    StyleSheet,
+    Image
+} from 'react-native';
 import { lightStyle,darkStyle,middleButton,modalstyles } from '../styles/HomePageStyles';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { useTheme } from '../config/ThemeContext';
 import { useNavigation } from '@react-navigation/native';
+import Animated, {FadeInDown} from "react-native-reanimated";
 
 const HomeScreen = ({ DataWeek1, DataWeek2 }) => {
     const navigation = useNavigation();
@@ -113,11 +125,21 @@ const HomeScreen = ({ DataWeek1, DataWeek2 }) => {
         
         <View style={{ flex: 1, backgroundColor: theme === 'dark' ?  '#000000': '#FFFFFF'}}>
         {DataWeek1.length === 0 ? (
-
-
-            <View style={middleButton.middleBtn}>
-                <Button title="Choose your schedule!" onPress={() => navigation.navigate('Alege orar')}></Button>
-            </View>
+            <>
+                <Animated.View entering = {FadeInDown.duration(800).springify()}>
+                    <Image
+                        style={{ width: 170, height: 170, alignSelf: 'center' , marginTop: 220, justifyContent: "center"}}
+                        source={require('../images/calendar-svgrepo-com.png')}
+                    />
+                    <Text style={{color:'black', textAlign: "center",alignItems: "center", marginTop: 20, fontSize: 20, fontWeight: "bold"}}>{"No added exams.."}</Text>
+                </Animated.View>
+                <TouchableOpacity
+                    style={theme === 'dark' ? darkStyle.addButton : lightStyle.addButton}
+                    onPress={() => navigation.navigate('Alege orar')}
+                >
+                    <Icon name="plus" size={24} color="#fff" />
+                </TouchableOpacity>
+            </>
         ) : (
         <View style={{ flex: 1 }}>
             <View style={theme === 'dark' ? darkStyle.buttonContainer : lightStyle.buttonContainer}><Button title={weekShown ? "Week 1" : "Week 2"} onPress={toggleWeeks} /></View>
