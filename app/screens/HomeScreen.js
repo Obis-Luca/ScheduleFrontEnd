@@ -129,9 +129,9 @@ const HomeScreen = ({ DataWeek1, DataWeek2 }) => {
                 <Animated.View entering = {FadeInDown.duration(800).springify()}>
                     <Image
                         style={{ width: 170, height: 170, alignSelf: 'center' , marginTop: 220, justifyContent: "center"}}
-                        source={require('../images/calendar-svgrepo-com.png')}
+                        source={theme === 'dark' ?  require('../images/calendar-svgrepo-com2.png') : require('../images/calendar-svgrepo-com.png')        }
                     />
-                    <Text style={{color:'black', textAlign: "center",alignItems: "center", marginTop: 20, fontSize: 20, fontWeight: "bold"}}>{"No added exams.."}</Text>
+                    <Text style={{color:  theme === 'dark' ?  '#FFFFFF': '#000000', textAlign: "center",alignItems: "center", marginTop: 20, fontSize: 20, fontWeight: "bold"}}>{"Nu aveti cursuri adaugate.."}</Text>
                 </Animated.View>
                 <TouchableOpacity
                     style={theme === 'dark' ? darkStyle.addButton : lightStyle.addButton}
