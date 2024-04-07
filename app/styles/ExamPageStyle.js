@@ -17,12 +17,9 @@ export const lightStyle = StyleSheet.create({
     },
     modalPopUp:{
         backgroundColor: 'white',
-        padding: 22,
+        padding: 20,
         borderRadius: 10,
         height: 400,
-        borderWidth: 6,
-        borderBottomLeftRadius: 10,
-        borderColor: '#3f51b5',
     },
     modalNotificationPopUp:{
         backgroundColor: 'white',

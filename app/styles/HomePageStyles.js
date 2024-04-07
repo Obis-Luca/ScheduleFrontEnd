@@ -8,7 +8,7 @@ export const lightStyle = StyleSheet.create({
     marginVertical: 6,
     marginHorizontal: 10,
     
-    borderRadius: 5,
+    borderRadius: 40,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.05,
@@ -123,7 +123,7 @@ export const darkStyle = StyleSheet.create({
     paddingHorizontal: 20,
     marginTop: 20,
     borderRadius: 10,
-    backgroundColor: '#012A4A',
+    backgroundColor: '#816e94',
   },
   addButton: {
     position: 'absolute',
