@@ -12,7 +12,7 @@ export const lightStyle = StyleSheet.create({
         width: "100%"
     },
     alldropdowns: {
-        marginTop: 25,
+        marginTop: 10,
         alignItems: "center",
         justifyContent: "center",
 
@@ -75,7 +75,7 @@ export const darkStyle = StyleSheet.create({
     },
     alldropdowns: {
         border: 50,
-        marginTop: 25,
+        marginTop: 10,
         alignItems: "center",
         justifyContent: "center",
     },
