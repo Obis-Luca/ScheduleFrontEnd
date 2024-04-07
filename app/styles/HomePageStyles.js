@@ -8,7 +8,7 @@ export const lightStyle = StyleSheet.create({
     marginVertical: 6,
     marginHorizontal: 10,
     
-    borderRadius: 40,
+    borderRadius: 5,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.05,
