@@ -288,43 +288,43 @@ const HomeScreen = ({ DataWeek1, DataWeek2 }) => {
                 <View style={modalstyles.modalView}>
                     <Text>Nu toate campurile sunt obligatorii</Text>
                     <TextInput
-                        style={{ height: 40, borderColor: 'gray', borderWidth: 1, borderRadius: 10, paddingLeft: 10, marginTop: 10}}
+                        style={{ width:200,height: 40, borderColor: 'gray', borderWidth: 1, borderRadius: 10, paddingLeft: 10, marginTop: 10}}
                         onChangeText={text => setInputText(text)}
                         placeholder={"Introdu numele"}
                         value={inputText}
                     />
                     <TextInput
-                        style={{ height: 40, borderColor: 'gray', borderWidth: 1, borderRadius: 10, paddingLeft: 10, marginTop: 10}}
+                        style={{ width:200,height: 40, borderColor: 'gray', borderWidth: 1, borderRadius: 10, paddingLeft: 10, marginTop: 10}}
                         onChangeText={text => setInputText2(text)}
                         placeholder={"Introdu ziua"}
                         value={inputText2}
                     />
                     <TextInput
-                        style={{ height: 40, borderColor: 'gray', borderWidth: 1, borderRadius: 10, paddingLeft: 10, marginTop: 10}}
+                        style={{ width:200,height: 40, borderColor: 'gray', borderWidth: 1, borderRadius: 10, paddingLeft: 10, marginTop: 10}}
                         onChangeText={text => setInputText3(text)}
                         placeholder={"Introdu frecventa"}
                         value={inputText3}
                     />
                     <TextInput
-                        style={{ height: 40, borderColor: 'gray', borderWidth: 1, borderRadius: 10, paddingLeft: 10, marginTop: 10}}
+                        style={{ width:200,height: 40, borderColor: 'gray', borderWidth: 1, borderRadius: 10, paddingLeft: 10, marginTop: 10}}
                         onChangeText={text => setInputText4(text)}
                         placeholder={"Introdu Ora"}
                         value={inputText4}
                     />
                     <TextInput
-                        style={{ height: 40, borderColor: 'gray', borderWidth: 1, borderRadius: 10, paddingLeft: 10, marginTop: 10}}
+                        style={{ width:200,height: 40, borderColor: 'gray', borderWidth: 1, borderRadius: 10, paddingLeft: 10, marginTop: 10}}
                         onChangeText={text => setInputText5(text)}
                         placeholder={"Introdu Locatia"}
                         value={inputText5}
                     />
                     <TextInput
-                        style={{ height: 40, borderColor: 'gray', borderWidth: 1, borderRadius: 10, paddingLeft: 10, marginTop: 10}}
+                        style={{ width:200,height: 40, borderColor: 'gray', borderWidth: 1, borderRadius: 10, paddingLeft: 10, marginTop: 10}}
                         onChangeText={text => setInputText6(text)}
                         placeholder={"Introdu tipul orei"}
                         value={inputText6}
                     />
                     <TextInput
-                        style={{ height: 40, borderColor: 'gray', borderWidth: 1, borderRadius: 10, paddingLeft: 10, marginTop: 10}}
+                        style={{ width:200,height: 40, borderColor: 'gray', borderWidth: 1, borderRadius: 10, paddingLeft: 10, marginTop: 10}}
                         onChangeText={text => setInputText7(text)}
                         placeholder={"Introdu numele profesorului"}
                         value={inputText7}
