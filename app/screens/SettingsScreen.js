@@ -10,11 +10,11 @@ import {darkMode, lightMode} from "../styles/SettingsStyle";
 
 const SettingsScreen = ({ navigation }) => {
     const { theme, toggleTheme } = useTheme();
-    const { changeLanguage } = useLanguage(); // Using the language change function from context
+    const { changeLanguage } = useLanguage();
     const { t, i18n } = useTranslation();
 
     const toggleLanguage = () => {
-        const newLanguage = i18n.language === 'en' ? 'ro' : 'en'; // Toggle between English and Romanian
+        const newLanguage = i18n.language === 'en' ? 'ro' : 'en';
         changeLanguage(newLanguage);
     };
 

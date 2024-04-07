@@ -166,10 +166,14 @@ export const darkStyle = StyleSheet.create({
 
 export const modalstyles = StyleSheet.create({
   centeredView: {
-    flex: 1,
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 22,
+    backgroundColor: "rgba(0, 0, 0, 0.5)", // This will create a semi-transparent black background
   },
   modalView: {
     margin: 20,

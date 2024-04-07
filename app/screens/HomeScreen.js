@@ -9,7 +9,8 @@ import {
     Modal,
     Linking,
     StyleSheet,
-    Image
+    Image,
+    TextInput
 } from 'react-native';
 import { lightStyle,darkStyle,middleButton,modalstyles } from '../styles/HomePageStyles';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -18,17 +19,81 @@ import { useNavigation } from '@react-navigation/native';
 import Animated, {FadeInDown} from "react-native-reanimated";
 import { useTranslation } from 'react-i18next'; // Import useTranslation hook
 
+
+
+
+
+
 const HomeScreen = ({ DataWeek1, DataWeek2 }) => {
     const navigation = useNavigation();
     const { theme, toggleSwitch } = useTheme();
     const [weekShown, setweekShown] = useState(false);
     const [expandedItem, setExpandedItem] = useState(null);
     const [dataToShow, setDataToShow] = useState([]);
-    const [confirmDelete, setConfirmDelete] = useState(false); // New state for confirmation
-    const [itemToRemove, setItemToRemove] = useState(null); // New state to store item to remove
+    const [confirmDelete, setConfirmDelete] = useState(false);
+    const [itemToRemove, setItemToRemove] = useState(null);
     const [isModalVisible, setIsModalVisible] = useState(false);
-    const { t } = useTranslation(); // Access t function for translation
-    // const [endModalVisible, setEndModalVisible] = useState(false);
+    const { t } = useTranslation();
+
+
+    const [AddingModalVisible, setAddingModalVisible] = useState(false);
+    const [inputText, setInputText] = useState('');
+    const [inputText2, setInputText2] = useState('');
+    const [inputText3, setInputText3] = useState('');
+    const [inputText4, setInputText4] = useState('');
+    const [inputText5, setInputText5] = useState('');
+    const [inputText6, setInputText6] = useState('');
+    const [inputText7, setInputText7] = useState('');
+
+    const handleAddingModalConfirm = () => {
+        const formatDataForSectionList = (data) => {
+            const groupedByDay = data.reduce((groups, item) => {
+                const day = item.course_day;
+                if (!groups[day]) {
+                    groups[day] = [];
+                }
+                groups[day].push(item);
+                return groups;
+            }, {});
+
+            const sections = Object.keys(groupedByDay).map(day => ({
+                title: day,
+                data: groupedByDay[day]
+            }));
+
+            return sections;
+        };
+        setAddingModalVisible(false);
+        const newCourse = {
+            id: Math.random().toString(),
+            course_name: inputText,
+            course_day: inputText2,
+            course_hour:inputText4,
+            freq: inputText3,
+            room: inputText5,
+            course_type:inputText6,
+            professor:inputText7,
+        };
+        DataWeek1 = [...DataWeek1, newCourse];
+        DataWeek2 = [...DataWeek2, newCourse];
+        setDataToShow(formatDataForSectionList(weekShown ? DataWeek2 : DataWeek1));
+    };
+
+    const handleAddingModalCancel = () => {
+        console.log("delete");
+        setAddingModalVisible(false);
+    };
+
+    const addHour = () => {
+        if (DataWeek1.length === 0)
+            navigation.navigate('Alege orar');
+        else
+        {
+            console.log('Adding more hours...');
+            setExpandedItem(null);
+            setAddingModalVisible(true);
+        }
+    };
 
 
     const handleRemoveCourse = (item) => {
@@ -37,27 +102,20 @@ const HomeScreen = ({ DataWeek1, DataWeek2 }) => {
                 ...section,
                 data: section.data.filter(i => i !== item)
             }));
-
-            // Update the state with the filtered data
             setDataToShow(updatedDataToShow);
-
-            // Close the expanded item if it's the item being removed
             if (expandedItem === itemToRemove) {
                 setExpandedItem(null);
             }
-
-            // Reset states
             setConfirmDelete(false);
             setItemToRemove(null);
         } else {
-            // Show confirmation icons for this item
             setItemToRemove(item);
             setConfirmDelete(true);
         }
     };
 
     const handleOpenMaps = () => {
-        const location = 'Universitatea+Babeș-Bolyai+din+Cluj-Napoca'; // Replace with your location
+        const location = 'Universitatea+Babeș-Bolyai+din+Cluj-Napoca';
     
         Linking.canOpenURL(`https://maps.apple.com/?q=${location}`).then(supported => {
             if (!supported) {
@@ -71,7 +129,7 @@ const HomeScreen = ({ DataWeek1, DataWeek2 }) => {
       
         const handleModalConfirm = () => {
           setIsModalVisible(false);
-          const location = 'Universitatea+Babeș-Bolyai+din+Cluj-Napoca'; // Replace with your location
+          const location = 'Universitatea+Babeș-Bolyai+din+Cluj-Napoca';
           Linking.openURL(`https://maps.apple.com/?q=${location}`);
         };
       
@@ -113,10 +171,10 @@ const HomeScreen = ({ DataWeek1, DataWeek2 }) => {
         setExpandedItem(prevItem => (prevItem === item ? null : item));
     };
 
-    const addHour = () => {
-        console.log('Adding more hours...');
-        setExpandedItem(null);
-    };
+    // const addHour = () => {
+    //     console.log('Adding more hours...');
+    //     setExpandedItem(null);
+    // };
 
     const sectionListRef = useRef(null);
 
@@ -164,7 +222,6 @@ const HomeScreen = ({ DataWeek1, DataWeek2 }) => {
                                         <Icon name={expandedItem === item ? "angle-up" : "angle-down"} size={20} style={{ marginLeft: 10,color: theme === 'dark' ? '#FFFFFF' :'#000000', }} />
                                     </View>
 
-                                    {/* Conditional rendering of confirmation icons */}
                                     {confirmDelete && (
                                         <View style={{ flexDirection: 'row' }}>
                                             <TouchableOpacity onPress={() => handleRemoveCourse(item)}>
@@ -195,6 +252,7 @@ const HomeScreen = ({ DataWeek1, DataWeek2 }) => {
                                             transparent={true}
                                             visible={isModalVisible}
                                             onRequestClose={() => setIsModalVisible(false)}
+                                            backgroundColor={theme === 'dark' ? '#000000' : '#FFFFFF'}
                                         >
                                             <View style={modalstyles.centeredView}>
                                             <View style={modalstyles.modalView}>
@@ -223,12 +281,71 @@ const HomeScreen = ({ DataWeek1, DataWeek2 }) => {
                     renderSectionHeader={({ section: { title } }) => (
                         <Text style={theme === 'dark' ? darkStyle.dayHeader : lightStyle.dayHeader}>{title}</Text>
                     )}
-                    // onEndReached={() => setEndModalVisible(true)} // Add this line
-                    // onBackdropPress={() => setEndModalVisible(false)}
-
                 />
 
             </View>
+            <Modal
+                animationType="slide"
+                transparent={true}
+                visible={AddingModalVisible}
+                onRequestClose={() => setAddingModalVisible(false)}
+            >
+                <View style={modalstyles.centeredView}>
+                    <View style={modalstyles.modalView}>
+                        <Text>Nu toate campurile sunt obligatorii</Text>
+                        <TextInput
+                            style={{ width:200,height: 40, borderColor: 'gray', borderWidth: 1, borderRadius: 10, paddingLeft: 10, marginTop: 10}}
+                            onChangeText={text => setInputText(text)}
+                            placeholder={"Introdu numele"}
+                            value={inputText}
+                        />
+                        <TextInput
+                            style={{ width:200,height: 40, borderColor: 'gray', borderWidth: 1, borderRadius: 10, paddingLeft: 10, marginTop: 10}}
+                            onChangeText={text => setInputText2(text)}
+                            placeholder={"Introdu ziua"}
+                            value={inputText2}
+                        />
+                        <TextInput
+                            style={{ width:200,height: 40, borderColor: 'gray', borderWidth: 1, borderRadius: 10, paddingLeft: 10, marginTop: 10}}
+                            onChangeText={text => setInputText3(text)}
+                            placeholder={"Introdu frecventa"}
+                            value={inputText3}
+                        />
+                        <TextInput
+                            style={{ width:200,height: 40, borderColor: 'gray', borderWidth: 1, borderRadius: 10, paddingLeft: 10, marginTop: 10}}
+                            onChangeText={text => setInputText4(text)}
+                            placeholder={"Introdu Ora"}
+                            value={inputText4}
+                        />
+                        <TextInput
+                            style={{ width:200,height: 40, borderColor: 'gray', borderWidth: 1, borderRadius: 10, paddingLeft: 10, marginTop: 10}}
+                            onChangeText={text => setInputText5(text)}
+                            placeholder={"Introdu Locatia"}
+                            value={inputText5}
+                        />
+                        <TextInput
+                            style={{ width:200,height: 40, borderColor: 'gray', borderWidth: 1, borderRadius: 10, paddingLeft: 10, marginTop: 10}}
+                            onChangeText={text => setInputText6(text)}
+                            placeholder={"Introdu tipul orei"}
+                            value={inputText6}
+                        />
+                        <TextInput
+                            style={{ width:200,height: 40, borderColor: 'gray', borderWidth: 1, borderRadius: 10, paddingLeft: 10, marginTop: 10}}
+                            onChangeText={text => setInputText7(text)}
+                            placeholder={"Introdu numele profesorului"}
+                            value={inputText7}
+                        />
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginTop: 20 }}>
+                            <TouchableOpacity style={{ ...modalstyles.button, backgroundColor: '#014F86' }} onPress={handleAddingModalConfirm}>
+                                <Text style={modalstyles.textStyle}>Adauga la orar</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={{ ...modalstyles.button, backgroundColor: '#014F86', marginLeft:10, }} onPress={handleAddingModalCancel}>
+                                <Text style={modalstyles.textStyle}>Anuleaza</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </View>
+            </Modal>
 
             <TouchableOpacity style={theme === 'dark' ? darkStyle.addButton : lightStyle.addButton} onPress={addHour}><Icon name="plus" size={24} color="#fff" /></TouchableOpacity>
         </View>

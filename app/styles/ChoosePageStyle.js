@@ -5,7 +5,6 @@ export const lightStyle = StyleSheet.create({
 
 
     container: {
-        // backgroundColor: '#89C2D9',
         flex: 1,
         flexDirection: "column",
 
@@ -30,7 +29,7 @@ export const lightStyle = StyleSheet.create({
     buttonsContainer: {
         flexDirection: 'column',
         justifyContent: 'center',
-        alignItems: 'center', // Add this line
+        alignItems: 'center',
         flexWrap: 'wrap',
         marginTop: 20,
         paddingHorizontal: 10,
@@ -45,7 +44,6 @@ export const lightStyle = StyleSheet.create({
         flexDirection: "column"
     },
     chooseFaculty: {
-        // backgroundColor: "#c42c2c",
         marginVertical: 5,
         width: "46%",
         height: 45,
@@ -91,7 +89,7 @@ export const darkStyle = StyleSheet.create({
     buttonsContainer: {
         flexDirection: 'column',
         justifyContent: 'center',
-        alignItems: 'center', // Add this line
+        alignItems: 'center',
         flexWrap: 'wrap',
         marginTop: 20,
         paddingHorizontal: 10,
@@ -106,7 +104,6 @@ export const darkStyle = StyleSheet.create({
         flexDirection: "column"
     },
     chooseFaculty: {
-        // backgroundColor: "#c42c2c",
         marginVertical: 5,
         width: "46%",
         height: 45,

@@ -144,27 +144,6 @@ const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
     return (
         <View style={theme === 'dark' ? darkStyle.container : lightStyle.container}>
             <StatusBar style="auto" />
-            {/*<TouchableOpacity*/}
-            {/*    style={{ position: 'absolute', top: 0, bottom: 0, left: 0, right: 0 }}*/}
-            {/*    onPress={() => {*/}
-            {/*        if (lastOpenedDropdown === 'group') {*/}
-            {/*            setShowGroupDropdown(false);*/}
-            {/*            setLastOpenedDropdown('year');*/}
-            {/*        } else if (lastOpenedDropdown === 'year') {*/}
-            {/*            setshowYearDropdown(false);*/}
-            {/*            setLastOpenedDropdown('specialization');*/}
-            {/*        } else if (lastOpenedDropdown === 'specialization') {*/}
-            {/*            setShowSpecializationDropdown(false);*/}
-            {/*            setLastOpenedDropdown('faculty');*/}
-            {/*        } else if (lastOpenedDropdown === 'faculty') {*/}
-            {/*            setShowFacultyDropdown(false);*/}
-            {/*            setLastOpenedDropdown(null);*/}
-            {/*        }*/}
-            {/*    }}*/}
-            {/*    activeOpacity={1} // Keep the opacity the same when pressed*/}
-            {/*/>*/}
-
-
 
 
             <View style={theme === 'dark' ? darkStyle.alldropdowns :lightStyle.alldropdowns}>
@@ -200,7 +179,6 @@ const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
                             onSelect={() => {
                                 fetchSpecializations(selectedFaculty)
                                 setShowSpecializationDropdown(true)
-                                setLastOpenedDropdown('faculty'); // Set last opened dropdown
 
                             }}
                         />
@@ -234,7 +212,6 @@ const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
                         save="id"
                         onSelect={() => {
                             setshowYearDropdown(true)
-                            setLastOpenedDropdown('specialization'); // Set last opened dropdown
 
                         }}
                         setSelected={setSelectedSpecialization}
@@ -270,8 +247,6 @@ const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
                         onSelect={() => {
                             fetchGroups()
                             setShowGroupDropdown(true)
-                            setLastOpenedDropdown('year'); // Set last opened dropdown
-
                         }}
                         setSelected={setselectedYear}
                     />
@@ -310,8 +285,6 @@ const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
                         save="value"
                         onSelect={() => {
                             setshowSubmitOptionsButton(true)
-                            setLastOpenedDropdown('group'); // Set last opened dropdown
-
                         }}
                         setSelected={setSelectedGroup}
                     />

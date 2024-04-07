@@ -42,8 +42,6 @@ const ExamsScreen = () => {
     const [timeDisplayError, setTimeDisplayError] = useState('');
     const [roomNumberError, setRoomNumberError] = useState('');
 
-    // const swipeableRef = exams.map(() => React.useRef(null));
-
 
     const validateFields = () => {
         let isValid = true;
@@ -98,7 +96,7 @@ const ExamsScreen = () => {
     const updateExam = async () => {
         if (validateFields()) {
             const updatedExam = {
-                id: exams[editingExamIndex].id,  // Keep the same id
+                id: exams[editingExamIndex].id,
                 name: inputText,
                 date: dateDisplay,
                 time: timeDisplay,
@@ -113,10 +111,8 @@ const ExamsScreen = () => {
             setTimeDisplay('Choose time');
             setEditModalVisible(false);
             setEditingExamIndex(null);
-            await AsyncStorage.setItem('exams', JSON.stringify(updatedExams)); // Save exams to AsyncStorage
+            await AsyncStorage.setItem('exams', JSON.stringify(updatedExams));
         }
-        // swipeableRef[editingExamIndex].current.close();
-
     };
 
     const editExam = (index) => {
@@ -151,7 +147,7 @@ const ExamsScreen = () => {
     const addExam = async () => {
         if (validateFields()) {
             const newExam = {
-                id: Math.random().toString(),  // Add a unique id
+                id: Math.random().toString(),
                 name: inputText,
                 date: dateDisplay,
                 time: timeDisplay,
@@ -171,7 +167,7 @@ const ExamsScreen = () => {
             setTimeDisplay('Choose time');
             setModalVisible(false);
             setEditingExamIndex(null);
-            await AsyncStorage.setItem('exams', JSON.stringify(updatedExams)); // Save exams to AsyncStorage
+            await AsyncStorage.setItem('exams', JSON.stringify(updatedExams));
         }
     };
     const onChangeDate = (event, selectedDate) => {
@@ -188,7 +184,7 @@ const ExamsScreen = () => {
         setTimeDisplay(currentTime.toLocaleTimeString());
     };
 
-    const [isSwitchOn, setIsSwitchOn] = useState(false); // Add this line at the top of your component
+    const [isSwitchOn, setIsSwitchOn] = useState(false);
 
     useEffect(() => {
         Notifications.requestPermissionsAsync();
@@ -203,11 +199,7 @@ const ExamsScreen = () => {
     }, []);
 
     const handleNotification = () => {
-        // Parse the date and time strings to create a Date object representing the exam time
-        const examDateTime = new Date(`${date}T${time}`);
-
-        // Subtract 1 minute from the exam time
-        examDateTime.setMinutes(examDateTime.getMinutes() - 1);
+        const examDateTime = new Date(`${date}T${time}`);examDateTime.setMinutes(examDateTime.getMinutes() - 1);
 
         Notifications.scheduleNotificationAsync({
             content: {
@@ -222,7 +214,6 @@ const ExamsScreen = () => {
         <View style={{flex:1, backgroundColor: theme === 'dark' ?  '#000000':'#FFFFFF'}}>
             <ScrollView>
                 {exams.length === 0 ? (
-                    // <Animated.View entering = {FadeInDown.duration(500).springify()}>
                         <Animated.View entering = {FadeInDown.duration(800).springify()}>
 
                             <Image
@@ -236,7 +227,6 @@ const ExamsScreen = () => {
                     exams.map((exam, index) => {
 
                         const renderRightActions = () => (
-                            // <Animated.View entering = {FadeInRight.duration(2000).springify(200)}>
                                 <View style={{marginRight: 10, marginTop: 10, padding: 10, backgroundColor  : theme === 'dark' ? '#012A4A' :'#A9D6E5', borderTopLeftRadius: 20, borderBottomLeftRadius: 20}}>
                                     <View style={{marginTop: 9}}>
                                         <View>
@@ -252,9 +242,6 @@ const ExamsScreen = () => {
                                         </View>
                                     </View>
                                 </View>
-
-                            // </Animated.View>
-
                         );
 
                         return (
@@ -269,9 +256,6 @@ const ExamsScreen = () => {
                                             <MaterialCommunityIcons name="calendar-clock" size={25} style={{marginRight: 10}} />
                                             <Text style={{marginRight: 10, marginTop: 5, color: theme === 'dark' ? '#FFFFFF' :'#000000',}}>{exam.date}</Text>
                                             <Text  style={{marginRight: 10, marginTop: 5, color: theme === 'dark' ? '#FFFFFF' :'#000000',}}>{exam.time}</Text>
-                                            {/*<TouchableOpacity style={{marginRight: 10, marginLeft: 18}}  onPress={handleBellPress}>*/}
-                                            {/*    <Bell/>*/}
-                                            {/*</TouchableOpacity>*/}
                                         </View>
 
                                         <View style={{flexDirection: "row", marginLeft: 10, marginTop: 10,color: theme === 'dark' ? '#FFFFFF' :'#000000',}}>
@@ -282,9 +266,6 @@ const ExamsScreen = () => {
                                                 <Bell/>
                                             </TouchableOpacity>
                                         </View>
-
-
-
                                     </View>
                                 </Swipeable>
                             </View>
@@ -305,8 +286,6 @@ const ExamsScreen = () => {
                         placeholder={t("Introdu numele examenului")}
                         value={inputText}
                     />
-                    {/*<Text style={{color: 'red'}}>{inputTextError}</Text>*/}
-
                     <View style={{flexDirection: "row",  marginTop:20}}>
 
                         <TouchableOpacity
@@ -352,7 +331,6 @@ const ExamsScreen = () => {
                             onChange={onChangeTime}
                         />
                     )}
-                    {/*<View style={{flexDirection: "row",  marginTop:20}}>*/}
                     <View style={{flexDirection: "row", marginTop: 20}}>
                         <TextInput
                             style={{height: 40,width:250, borderColor: 'gray', borderWidth: 1, borderRadius: 10, paddingLeft: 10, justifyContent: 'center'}}
@@ -366,7 +344,6 @@ const ExamsScreen = () => {
 
                     </View>
 
-                    {/*<View/>*/}
                     <View style={{marginTop: 80, alignItems: "center"}}>
                         <TouchableOpacity
                             style={{height: 40, width: 100, borderColor: 'gray', borderWidth: 1, borderRadius: 10, backgroundColor: '#417B5A', justifyContent: 'center', alignItems: 'center'}}
@@ -391,16 +368,6 @@ const ExamsScreen = () => {
             >
                 <View style={theme === 'dark' ? darkStyle.modalNotificationPopUp : lightStyle.modalNotificationPopUp}>
                     <Button title={"Set notification"} onPress={handleNotification}/>
-                    {/*<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', marginLeft: 60 ,transform: [{ scaleX: 1.5 }, { scaleY:1.5 }] }}>*/}
-                    {/*    <Switch*/}
-                    {/*        trackColor={{ false: "#000000", true: "#fdfdfd" }}*/}
-                    {/*        thumbColor={"#000000"}*/}
-                    {/*        ios_backgroundColor="#3e3e3e"*/}
-                    {/*        onValueChange={handleNotification()}*/}
-                    {/*        value={isSwitchOn} // Add this line*/}
-
-                    {/*    />*/}
-                    {/*</View>*/}
                 </View>
             </Modal>
 
@@ -416,14 +383,11 @@ const ExamsScreen = () => {
                         placeholder={t("Introdu numele examenului")}
                         value={inputText}
                     />
-                    {/*<Text style={{color: 'red'}}>{inputTextError}</Text>*/}
-
                     <View style={{flexDirection: "row",  marginTop:20}}>
 
                         <TouchableOpacity
                             style={{height: 40,width: 250,borderColor: 'gray', borderWidth: 1, borderRadius: 10, paddingLeft: 10, justifyContent: 'center'}}
                             onPress={() => setShowDatePicker(true)}
-
                         >
                             <Text>{dateDisplay}</Text>
                         </TouchableOpacity>
@@ -463,7 +427,6 @@ const ExamsScreen = () => {
                             onChange={onChangeTime}
                         />
                     )}
-                    {/*<View style={{flexDirection: "row",  marginTop:20}}>*/}
                     <View style={{flexDirection: "row", marginTop: 20}}>
                         <TextInput
                             style={{height: 40,width:250, borderColor: 'gray', borderWidth: 1, borderRadius: 10, paddingLeft: 10, justifyContent: 'center'}}
