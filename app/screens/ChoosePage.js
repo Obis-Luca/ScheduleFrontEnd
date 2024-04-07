@@ -3,10 +3,13 @@ import {darkStyle, lightStyle, boxStyles} from '../styles/ChoosePageStyle';
 import React, { useState, useEffect } from 'react';
 import { SelectList } from 'react-native-dropdown-select-list'
 import Animated, {FadeIn, FadeInDown} from 'react-native-reanimated';
-import {View, Button, TouchableOpacity,ImageBackground} from 'react-native';
+import {View, Button, TouchableOpacity, ImageBackground, Text} from 'react-native';
 import { Icon1 } from '../config/Icons';
 import { useTheme } from '../config/ThemeContext';
 import {useNavigation} from "@react-navigation/native";
+import { useTranslation } from 'react-i18next';
+
+
 function compareData(a, b) {
 
     const dayIndexMap = {
@@ -34,7 +37,10 @@ function compareData(a, b) {
 }
 
 const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
-    const ipAddress = '192.168.1.130:8000';
+    const [lastOpenedDropdown, setLastOpenedDropdown] = useState(null);
+
+    const { t, i18n } = useTranslation();
+    const ipAddress = '192.168.182.122:8000';
     const { theme } = useTheme();
     const navigation = useNavigation();
 
@@ -48,7 +54,6 @@ const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
         {key:'1', value:'1',},
         {key:'2', value:'2'},
         {key:'3', value:'3'},
-
     ]
 
     const [selectedFaculty, setSelectedFaculty] = useState(null);
@@ -88,7 +93,7 @@ const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
                 if (week2Data) {
                     setDataWeek2(week2Data);
                 }
-                navigation.navigate('Acasa')
+                navigation.navigate(t('Home'));
             })
             .catch(error => {
                 console.error('Error fetching faculties:', error);
@@ -99,7 +104,7 @@ const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
 
             .then(response => response.json())
             .then(data => {
-                const formattedFaculties = data.map(faculty => ({ key: faculty.id.toString(), value: faculty.name }));
+                const formattedFaculties = data.map(faculty => ({ key: faculty.id.toString(), value: t(faculty.name) }));
                 setFaculties(formattedFaculties);
             })
             .catch(error => {
@@ -114,7 +119,7 @@ const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
             .then(response => response.json())
             .then(data => {
 
-                const formattedSpecializations = data.map(specialization => ({ key: specialization.id.toString(), value: specialization.name }));
+                const formattedSpecializations = data.map(specialization => ({ key: specialization.id.toString(), value: t(specialization.name) }));
                 setSpecializations(formattedSpecializations);
             })
             .catch(error => {
@@ -139,13 +144,26 @@ const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
     return (
         <View style={theme === 'dark' ? darkStyle.container : lightStyle.container}>
             <StatusBar style="auto" />
-            {/*<Animated.View entering = {FadeInDown.duration(1000).springify()}>*/}
-            {/*    <View style={theme === 'dark' ? darkStyle.iconContainer: lightStyle.iconContainer }>*/}
-            {/*        <TouchableOpacity>*/}
-            {/*            <Icon1 />*/}
-            {/*        </TouchableOpacity>*/}
-            {/*    </View>*/}
-            {/*</Animated.View>*/}
+            {/*<TouchableOpacity*/}
+            {/*    style={{ position: 'absolute', top: 0, bottom: 0, left: 0, right: 0 }}*/}
+            {/*    onPress={() => {*/}
+            {/*        if (lastOpenedDropdown === 'group') {*/}
+            {/*            setShowGroupDropdown(false);*/}
+            {/*            setLastOpenedDropdown('year');*/}
+            {/*        } else if (lastOpenedDropdown === 'year') {*/}
+            {/*            setshowYearDropdown(false);*/}
+            {/*            setLastOpenedDropdown('specialization');*/}
+            {/*        } else if (lastOpenedDropdown === 'specialization') {*/}
+            {/*            setShowSpecializationDropdown(false);*/}
+            {/*            setLastOpenedDropdown('faculty');*/}
+            {/*        } else if (lastOpenedDropdown === 'faculty') {*/}
+            {/*            setShowFacultyDropdown(false);*/}
+            {/*            setLastOpenedDropdown(null);*/}
+            {/*        }*/}
+            {/*    }}*/}
+            {/*    activeOpacity={1} // Keep the opacity the same when pressed*/}
+            {/*/>*/}
+
 
 
 
@@ -174,7 +192,7 @@ const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
                             dropdownTextStyles={{
                                 color: theme === 'dark' ? '#FFFFFF' :'#000000',
                             }}
-                            placeholder={"Selecteaza facultatea"}
+                            placeholder={t("Selecteaza facultatea")}
                             data={faculties}
                             save="id"
                             setSelected={setSelectedFaculty}
@@ -182,6 +200,8 @@ const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
                             onSelect={() => {
                                 fetchSpecializations(selectedFaculty)
                                 setShowSpecializationDropdown(true)
+                                setLastOpenedDropdown('faculty'); // Set last opened dropdown
+
                             }}
                         />
                 )}
@@ -209,11 +229,13 @@ const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
                         dropdownTextStyles={{
                             color: theme === 'dark' ? '#FFFFFF' :'#000000',
                         }}
-                        placeholder={"Selecteaza specializarea"}
+                        placeholder={t("Selecteaza specializarea")}
                         data={specializations}
                         save="id"
                         onSelect={() => {
                             setshowYearDropdown(true)
+                            setLastOpenedDropdown('specialization'); // Set last opened dropdown
+
                         }}
                         setSelected={setSelectedSpecialization}
                     />
@@ -242,12 +264,14 @@ const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
                         dropdownTextStyles={{
                             color: theme === 'dark' ? '#FFFFFF' :'#000000',
                         }}
-                        placeholder={"Selecteaza anul"}
+                        placeholder={t("Selecteaza anul")}
                         data={years}
                         save="id"
                         onSelect={() => {
                             fetchGroups()
                             setShowGroupDropdown(true)
+                            setLastOpenedDropdown('year'); // Set last opened dropdown
+
                         }}
                         setSelected={setselectedYear}
                     />
@@ -267,6 +291,7 @@ const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
                             shadowOpacity: 0.3,
                             shadowRadius: 2,
                             elevation: 5,
+
                             
                         }}
                         dropdownStyles={{
@@ -278,18 +303,30 @@ const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
                         }}
                         dropdownTextStyles={{
                             color: theme === 'dark' ? '#FFFFFF' :'#000000',
+
                         }}
-                        placeholder={"Selecteaza grupa"}
+                        placeholder={t("Selecteaza grupa")}
                         data={groups}
                         save="value"
-                        onSelect={() => setshowSubmitOptionsButton(true)}
+                        onSelect={() => {
+                            setshowSubmitOptionsButton(true)
+                            setLastOpenedDropdown('group'); // Set last opened dropdown
+
+                        }}
                         setSelected={setSelectedGroup}
                     />
                 )}
 
 
                 {showSubmitOptionsButton &&(
-                <Button title="Submit" onPress={() => populateWeeks(selectedGroup, selectedSpecialization, selectedYear)} />)}
+
+                    <TouchableOpacity
+                        style={{marginTop: 20,height: 40, width: 100, borderColor: 'gray', borderWidth: 1, borderRadius: 10, backgroundColor: '#315E44', justifyContent: 'center', alignItems: 'center'}}
+                        onPress={() => populateWeeks(selectedGroup, selectedSpecialization, selectedYear)}
+                    >
+                        <Text style={{color:theme === 'dark' ? '#FFFFFF' :'#000000', textAlign: "center"}}>{t("AddButtonChoosePage")}</Text>
+                    </TouchableOpacity>
+                )}
                 </View>
         </View>
     );

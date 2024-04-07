@@ -17,9 +17,12 @@ export const lightStyle = StyleSheet.create({
     },
     modalPopUp:{
         backgroundColor: 'white',
-        padding: 20,
+        padding: 22,
         borderRadius: 10,
         height: 400,
+        borderWidth: 6,
+        borderBottomLeftRadius: 10,
+        borderColor: '#3f51b5',
     },
     modalNotificationPopUp:{
         backgroundColor: 'white',
@@ -51,6 +54,8 @@ export const darkStyle = StyleSheet.create({
         padding: 20,
         borderRadius: 10,
         height: 400,
+
+
     },
     modalNotificationPopUp:{
         backgroundColor: 'white',

@@ -16,6 +16,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { useTheme } from '../config/ThemeContext';
 import { useNavigation } from '@react-navigation/native';
 import Animated, {FadeInDown} from "react-native-reanimated";
+import { useTranslation } from 'react-i18next'; // Import useTranslation hook
 
 const HomeScreen = ({ DataWeek1, DataWeek2 }) => {
     const navigation = useNavigation();
@@ -26,6 +27,9 @@ const HomeScreen = ({ DataWeek1, DataWeek2 }) => {
     const [confirmDelete, setConfirmDelete] = useState(false); // New state for confirmation
     const [itemToRemove, setItemToRemove] = useState(null); // New state to store item to remove
     const [isModalVisible, setIsModalVisible] = useState(false);
+    const { t } = useTranslation(); // Access t function for translation
+    // const [endModalVisible, setEndModalVisible] = useState(false);
+
 
     const handleRemoveCourse = (item) => {
         if (confirmDelete && item === itemToRemove) {
@@ -73,7 +77,7 @@ const HomeScreen = ({ DataWeek1, DataWeek2 }) => {
       
         const handleModalCancel = () => {
           setIsModalVisible(false);
-        };
+        };FadeInDown
       
           
 
@@ -81,7 +85,7 @@ const HomeScreen = ({ DataWeek1, DataWeek2 }) => {
     useEffect(() => {
         const formatDataForSectionList = (data) => {
             const groupedByDay = data.reduce((groups, item) => {
-                const day = item.course_day;
+                const day = t(item.course_day);
                 if (!groups[day]) {
                     groups[day] = [];
                 }
@@ -131,18 +135,17 @@ const HomeScreen = ({ DataWeek1, DataWeek2 }) => {
                         style={{ width: 170, height: 170, alignSelf: 'center' , marginTop: 220, justifyContent: "center"}}
                         source={theme === 'dark' ?  require('../images/calendar-svgrepo-com2.png') : require('../images/calendar-svgrepo-com.png')        }
                     />
-                    <Text style={{color:  theme === 'dark' ?  '#FFFFFF': '#000000', textAlign: "center",alignItems: "center", marginTop: 20, fontSize: 20, fontWeight: "bold"}}>{"Nu aveti cursuri adaugate.."}</Text>
+                    <Text style={{color:  theme === 'dark' ?  '#FFFFFF': '#000000', textAlign: "center",alignItems: "center", marginTop: 20, fontSize: 20, fontWeight: "bold"}}>{t("mesajHomeScreen")}</Text>
                 </Animated.View>
                 <TouchableOpacity
                     style={theme === 'dark' ? darkStyle.addButton : lightStyle.addButton}
-                    onPress={() => navigation.navigate('Alege orar')}
-                >
+                    onPress={() => navigation.navigate(t('Choose Schedule'))}                >
                     <Icon name="plus" size={24} color="#fff" />
                 </TouchableOpacity>
             </>
         ) : (
         <View style={{ flex: 1 }}>
-            <View style={theme === 'dark' ? darkStyle.buttonContainer : lightStyle.buttonContainer}><Button title={weekShown ? "Week 1" : "Week 2"} onPress={toggleWeeks} /></View>
+            <View style={theme === 'dark' ? darkStyle.buttonContainer : lightStyle.buttonContainer}><Button title={weekShown ? t("Week 1") : t("Week 2")} onPress={toggleWeeks} /></View>
             <View style={{ flex: 1 }}>
                 <SectionList
                     ref={sectionListRef}
@@ -154,7 +157,7 @@ const HomeScreen = ({ DataWeek1, DataWeek2 }) => {
                             <View style={theme === 'dark' ? darkStyle.itemContainer : lightStyle.itemContainer}>
 
                                 <View style={theme === 'dark' ? darkStyle.itemHeader : lightStyle.itemHeader}>
-                                    <Text style={theme === 'dark' ? darkStyle.title : lightStyle.title}>{item.course_name}</Text>
+                                    <Text style={theme === 'dark' ? darkStyle.title : lightStyle.title}>{t(item.course_name)}</Text>
 
                                     <View style={theme === 'dark' ? darkStyle.div_for_hour_and_dropdownArrow : lightStyle.div_for_hour_and_dropdownArrow}>
                                         <Text style={theme === 'dark' ? darkStyle.hour : lightStyle.hour}>{item.course_hour}</Text>
@@ -181,7 +184,7 @@ const HomeScreen = ({ DataWeek1, DataWeek2 }) => {
                                     </View> 
                                 {expandedItem === item && (
                                     <View style={theme === 'dark' ? darkStyle.dropdown : lightStyle.dropdown}>
-                                        <Text style={{color: theme === 'dark' ? '#FFFFFF' :'#000000',}}>{item.course_type}</Text>
+                                        <Text style={{color: theme === 'dark' ? '#FFFFFF' :'#000000',}}>{t(item.course_type)}</Text>
                                         <View>
                                         <TouchableOpacity onPress={() => setIsModalVisible(true)} style={{ flexDirection: 'row' }}>
                                             <Text style={{color: theme === 'dark' ? '#FFFFFF' :'#000000',}}>{item.room}</Text>
@@ -220,7 +223,11 @@ const HomeScreen = ({ DataWeek1, DataWeek2 }) => {
                     renderSectionHeader={({ section: { title } }) => (
                         <Text style={theme === 'dark' ? darkStyle.dayHeader : lightStyle.dayHeader}>{title}</Text>
                     )}
+                    // onEndReached={() => setEndModalVisible(true)} // Add this line
+                    // onBackdropPress={() => setEndModalVisible(false)}
+
                 />
+
             </View>
 
             <TouchableOpacity style={theme === 'dark' ? darkStyle.addButton : lightStyle.addButton} onPress={addHour}><Icon name="plus" size={24} color="#fff" /></TouchableOpacity>
