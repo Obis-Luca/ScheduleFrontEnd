@@ -123,7 +123,7 @@ export const darkStyle = StyleSheet.create({
     paddingHorizontal: 20,
     marginTop: 20,
     borderRadius: 10,
-    backgroundColor: '#012A4A',
+    backgroundColor: '#816e94',
   },
   addButton: {
     position: 'absolute',

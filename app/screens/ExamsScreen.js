@@ -279,6 +279,10 @@ const ExamsScreen = () => {
                                             <Text  style={{marginRight: 10, marginTop: 5, color: theme === 'dark' ? '#FFFFFF' :'#000000',}}>{exam.room}</Text>
 
                                             <TouchableOpacity style={{marginRight: 10, marginLeft: 18}}  onPress={handleBellPress}>
+                                                    <Text style={{marginRight: 10, marginTop: 5, color: theme === 'dark' ? '#FFFFFF' :'#000000',}}>{exam.date}</Text>
+                                                    <Text  style={{marginRight: 10, marginTop: 5, color: theme === 'dark' ? '#FFFFFF' :'#000000',}}>{exam.time}</Text>
+                                                    <Text  style={{marginRight: 10, marginTop: 5, color: theme === 'dark' ? '#FFFFFF' :'#000000',}}>{exam.room}</Text>
+                                            <TouchableOpacity style={{float: 'right',}}  onPress={handleBellPress}>
                                                 <Bell/>
                                             </TouchableOpacity>
                                         </View>
@@ -416,7 +420,6 @@ const ExamsScreen = () => {
                         placeholder={t("Introdu numele examenului")}
                         value={inputText}
                     />
-                    {/*<Text style={{color: 'red'}}>{inputTextError}</Text>*/}
 
                     <View style={{flexDirection: "row",  marginTop:20}}>
 
@@ -463,7 +466,6 @@ const ExamsScreen = () => {
                             onChange={onChangeTime}
                         />
                     )}
-                    {/*<View style={{flexDirection: "row",  marginTop:20}}>*/}
                     <View style={{flexDirection: "row", marginTop: 20}}>
                         <TextInput
                             style={{height: 40,width:250, borderColor: 'gray', borderWidth: 1, borderRadius: 10, paddingLeft: 10, justifyContent: 'center'}}
