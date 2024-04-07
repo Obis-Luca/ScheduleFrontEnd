@@ -195,7 +195,7 @@ const ExamsScreen = () => {
                                                     <Text style={{marginRight: 10, marginTop: 5, color: theme === 'dark' ? '#FFFFFF' :'#000000',}}>{exam.date}</Text>
                                                     <Text  style={{marginRight: 10, marginTop: 5, color: theme === 'dark' ? '#FFFFFF' :'#000000',}}>{exam.time}</Text>
                                                     <Text  style={{marginRight: 10, marginTop: 5, color: theme === 'dark' ? '#FFFFFF' :'#000000',}}>{exam.room}</Text>
-                                            <TouchableOpacity style={{marginLeft: 130}}  onPress={handleBellPress}>
+                                            <TouchableOpacity style={{float: 'right',}}  onPress={handleBellPress}>
                                                 <Bell/>
                                             </TouchableOpacity>
                                         </View>

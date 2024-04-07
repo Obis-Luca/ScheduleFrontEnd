@@ -9,12 +9,15 @@ import {
     Modal,
     Linking,
     StyleSheet,
-    Image
+    Image,
+    TextInput,
 } from 'react-native';
 import { lightStyle,darkStyle,middleButton,modalstyles } from '../styles/HomePageStyles';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { useTheme } from '../config/ThemeContext';
 import { useNavigation } from '@react-navigation/native';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import {Calendar, Clock, Blackboard, CustomSvgComponent, Bell, Pen, TrashCan, LocationPin} from '../config/Icons';
 import Animated, {FadeInDown} from "react-native-reanimated";
 
 const HomeScreen = ({ DataWeek1, DataWeek2 }) => {
@@ -26,6 +29,14 @@ const HomeScreen = ({ DataWeek1, DataWeek2 }) => {
     const [confirmDelete, setConfirmDelete] = useState(false); // New state for confirmation
     const [itemToRemove, setItemToRemove] = useState(null); // New state to store item to remove
     const [isModalVisible, setIsModalVisible] = useState(false);
+    const [AddingModalVisible, setAddingModalVisible] = useState(false);
+    const [inputText, setInputText] = useState('');
+    const [inputText2, setInputText2] = useState('');
+    const [inputText3, setInputText3] = useState('');
+    const [inputText4, setInputText4] = useState('');
+    const [inputText5, setInputText5] = useState('');
+    const [inputText6, setInputText6] = useState('');
+    const [inputText7, setInputText7] = useState('');
 
     const handleRemoveCourse = (item) => {
         if (confirmDelete && item === itemToRemove) {
@@ -100,6 +111,45 @@ const HomeScreen = ({ DataWeek1, DataWeek2 }) => {
         setDataToShow(formatDataForSectionList(weekShown ? DataWeek2 : DataWeek1));
     }, [DataWeek1, DataWeek2, weekShown]);
 
+    const handleAddingModalConfirm = () => {
+        const formatDataForSectionList = (data) => {
+            const groupedByDay = data.reduce((groups, item) => {
+                const day = item.course_day;
+                if (!groups[day]) {
+                    groups[day] = [];
+                }
+                groups[day].push(item);
+                return groups;
+            }, {});
+
+            const sections = Object.keys(groupedByDay).map(day => ({
+                title: day,
+                data: groupedByDay[day]
+            }));
+
+            return sections;
+        };
+        setAddingModalVisible(false);
+        const newCourse = {
+            id: Math.random().toString(),
+            course_name: inputText,
+            course_day: inputText2,
+            course_hour:inputText4,
+            freq: inputText3,
+            room: inputText5,
+            course_type:inputText6,
+            professor:inputText7,
+        };
+        DataWeek1 = [...DataWeek1, newCourse];
+        DataWeek2 = [...DataWeek2, newCourse];
+        setDataToShow(formatDataForSectionList(weekShown ? DataWeek2 : DataWeek1));
+      };
+    
+      const handleAddingModalCancel = () => {
+        console.log("delete");
+        setAddingModalVisible(false);
+      };
+    
     const toggleWeeks = () => {
         setweekShown(prevState => !prevState);
         setExpandedItem(null);
@@ -110,8 +160,14 @@ const HomeScreen = ({ DataWeek1, DataWeek2 }) => {
     };
 
     const addHour = () => {
-        console.log('Adding more hours...');
-        setExpandedItem(null);
+        if (DataWeek1.length === 0)
+            navigation.navigate('Alege orar');
+        else
+        {
+            console.log('Adding more hours...');
+            setExpandedItem(null);
+            setAddingModalVisible(true);
+        }
     };
 
     const sectionListRef = useRef(null);
@@ -135,14 +191,14 @@ const HomeScreen = ({ DataWeek1, DataWeek2 }) => {
                 </Animated.View>
                 <TouchableOpacity
                     style={theme === 'dark' ? darkStyle.addButton : lightStyle.addButton}
-                    onPress={() => navigation.navigate('Alege orar')}
+                    onPress={addHour}
                 >
                     <Icon name="plus" size={24} color="#fff" />
                 </TouchableOpacity>
             </>
         ) : (
         <View style={{ flex: 1 }}>
-            <View style={theme === 'dark' ? darkStyle.buttonContainer : lightStyle.buttonContainer}><Button title={weekShown ? "Week 1" : "Week 2"} onPress={toggleWeeks} /></View>
+            <View style={theme === 'dark' ? darkStyle.buttonContainer : lightStyle.buttonContainer}><Button title={weekShown ? "Saptamana 1" : "Saptamana 2"} onPress={toggleWeeks} /></View>
             <View style={{ flex: 1 }}>
                 <SectionList
                     ref={sectionListRef}
@@ -222,7 +278,68 @@ const HomeScreen = ({ DataWeek1, DataWeek2 }) => {
                     )}
                 />
             </View>
-
+            <Modal
+                animationType="slide"
+                transparent={true}
+                visible={AddingModalVisible}
+                onRequestClose={() => setAddingModalVisible(false)}
+            >
+                <View style={modalstyles.centeredView}>
+                <View style={modalstyles.modalView}>
+                    <Text>Nu toate campurile sunt obligatorii</Text>
+                    <TextInput
+                        style={{ height: 40, borderColor: 'gray', borderWidth: 1, borderRadius: 10, paddingLeft: 10, marginTop: 10}}
+                        onChangeText={text => setInputText(text)}
+                        placeholder={"Introdu numele"}
+                        value={inputText}
+                    />
+                    <TextInput
+                        style={{ height: 40, borderColor: 'gray', borderWidth: 1, borderRadius: 10, paddingLeft: 10, marginTop: 10}}
+                        onChangeText={text => setInputText2(text)}
+                        placeholder={"Introdu ziua"}
+                        value={inputText2}
+                    />
+                    <TextInput
+                        style={{ height: 40, borderColor: 'gray', borderWidth: 1, borderRadius: 10, paddingLeft: 10, marginTop: 10}}
+                        onChangeText={text => setInputText3(text)}
+                        placeholder={"Introdu frecventa"}
+                        value={inputText3}
+                    />
+                    <TextInput
+                        style={{ height: 40, borderColor: 'gray', borderWidth: 1, borderRadius: 10, paddingLeft: 10, marginTop: 10}}
+                        onChangeText={text => setInputText4(text)}
+                        placeholder={"Introdu Ora"}
+                        value={inputText4}
+                    />
+                    <TextInput
+                        style={{ height: 40, borderColor: 'gray', borderWidth: 1, borderRadius: 10, paddingLeft: 10, marginTop: 10}}
+                        onChangeText={text => setInputText5(text)}
+                        placeholder={"Introdu Locatia"}
+                        value={inputText5}
+                    />
+                    <TextInput
+                        style={{ height: 40, borderColor: 'gray', borderWidth: 1, borderRadius: 10, paddingLeft: 10, marginTop: 10}}
+                        onChangeText={text => setInputText6(text)}
+                        placeholder={"Introdu tipul orei"}
+                        value={inputText6}
+                    />
+                    <TextInput
+                        style={{ height: 40, borderColor: 'gray', borderWidth: 1, borderRadius: 10, paddingLeft: 10, marginTop: 10}}
+                        onChangeText={text => setInputText7(text)}
+                        placeholder={"Introdu numele profesorului"}
+                        value={inputText7}
+                    />
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginTop: 20 }}>
+                    <TouchableOpacity style={{ ...modalstyles.button, backgroundColor: '#014F86' }} onPress={handleAddingModalConfirm}>
+                        <Text style={modalstyles.textStyle}>Adauga la orar</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={{ ...modalstyles.button, backgroundColor: '#014F86', marginLeft:10, }} onPress={handleAddingModalCancel}>
+                        <Text style={modalstyles.textStyle}>Anuleaza</Text>
+                    </TouchableOpacity>
+                    </View>
+                </View>
+                </View>
+            </Modal>
             <TouchableOpacity style={theme === 'dark' ? darkStyle.addButton : lightStyle.addButton} onPress={addHour}><Icon name="plus" size={24} color="#fff" /></TouchableOpacity>
         </View>
         )}
