@@ -5,11 +5,11 @@ import { useTheme } from "../config/ThemeContext";
 import Icon from "react-native-vector-icons/FontAwesome";
 import Modal from "react-native-modal";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import { Calendar, Clock, Blackboard, CustomSvgComponent, Bell, Pen, TrashCan, LocationPin } from "../config/Icons";
+import { Calendar, Clock, Bell, Pen, TrashCan, LocationPin } from "../config/Icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Swipeable from "react-native-gesture-handler/Swipeable";
 import { Vibration } from "react-native";
-import Animated, { FadeInDown, FadeInRight } from "react-native-reanimated";
+import Animated, { FadeInDown } from "react-native-reanimated";
 
 const ExamsScreen = () => {
 	const { theme } = useTheme();
@@ -120,14 +120,14 @@ const ExamsScreen = () => {
 		}
 	};
 
-	const onChangeDate = (event, selectedDate) => {
+	const onChangeDate = (selectedDate) => {
 		const currentDate = selectedDate || date;
 		setShowDatePicker(Platform.OS === "ios");
 		setDate(currentDate);
 		setDateDisplay(currentDate.toLocaleDateString());
 	};
 
-	const onChangeTime = (event, selectedTime) => {
+	const onChangeTime = (selectedTime) => {
 		const currentTime = selectedTime || time;
 		setShowTimePicker(Platform.OS === "ios");
 		setTime(currentTime);
@@ -136,15 +136,36 @@ const ExamsScreen = () => {
 
 	const renderEmptyExams = () => (
 		<Animated.View entering={FadeInDown.duration(800).springify()}>
-			<Image style={{ width: 170, height: 170, alignSelf: "center", marginTop: 220, justifyContent: "center" }} source={require("../images/blackboard-svgrepo-com.png")} />
-			<Text style={{ color: theme === "dark" ? "#FFFFFF" : "#000000", textAlign: "center", alignItems: "center", marginTop: 20, fontSize: 20, fontWeight: "bold" }}>{"No added exams.."}</Text>
+			<Image
+				style={{ width: 170, height: 170, alignSelf: "center", marginTop: 220, justifyContent: "center" }}
+				source={require("../images/blackboard-svgrepo-com.png")}
+			/>
+			<Text
+				style={{
+					color: theme === "dark" ? "#FFFFFF" : "#000000",
+					textAlign: "center",
+					alignItems: "center",
+					marginTop: 20,
+					fontSize: 20,
+					fontWeight: "bold",
+				}}>
+				{"No added exams.."}
+			</Text>
 		</Animated.View>
 	);
 
 	const renderExamsList = () =>
 		exams.map((exam, index) => {
 			const renderRightActions = () => (
-				<View style={{ marginRight: 10, marginTop: 10, padding: 10, backgroundColor: theme === "dark" ? "#012A4A" : "#A9D6E5", borderTopLeftRadius: 20, borderBottomLeftRadius: 20 }}>
+				<View
+					style={{
+						marginRight: 10,
+						marginTop: 10,
+						padding: 10,
+						backgroundColor: theme === "dark" ? "#012A4A" : "#A9D6E5",
+						borderTopLeftRadius: 20,
+						borderBottomLeftRadius: 20,
+					}}>
 					<View style={{ marginTop: 9 }}>
 						<View>
 							<TouchableOpacity onPress={() => editExam(index)}>
@@ -164,7 +185,15 @@ const ExamsScreen = () => {
 			return (
 				<View style={{ marginTop: 15 }} key={exam.id}>
 					<Swipeable key={exam.id} renderRightActions={renderRightActions} friction={1} onSwipeableWillOpen={() => Vibration.vibrate([0, 50])}>
-						<View style={{ marginLeft: 15, marginRight: 15, marginTop: 10, padding: 13, backgroundColor: theme === "dark" ? "#012A4A" : "#89C2D9", borderRadius: 20 }}>
+						<View
+							style={{
+								marginLeft: 15,
+								marginRight: 15,
+								marginTop: 10,
+								padding: 13,
+								backgroundColor: theme === "dark" ? "#012A4A" : "#89C2D9",
+								borderRadius: 20,
+							}}>
 							<View style={{ margin: 2, padding: 20, backgroundColor: theme === "dark" ? "#013A63" : "#A9D6E5", borderRadius: 20 }}>
 								<Text style={{ color: theme === "dark" ? "#FFFFFF" : "#000000" }}>{exam.name}</Text>
 							</View>
@@ -248,7 +277,16 @@ const ExamsScreen = () => {
 
 				<View style={{ marginTop: 80, alignItems: "center" }}>
 					<TouchableOpacity
-						style={{ height: 40, width: 100, borderColor: "gray", borderWidth: 1, borderRadius: 10, backgroundColor: "#b5efa2", justifyContent: "center", alignItems: "center" }}
+						style={{
+							height: 40,
+							width: 100,
+							borderColor: "gray",
+							borderWidth: 1,
+							borderRadius: 10,
+							backgroundColor: "#b5efa2",
+							justifyContent: "center",
+							alignItems: "center",
+						}}
 						onPress={() => addExam()}>
 						<Text style={{ color: "black", textAlign: "center" }}>{"Adauga examen"}</Text>
 					</TouchableOpacity>

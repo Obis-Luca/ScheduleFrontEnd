@@ -1,5 +1,4 @@
 import { StatusBar } from "expo-status-bar";
-import { darkStyle, lightStyle } from "../styles/ChoosePageStyle";
 import React, { useState, useEffect } from "react";
 import { SelectList } from "react-native-dropdown-select-list";
 import { View, Button } from "react-native";
@@ -7,12 +6,12 @@ import { useTheme } from "../config/ThemeContext";
 import { useNavigation } from "@react-navigation/native";
 import { compareData } from "../utils/utils";
 import { apiProxy } from "../utils/apiProxy";
+import { darkStyle, lightStyle, dropdownStyles } from "../styles/ChoosePageStyle";
 
 const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
 	const { theme } = useTheme();
 	const navigation = useNavigation();
 
-	const [showFacultyDropdown, setShowFacultyDropdown] = useState(true);
 	const [showSpecializationDropdown, setShowSpecializationDropdown] = useState(false);
 	const [showGroupDropdown, setShowGroupDropdown] = useState(false);
 	const [showYearDropdown, setshowYearDropdown] = useState(false);
@@ -95,7 +94,7 @@ const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
 		<View style={theme === "dark" ? darkStyle.container : lightStyle.container}>
 			<StatusBar style="auto" />
 			<View style={theme === "dark" ? darkStyle.alldropdowns : lightStyle.alldropdowns}>
-				{showFacultyDropdown && FacultyDropdown()}
+				{FacultyDropdown()}
 				{showSpecializationDropdown && SpecializationDropdown()}
 				{showYearDropdown && YearDropdown()}
 				{showGroupDropdown && GroupDropdown()}
@@ -107,10 +106,10 @@ const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
 	function FacultyDropdown() {
 		return (
 			<SelectList
-				boxStyles={getDropdownStyles()}
-				dropdownStyles={getDropdownBackgroundStyle()}
-				inputStyles={getDropdownTextStyle()}
-				dropdownTextStyles={getDropdownTextStyle()}
+				boxStyles={dropdownStyles[theme].box}
+				dropdownStyles={dropdownStyles[theme].dropdown}
+				inputStyles={dropdownStyles[theme].text}
+				dropdownTextStyles={dropdownStyles[theme].text}
 				placeholder={"Selecteaza facultatea"}
 				data={faculties}
 				save="id"
@@ -126,15 +125,16 @@ const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
 	function SpecializationDropdown() {
 		return (
 			<SelectList
-				boxStyles={getDropdownStyles()}
-				dropdownStyles={getDropdownBackgroundStyle()}
-				inputStyles={getDropdownTextStyle()}
-				dropdownTextStyles={getDropdownTextStyle()}
+				boxStyles={dropdownStyles[theme].box}
+				dropdownStyles={dropdownStyles[theme].dropdown}
+				inputStyles={dropdownStyles[theme].text}
+				dropdownTextStyles={dropdownStyles[theme].text}
 				placeholder={"Selecteaza specializarea"}
 				data={specializations}
 				save="id"
 				onSelect={() => {
 					setshowYearDropdown(true);
+					selectedYear && fetchGroups();
 				}}
 				setSelected={setSelectedSpecialization}
 			/>
@@ -144,10 +144,10 @@ const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
 	function YearDropdown() {
 		return (
 			<SelectList
-				boxStyles={getDropdownStyles()}
-				dropdownStyles={getDropdownBackgroundStyle()}
-				inputStyles={getDropdownTextStyle()}
-				dropdownTextStyles={getDropdownTextStyle()}
+				boxStyles={dropdownStyles[theme].box}
+				dropdownStyles={dropdownStyles[theme].dropdown}
+				inputStyles={dropdownStyles[theme].text}
+				dropdownTextStyles={dropdownStyles[theme].text}
 				placeholder={"Selecteaza anul"}
 				data={years}
 				save="id"
@@ -163,10 +163,10 @@ const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
 	function GroupDropdown() {
 		return (
 			<SelectList
-				boxStyles={getDropdownStyles()}
-				dropdownStyles={getDropdownBackgroundStyle()}
-				inputStyles={getDropdownTextStyle()}
-				dropdownTextStyles={getDropdownTextStyle()}
+				boxStyles={dropdownStyles[theme].box}
+				dropdownStyles={dropdownStyles[theme].dropdown}
+				inputStyles={dropdownStyles[theme].text}
+				dropdownTextStyles={dropdownStyles[theme].text}
 				placeholder={"Selecteaza grupa"}
 				data={groups}
 				save="value"
@@ -178,33 +178,6 @@ const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
 
 	function SubmitButton() {
 		return <Button title="Submit" onPress={populateWeeks} />;
-	}
-
-	function getDropdownStyles() {
-		return {
-			marginTop: 20,
-			marginBottom: 10,
-			padding: 10,
-			borderRadius: 25,
-			backgroundColor: theme === "dark" ? "#012A4A" : "#A9D6E5",
-			shadowColor: "#000",
-			shadowOffset: { width: 3, height: 2 },
-			shadowOpacity: 0.3,
-			shadowRadius: 2,
-			elevation: 5,
-		};
-	}
-
-	function getDropdownBackgroundStyle() {
-		return {
-			backgroundColor: theme === "dark" ? "#012A4A" : "#A9D6E5",
-		};
-	}
-
-	function getDropdownTextStyle() {
-		return {
-			color: theme === "dark" ? "#FFFFFF" : "#000000",
-		};
 	}
 };
 

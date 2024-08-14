@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { View, Switch, Text } from "react-native";
 import { darkMode, lightMode } from "../styles/SettingsStyle";
 import Animated, { FadeInDown } from "react-native-reanimated";

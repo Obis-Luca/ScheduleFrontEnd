@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, Image, TouchableOpacity } from "react-native";
+import { Text, Image, TouchableOpacity } from "react-native";
 import Animated, { FadeInDown } from "react-native-reanimated";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { lightStyle, darkStyle } from "../../styles/HomePageStyles";

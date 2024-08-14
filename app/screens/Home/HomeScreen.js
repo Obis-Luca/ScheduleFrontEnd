@@ -48,11 +48,7 @@ const HomeScreen = ({ DataWeek1, DataWeek2 }) => {
 	const handleOpenMaps = () => {
 		const location = "Universitatea+Babeș-Bolyai+din+Cluj-Napoca";
 		Linking.canOpenURL(`https://maps.apple.com/?q=${location}`).then((supported) => {
-			if (supported) {
-				setIsModalVisible(true);
-			} else {
-				console.log("Maps app is not available.");
-			}
+			supported ? setIsModalVisible(true) : console.log("Maps app is not available.");
 		});
 	};
 
@@ -85,7 +81,7 @@ const HomeScreen = ({ DataWeek1, DataWeek2 }) => {
 					/>
 				</View>
 			)}
-			<LocationModal isVisible={isModalVisible} onConfirm={handleModalConfirm} onCancel={() => setIsModalVisible(false)} />
+			<LocationModal isVisible={isModalVisible} onConfirm={handleModalConfirm} onCancel={() => setIsModalVisible(false)} theme={theme} />
 		</View>
 	);
 };

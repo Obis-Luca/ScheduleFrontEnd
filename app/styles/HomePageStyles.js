@@ -1,16 +1,14 @@
 import { StyleSheet } from "react-native";
-export const middleButton = StyleSheet.create({
-	middleBtn: { flex: 1, justifyContent: "center", alignItems: "center" },
-});
+import { colors } from "../constants/colors";
+
 export const lightStyle = StyleSheet.create({
 	itemContainer: {
-		backgroundColor: "#A9D6E5",
+		backgroundColor: colors.lightBackground,
 		padding: 15,
 		marginVertical: 6,
 		marginHorizontal: 10,
-
 		borderRadius: 40,
-		shadowColor: "#000",
+		shadowColor: colors.lightText,
 		shadowOffset: { width: 0, height: 2 },
 		shadowOpacity: 0.05,
 		shadowRadius: 3.84,
@@ -25,10 +23,11 @@ export const lightStyle = StyleSheet.create({
 		flexDirection: "row",
 		justifyContent: "space-between",
 		alignItems: "center",
-		fontSize: 28,
-		backgroundColor: "#468FAF",
-		color: "#000000",
+		fontSize: 18,
+		backgroundColor: colors.primary,
+		color: colors.lightText,
 		paddingHorizontal: 15,
+		paddingVertical: 10,
 		marginVertical: 5,
 		marginHorizontal: 10,
 		borderRadius: 5,
@@ -37,13 +36,7 @@ export const lightStyle = StyleSheet.create({
 	title: {
 		width: 200,
 		fontSize: 20,
-		color: "#000000",
-	},
-	buttonContainer: {
-		paddingHorizontal: 20,
-		marginTop: 20,
-		borderRadius: 10,
-		backgroundColor: "#A9D6E5",
+		color: colors.lightText,
 	},
 	addButton: {
 		position: "absolute",
@@ -51,7 +44,7 @@ export const lightStyle = StyleSheet.create({
 		right: 20,
 		width: 50,
 		height: 50,
-		backgroundColor: "#3f51b5",
+		backgroundColor: colors.buttonColor,
 		borderRadius: 20,
 		justifyContent: "center",
 		alignItems: "center",
@@ -66,47 +59,54 @@ export const lightStyle = StyleSheet.create({
 	},
 	hour: {
 		fontSize: 20,
+		color: colors.lightText,
 	},
 	dropdown: {
 		borderTopWidth: 3,
 		borderTopStartRadius: 5,
 		borderTopEndRadius: 5,
-		borderTopColor: "#ffffff",
+		borderTopColor: colors.darkText,
 		padding: 10,
 		flex: 1,
 		flexDirection: "row",
 		justifyContent: "space-around",
 		marginTop: 20,
 	},
+	buttonContainer: {
+		paddingHorizontal: 20,
+		marginTop: 20,
+		borderRadius: 10,
+		backgroundColor: colors.lightAccent,
+	},
 });
 
 export const darkStyle = StyleSheet.create({
 	itemContainer: {
-		backgroundColor: "#012A4A",
+		backgroundColor: colors.darkBackground,
 		padding: 15,
 		marginVertical: 6,
 		marginHorizontal: 10,
 		borderRadius: 5,
-		shadowColor: "#000",
+		shadowColor: colors.lightText,
 		shadowOffset: { width: 0, height: 2 },
 		shadowOpacity: 0.05,
 		shadowRadius: 3.84,
 		elevation: 5,
-		color: "#FFFFFF",
+		color: colors.darkText,
 	},
 	itemHeader: {
 		flexDirection: "row",
 		justifyContent: "space-between",
 		alignItems: "center",
-		color: "#FFFFFF",
+		color: colors.darkText,
 	},
 	dayHeader: {
 		flexDirection: "row",
 		justifyContent: "space-between",
 		alignItems: "center",
-		color: "#FFFFFF",
+		color: colors.darkText,
 		fontSize: 28,
-		backgroundColor: "#2A6F97",
+		backgroundColor: colors.darkAccent,
 		padding: 5,
 		paddingHorizontal: 15,
 		marginVertical: 5,
@@ -117,13 +117,7 @@ export const darkStyle = StyleSheet.create({
 	title: {
 		width: 200,
 		fontSize: 20,
-		color: "#FFFFFF",
-	},
-	buttonContainer: {
-		paddingHorizontal: 20,
-		marginTop: 20,
-		borderRadius: 10,
-		backgroundColor: "#012A4A",
+		color: colors.darkText,
 	},
 	addButton: {
 		position: "absolute",
@@ -131,7 +125,7 @@ export const darkStyle = StyleSheet.create({
 		right: 20,
 		width: 50,
 		height: 50,
-		backgroundColor: "#3f51b5",
+		backgroundColor: colors.buttonColor,
 		borderRadius: 20,
 		justifyContent: "center",
 		alignItems: "center",
@@ -143,22 +137,28 @@ export const darkStyle = StyleSheet.create({
 		flex: 1,
 		flexDirection: "row",
 		justifyContent: "flex-end",
-		color: "#FFFFFF",
+		color: colors.darkText,
 	},
 	hour: {
 		fontSize: 20,
-		color: "#FFFFFF",
+		color: colors.darkText,
 	},
 	dropdown: {
 		borderTopWidth: 3,
 		borderTopStartRadius: 5,
 		borderTopEndRadius: 5,
-		borderTopColor: "#FFFFFF",
+		borderTopColor: colors.lightText,
 		padding: 10,
 		flex: 1,
 		flexDirection: "row",
 		justifyContent: "space-around",
 		marginTop: 20,
+	},
+	buttonContainer: {
+		paddingHorizontal: 20,
+		marginTop: 20,
+		borderRadius: 10,
+		backgroundColor: colors.darkBackground,
 	},
 });
 
@@ -171,11 +171,11 @@ export const modalstyles = StyleSheet.create({
 	},
 	modalView: {
 		margin: 20,
-		backgroundColor: "white",
+		backgroundColor: colors.lightText,
 		borderRadius: 20,
 		padding: 35,
 		alignItems: "center",
-		shadowColor: "#000",
+		shadowColor: colors.lightText,
 		shadowOffset: {
 			width: 0,
 			height: 2,
@@ -189,7 +189,7 @@ export const modalstyles = StyleSheet.create({
 		height: 24,
 		marginLeft: 5,
 		marginTop: 3,
-		color: "red",
+		color: colors.error,
 	},
 	button: {
 		borderRadius: 20,
@@ -197,7 +197,7 @@ export const modalstyles = StyleSheet.create({
 		elevation: 2,
 	},
 	textStyle: {
-		color: "white",
+		color: colors.darkText,
 		fontWeight: "bold",
 		textAlign: "center",
 	},
