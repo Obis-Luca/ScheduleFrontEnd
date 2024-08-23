@@ -1,20 +1,31 @@
 import React, { useState, useRef, useEffect } from "react";
 import { View, Button, SectionList, Text, Linking } from "react-native";
 import { lightStyle, darkStyle } from "../../styles/HomePageStyles";
-import { useTheme } from "../../config/ThemeContext";
+import { useTheme } from "../../context/ThemeContext";
 import { useNavigation } from "@react-navigation/native";
 import EmptyState from "./EmptyState";
 import CourseItem from "./CourseItem";
 import LocationModal from "./LocationModal";
+import { useSchedule } from "../../context/ScheduleContext";
 
-const HomeScreen = ({ DataWeek1, DataWeek2 }) => {
+const HomeScreen = () => {
 	const navigation = useNavigation();
 	const { theme } = useTheme();
+	const { asyncStorageWeek1Schedule, asyncStorageWeek2Schedule, isLoading } = useSchedule();
+	const [DataWeek1, setDataWeek1] = useState([]);
+	const [DataWeek2, setDataWeek2] = useState([]);
 	const [weekShown, setWeekShown] = useState(false);
 	const [expandedItem, setExpandedItem] = useState(null);
 	const [dataToShow, setDataToShow] = useState([]);
 	const [isModalVisible, setIsModalVisible] = useState(false);
 	const sectionListRef = useRef(null);
+
+	useEffect(() => {
+		if (!isLoading) {
+			setDataWeek1(asyncStorageWeek1Schedule || []);
+			setDataWeek2(asyncStorageWeek2Schedule || []);
+		}
+	}, [isLoading, asyncStorageWeek1Schedule, asyncStorageWeek2Schedule]);
 
 	useEffect(() => {
 		setDataToShow(formatDataForSectionList(weekShown ? DataWeek2 : DataWeek1));
@@ -58,7 +69,9 @@ const HomeScreen = ({ DataWeek1, DataWeek2 }) => {
 		Linking.openURL(`https://maps.apple.com/?q=${location}`);
 	};
 
-	const renderSectionHeader = ({ section: { title } }) => <Text style={theme === "dark" ? darkStyle.dayHeader : lightStyle.dayHeader}>{title}</Text>;
+	const renderSectionHeader = ({ section: { title } }) => (
+		<Text style={theme === "dark" ? darkStyle.dayHeader : lightStyle.dayHeader}>{title}</Text>
+	);
 
 	return (
 		<View style={{ flex: 1, backgroundColor: theme === "dark" ? "#000000" : "#FFFFFF" }}>
@@ -75,13 +88,24 @@ const HomeScreen = ({ DataWeek1, DataWeek2 }) => {
 						sections={dataToShow}
 						keyExtractor={(item, index) => item + index}
 						renderItem={({ item }) => (
-							<CourseItem item={item} expandedItem={expandedItem} toggleItem={toggleItem} theme={theme} handleOpenMaps={handleOpenMaps} />
+							<CourseItem
+								item={item}
+								expandedItem={expandedItem}
+								toggleItem={toggleItem}
+								theme={theme}
+								handleOpenMaps={handleOpenMaps}
+							/>
 						)}
 						renderSectionHeader={renderSectionHeader}
 					/>
 				</View>
 			)}
-			<LocationModal isVisible={isModalVisible} onConfirm={handleModalConfirm} onCancel={() => setIsModalVisible(false)} theme={theme} />
+			<LocationModal
+				isVisible={isModalVisible}
+				onConfirm={handleModalConfirm}
+				onCancel={() => setIsModalVisible(false)}
+				theme={theme}
+			/>
 		</View>
 	);
 };

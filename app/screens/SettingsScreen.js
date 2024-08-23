@@ -2,7 +2,7 @@ import React from "react";
 import { View, Switch, Text } from "react-native";
 import { darkMode, lightMode } from "../styles/SettingsStyle";
 import Animated, { FadeInDown } from "react-native-reanimated";
-import { useTheme } from "../config/ThemeContext";
+import { useTheme } from "../context/ThemeContext";
 
 const SettingsScreen = () => {
 	const { theme, toggleTheme } = useTheme();

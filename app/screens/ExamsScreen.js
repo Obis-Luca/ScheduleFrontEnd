@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, Button, Platform, ScrollView, Image, Switch } from "react-native";
 import { lightStyle, darkStyle } from "../styles/ExamPageStyle";
-import { useTheme } from "../config/ThemeContext";
+import { useTheme } from "../context/ThemeContext";
 import Icon from "react-native-vector-icons/FontAwesome";
 import Modal from "react-native-modal";
 import DateTimePicker from "@react-native-community/datetimepicker";
