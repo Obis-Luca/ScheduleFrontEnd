@@ -8,7 +8,10 @@ const CourseItem = ({ item, expandedItem, toggleItem, theme, handleOpenMaps }) =
 		<View style={theme === "dark" ? darkStyle.itemContainer : lightStyle.itemContainer}>
 			<View style={theme === "dark" ? darkStyle.itemHeader : lightStyle.itemHeader}>
 				<Text style={theme === "dark" ? darkStyle.title : lightStyle.title}>{item.courseName}</Text>
-				<View style={theme === "dark" ? darkStyle.div_for_hour_and_dropdownArrow : lightStyle.div_for_hour_and_dropdownArrow}>
+				<View
+					style={
+						theme === "dark" ? darkStyle.div_for_hour_and_dropdownArrow : lightStyle.div_for_hour_and_dropdownArrow
+					}>
 					<Text style={theme === "dark" ? darkStyle.hour : lightStyle.hour}>{item.courseHour}</Text>
 					<Icon
 						name={expandedItem === item ? "angle-up" : "angle-down"}

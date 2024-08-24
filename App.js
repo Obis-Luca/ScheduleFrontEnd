@@ -13,8 +13,6 @@ import { ScheduleProvider } from "./app/context/ScheduleContext";
 
 export default function MyApp() {
 	const Drawer = createDrawerNavigator();
-	// const [DataWeek1, setDataWeek1] = useState([]);
-	// const [DataWeek2, setDataWeek2] = useState([]);
 
 	return (
 		<ThemeProvider>
