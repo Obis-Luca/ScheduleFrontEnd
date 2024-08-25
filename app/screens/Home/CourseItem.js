@@ -16,7 +16,7 @@ const CourseItem = ({ item, expandedItem, toggleItem, theme, handleOpenMaps }) =
 					<Icon
 						name={expandedItem === item ? "angle-up" : "angle-down"}
 						size={20}
-						style={{ marginLeft: 10, color: theme === "dark" ? "#FFFFFF" : "#000000" }}
+						style={{ marginLeft: 10, color: "#4A90E2" }}
 					/>
 				</View>
 			</View>

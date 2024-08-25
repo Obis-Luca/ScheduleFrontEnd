@@ -8,6 +8,7 @@ import { compareData } from "../utils/utils";
 import { apiProxy } from "../utils/apiProxy";
 import { darkStyle, lightStyle, dropdownStyles } from "../styles/ChoosePageStyle";
 import { useSchedule } from "../context/ScheduleContext";
+import { colors } from "../constants/colors";
 
 const ChoosePage = () => {
 	const { saveSchedule } = useSchedule();

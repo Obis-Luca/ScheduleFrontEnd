@@ -1,12 +1,12 @@
 import React, { useState, useRef, useEffect } from "react";
 import { View, Button, SectionList, Text, Linking } from "react-native";
+import { lightStyle, darkStyle } from "../../styles/HomePageStyles";
 import { useTheme } from "../../context/ThemeContext";
 import { useNavigation } from "@react-navigation/native";
 import EmptyState from "./EmptyState";
 import CourseItem from "./CourseItem";
 import LocationModal from "./LocationModal";
 import { useSchedule } from "../../context/ScheduleContext";
-import { darkStyle, lightStyle } from "../../styles/HomePageStyles";
 
 const HomeScreen = () => {
 	const navigation = useNavigation();
@@ -74,7 +74,7 @@ const HomeScreen = () => {
 	);
 
 	return (
-		<View style={theme === "dark" ? darkStyle.buttonContainer : lightStyle.mainContainer}>
+		<View style={{ flex: 1, backgroundColor: theme === "dark" ? "#000000" : "#FFFFFF" }}>
 			{DataWeek1.length === 0 ? (
 				<EmptyState theme={theme} navigation={navigation} />
 			) : (

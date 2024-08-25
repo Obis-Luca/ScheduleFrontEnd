@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Switch, Text } from "react-native";
-import { darkMode, lightMode } from "../styles/SettingsStyle";
+import { animatedView, darkMode, lightMode } from "../styles/SettingsStyle";
 import Animated, { FadeInDown } from "react-native-reanimated";
 import { useTheme } from "../context/ThemeContext";
 
@@ -8,12 +8,12 @@ const SettingsScreen = () => {
 	const { theme, toggleTheme } = useTheme();
 
 	return (
-		<View style={{ flex: 1, backgroundColor: theme === "dark" ? "#000000" : "#FFFFFF" }}>
+		<View style={theme === "dark" ? darkMode.bigView : lightMode.bigView}>
 			<View style={theme === "dark" ? darkMode.bigView : lightMode.bigView}>
 				<View style={{ flexDirection: "row" }}>
-					<Text style={{ padding: 20, fontSize: 20, marginLeft: 8, color: theme === "dark" ? "#FFFFFF" : "#000000" }}>Alege tema</Text>
+					<Text style={theme === "dark" ? darkMode.text : lightMode.text}>Alege tema</Text>
 					<Animated.View entering={FadeInDown.duration(500).springify()}>
-						<View style={{ flex: 1, alignItems: "center", justifyContent: "center", marginLeft: 170, transform: [{ scaleX: 1.5 }, { scaleY: 1.5 }] }}>
+						<View style={animatedView.animatedView}>
 							<Switch
 								trackColor={{ false: "#000000", true: "#fdfdfd" }}
 								thumbColor={theme === "dark" ? "#000000" : "#f4f3f4"}
