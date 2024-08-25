@@ -2,13 +2,16 @@ import { StatusBar } from "expo-status-bar";
 import React, { useState, useEffect } from "react";
 import { SelectList } from "react-native-dropdown-select-list";
 import { View, Button } from "react-native";
-import { useTheme } from "../config/ThemeContext";
+import { useTheme } from "../context/ThemeContext";
 import { useNavigation } from "@react-navigation/native";
 import { compareData } from "../utils/utils";
 import { apiProxy } from "../utils/apiProxy";
 import { darkStyle, lightStyle, dropdownStyles } from "../styles/ChoosePageStyle";
+import { useSchedule } from "../context/ScheduleContext";
+import { colors } from "../constants/colors";
 
-const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
+const ChoosePage = () => {
+	const { saveSchedule } = useSchedule();
 	const { theme } = useTheme();
 	const navigation = useNavigation();
 
@@ -48,7 +51,10 @@ const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
 	const fetchSpecializations = async () => {
 		try {
 			const data = await apiProxy.get(`/specialisations/filter?faculty_id=${selectedFaculty}`);
-			const formattedSpecializations = data.map((specialization) => ({ key: specialization.id.toString(), value: specialization.name }));
+			const formattedSpecializations = data.map((specialization) => ({
+				key: specialization.id.toString(),
+				value: specialization.name,
+			}));
 			setSpecializations(formattedSpecializations);
 		} catch (error) {
 			console.error("Error fetching specializations:", error);
@@ -67,7 +73,9 @@ const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
 
 	const populateWeeks = async () => {
 		try {
-			const data = await apiProxy.get(`/courses/filter?groupId=${selectedGroup}&specialisationId=${selectedSpecialization}&year=${selectedYear}`);
+			const data = await apiProxy.get(
+				`/courses/filter?groupId=${selectedGroup}&specialisationId=${selectedSpecialization}&year=${selectedYear}`
+			);
 			let week1Data = [];
 			let week2Data = [];
 			data.forEach((course) => {
@@ -82,8 +90,8 @@ const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
 			});
 			week1Data.sort(compareData);
 			week2Data.sort(compareData);
-			setDataWeek1(week1Data);
-			setDataWeek2(week2Data);
+
+			saveSchedule(week1Data, week2Data);
 			navigation.navigate("Acasa");
 		} catch (error) {
 			console.error("Error fetching courses:", error);

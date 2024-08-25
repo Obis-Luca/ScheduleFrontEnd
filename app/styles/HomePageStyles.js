@@ -25,7 +25,7 @@ export const lightStyle = StyleSheet.create({
 		alignItems: "center",
 		fontSize: 18,
 		backgroundColor: colors.primary,
-		color: colors.lightText,
+		color: colors.white,
 		paddingHorizontal: 15,
 		paddingVertical: 10,
 		marginVertical: 5,
@@ -83,6 +83,7 @@ export const lightStyle = StyleSheet.create({
 export const darkStyle = StyleSheet.create({
 	itemContainer: {
 		backgroundColor: colors.darkBackground,
+		color: colors.darkText,
 		padding: 15,
 		marginVertical: 6,
 		marginHorizontal: 10,
@@ -92,7 +93,6 @@ export const darkStyle = StyleSheet.create({
 		shadowOpacity: 0.05,
 		shadowRadius: 3.84,
 		elevation: 5,
-		color: colors.darkText,
 	},
 	itemHeader: {
 		flexDirection: "row",
@@ -106,7 +106,7 @@ export const darkStyle = StyleSheet.create({
 		alignItems: "center",
 		color: colors.darkText,
 		fontSize: 28,
-		backgroundColor: colors.darkAccent,
+		backgroundColor: "#4A90E2",
 		padding: 5,
 		paddingHorizontal: 15,
 		marginVertical: 5,
