@@ -5,7 +5,7 @@ import { useTheme } from "../context/ThemeContext";
 import Icon from "react-native-vector-icons/FontAwesome";
 import Modal from "react-native-modal";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import { Calendar, Clock, Bell, Pen, TrashCan, LocationPin } from "../config/Icons";
+import { Calendar, Clock, Pen, TrashCan, LocationPin } from "../config/Icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Swipeable from "react-native-gesture-handler/Swipeable";
 import { Vibration } from "react-native";
@@ -24,7 +24,6 @@ const ExamsScreen = () => {
 	const [showTimePicker, setShowTimePicker] = useState(false);
 	const [exams, setExams] = useState([]);
 	const [editingExamIndex, setEditingExamIndex] = useState(null);
-	const [notificationModalVisible, setNotificationModalVisible] = useState(false);
 	const [inputTextError, setInputTextError] = useState("");
 	const [dateDisplayError, setDateDisplayError] = useState("");
 	const [timeDisplayError, setTimeDisplayError] = useState("");
@@ -64,15 +63,12 @@ const ExamsScreen = () => {
 		return isValid;
 	};
 
-	const handleBellPress = () => {
-		setNotificationModalVisible(true);
-	};
-
 	const editExam = (index) => {
 		const exam = exams[index];
 		setInputText(exam.name);
 		setDateDisplay(exam.date);
 		setTimeDisplay(exam.time);
+		setRoomNumber(exam.room);
 		setEditingExamIndex(index);
 		setModalVisible(true);
 	};
@@ -94,7 +90,9 @@ const ExamsScreen = () => {
 	}, []);
 
 	const addExam = async () => {
+		console.log("Validating fields...");
 		if (validateFields()) {
+			console.log("Fields are valid, adding exam...");
 			const newExam = {
 				id: Math.random().toString(), // Add a unique id
 				name: inputText,
@@ -109,6 +107,7 @@ const ExamsScreen = () => {
 			} else {
 				updatedExams = [...exams, newExam];
 			}
+			console.log("Updated exams:", updatedExams);
 			setExams(updatedExams);
 			setInputText("");
 			setRoomNumber("");
@@ -117,21 +116,28 @@ const ExamsScreen = () => {
 			setModalVisible(false);
 			setEditingExamIndex(null);
 			await AsyncStorage.setItem("exams", JSON.stringify(updatedExams)); // Save exams to AsyncStorage
+			console.log("Exam added and saved to storage.");
+		} else {
+			console.log("Fields validation failed.");
 		}
 	};
 
-	const onChangeDate = (selectedDate) => {
+	const onChangeDate = (event, selectedDate) => {
 		const currentDate = selectedDate || date;
 		setShowDatePicker(Platform.OS === "ios");
-		setDate(currentDate);
-		setDateDisplay(currentDate.toLocaleDateString());
+		if (event.type === "set") {
+			setDate(currentDate);
+			setDateDisplay(currentDate.toLocaleDateString());
+		}
 	};
 
-	const onChangeTime = (selectedTime) => {
+	const onChangeTime = (event, selectedTime) => {
 		const currentTime = selectedTime || time;
 		setShowTimePicker(Platform.OS === "ios");
-		setTime(currentTime);
-		setTimeDisplay(currentTime.toLocaleTimeString());
+		if (event.type === "set") {
+			setTime(currentTime);
+			setTimeDisplay(currentTime.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }));
+		}
 	};
 
 	const renderEmptyExams = () => (
@@ -224,9 +230,6 @@ const ExamsScreen = () => {
 								<Text style={{ marginRight: 10, marginTop: 5, color: theme === "dark" ? "#FFFFFF" : "#000000" }}>
 									{exam.room}
 								</Text>
-								<TouchableOpacity style={{ marginLeft: 130 }} onPress={handleBellPress}>
-									<Bell />
-								</TouchableOpacity>
 							</View>
 						</View>
 					</Swipeable>
@@ -240,27 +243,6 @@ const ExamsScreen = () => {
 			onPress={() => setModalVisible(true)}>
 			<Icon name="plus" size={24} color="#fff" />
 		</TouchableOpacity>
-	);
-
-	const renderNotificationModal = () => (
-		<Modal isVisible={notificationModalVisible} onBackdropPress={() => setNotificationModalVisible(false)}>
-			<View style={theme === "dark" ? darkStyle.modalNotificationPopUp : lightStyle.modalNotificationPopUp}>
-				<View
-					style={{
-						flex: 1,
-						alignItems: "center",
-						justifyContent: "center",
-						marginLeft: 120,
-						transform: [{ scaleX: 1.5 }, { scaleY: 1.5 }],
-					}}>
-					<Switch
-						trackColor={{ false: "#000000", true: "#fdfdfd" }}
-						thumbColor={"#000000"}
-						ios_backgroundColor="#3e3e3e"
-					/>
-				</View>
-			</View>
-		</Modal>
 	);
 
 	const renderAddExamModal = () => (
@@ -358,7 +340,6 @@ const ExamsScreen = () => {
 		<View style={{ flex: 1, backgroundColor: theme === "dark" ? "#000000" : "#FFFFFF" }}>
 			<ScrollView>{exams.length === 0 ? renderEmptyExams() : renderExamsList()}</ScrollView>
 			{renderAddExamButton()}
-			{renderNotificationModal()}
 			{renderAddExamModal()}
 		</View>
 	);

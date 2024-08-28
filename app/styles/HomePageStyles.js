@@ -137,7 +137,6 @@ export const darkStyle = StyleSheet.create({
 		flex: 1,
 		flexDirection: "row",
 		justifyContent: "flex-end",
-		color: colors.darkText,
 	},
 	hour: {
 		fontSize: 20,
@@ -171,10 +170,10 @@ export const modalstyles = StyleSheet.create({
 	},
 	modalView: {
 		margin: 20,
-		backgroundColor: colors.lightText,
 		borderRadius: 20,
 		padding: 35,
 		alignItems: "center",
+		opacity: 1,
 		shadowColor: colors.lightText,
 		shadowOffset: {
 			width: 0,

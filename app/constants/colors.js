@@ -1,10 +1,10 @@
 export const colors = {
-	lightBackground: "F5F5F5",
+	lightBackground: "#F5F5F5",
+	darkBackground: "#1C1C1C", // Deep Navy Blue
 	dayAccent: "#1ABC9C",
 	dropDownLineAccent: "#E67E22",
 	primary: "#1ABC9C", // Teal
 	secondary: "#31A4F0", // Sky Blue
-	darkBackground: "#1C1C1C", // Deep Navy Blue
 	lightAccent: "#A9D6E5", // Light Blue
 	darkAccent: "#2A6F97", // Slightly Darker Blue
 	lightText: "#34495E", // this is for light mode
