@@ -1,19 +1,19 @@
 import { StatusBar } from "expo-status-bar";
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useState, useEffect } from "react";
 import { SelectList } from "react-native-dropdown-select-list";
 
-import { View, Button, TouchableOpacity, Text } from "react-native";
-import { useTheme } from "../config/ThemeContext";
+import { View, TouchableOpacity, Text } from "react-native";
+import { useTheme } from "../context/ThemeContext";
+import { useSchedule } from "../context/ScheduleContext";
 import { useNavigation } from "@react-navigation/native";
 import { compareData } from "../utils/utils";
 import { apiProxy } from "../utils/apiProxy";
 import { darkStyle, lightStyle, dropdownStyles, buttonStyles } from "../styles/ChoosePageStyle";
 
 const ChoosePage = () => {
-	  const { saveSchedule } = useSchedule();
-	  const { theme } = useTheme();
-	  const navigation = useNavigation();
+	const { saveSchedule } = useSchedule();
+	const { theme } = useTheme();
+	const navigation = useNavigation();
 
     const [showSpecializationDropdown, setShowSpecializationDropdown] = useState(false);
     const [showGroupDropdown, setShowGroupDropdown] = useState(false);
@@ -279,5 +279,6 @@ const ChoosePage = () => {
         );
     }
 
+}
 
 export default ChoosePage;
