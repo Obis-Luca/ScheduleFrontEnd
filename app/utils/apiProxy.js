@@ -1,5 +1,3 @@
-// utils/apiProxy.js
-
 /*
 The issue you're encountering is common when using localhost in an Android Virtual Device (AVD).
  The problem is that localhost in the AVD refers to the emulator itself, not your computer's localhost where your backend is running.

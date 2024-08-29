@@ -1,4 +1,4 @@
-import { MaterialCommunityIcons } from "@expo/vector-icons"; // import the icon library
+import { MaterialCommunityIcons } from "@expo/vector-icons"; 
 import "react-native-gesture-handler";
 import * as React from "react";
 import { useState } from "react";
