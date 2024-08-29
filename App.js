@@ -1,4 +1,4 @@
-import { MaterialCommunityIcons } from "@expo/vector-icons"; // import the icon library
+import { MaterialCommunityIcons } from "@expo/vector-icons"; 
 import "react-native-gesture-handler";
 import * as React from "react";
 import { useState } from "react";
@@ -9,7 +9,7 @@ import SettingsScreen from "./app/screens/SettingsScreen";
 import ChoosePage from "./app/screens/ChoosePage";
 import ExamsScreen from "./app/screens/ExamsScreen";
 import { ThemeProvider } from "./app/config/ThemeContext";
-// import LinearGradient from "react-native-linear-gradient";
+
 
 export default function MyApp() {
 	const Drawer = createDrawerNavigator();

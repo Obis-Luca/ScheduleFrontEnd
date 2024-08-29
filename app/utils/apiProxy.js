@@ -1,6 +1,5 @@
-// utils/apiProxy.js
-
-const BASE_URL = "http://localhost:8080";
+// const BASE_URL = "http://localhost:8080";
+const BASE_URL = "http://192.168.8.202:8080";
 
 export const apiProxy = {
 	get: async (endpoint) => {

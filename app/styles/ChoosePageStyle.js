@@ -71,3 +71,18 @@ export const dropdownStyles = {
 		},
 	}),
 };
+
+export const buttonStyles = StyleSheet.create({
+    button: {
+        backgroundColor: colors.primary, 
+        padding: 10, 
+        borderRadius: 5, 
+        alignItems: "center", 
+		marginTop: 20
+    },
+    buttonText: {
+        color: "white", 
+        fontSize: 18, 
+        fontWeight: "bold", 
+    },
+});
