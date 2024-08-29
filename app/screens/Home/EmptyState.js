@@ -15,7 +15,11 @@ const EmptyState = ({ theme, navigation }) => (
 					marginTop: 220,
 					justifyContent: "center",
 				}}
-				source={theme === "dark" ? require("../../images/calendar-svgrepo-com2.png") : require("../../images/calendar-svgrepo-com.png")}
+				source={
+					theme === "dark"
+						? require("../../images/calendar-svgrepo-com2.png")
+						: require("../../images/calendar-svgrepo-com.png")
+				}
 			/>
 			<Text
 				style={{
@@ -29,7 +33,9 @@ const EmptyState = ({ theme, navigation }) => (
 				{"Nu ai cursuri adaugate.."}
 			</Text>
 		</Animated.View>
-		<TouchableOpacity style={theme === "dark" ? darkStyle.addButton : lightStyle.addButton} onPress={() => navigation.navigate("Alege orar")}>
+		<TouchableOpacity
+			style={theme === "dark" ? darkStyle.addButton : lightStyle.addButton}
+			onPress={() => navigation.navigate("Alege orar")}>
 			<Icon name="plus" size={24} color="#fff" />
 		</TouchableOpacity>
 	</>

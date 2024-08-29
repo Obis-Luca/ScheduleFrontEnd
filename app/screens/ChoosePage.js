@@ -2,6 +2,7 @@ import { StatusBar } from "expo-status-bar";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useState, useEffect } from "react";
 import { SelectList } from "react-native-dropdown-select-list";
+
 import { View, Button, TouchableOpacity, Text } from "react-native";
 import { useTheme } from "../config/ThemeContext";
 import { useNavigation } from "@react-navigation/native";
@@ -9,9 +10,10 @@ import { compareData } from "../utils/utils";
 import { apiProxy } from "../utils/apiProxy";
 import { darkStyle, lightStyle, dropdownStyles, buttonStyles } from "../styles/ChoosePageStyle";
 
-const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
-    const { theme } = useTheme();
-    const navigation = useNavigation();
+const ChoosePage = () => {
+	  const { saveSchedule } = useSchedule();
+	  const { theme } = useTheme();
+	  const navigation = useNavigation();
 
     const [showSpecializationDropdown, setShowSpecializationDropdown] = useState(false);
     const [showGroupDropdown, setShowGroupDropdown] = useState(false);
@@ -73,20 +75,6 @@ const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
         setShowSubmitOptionsButton(false);
     };
 
-    const saveUserPreferences = async (faculty, specialization, year, group) => {
-        try {
-            await AsyncStorage.setItem('userFaculty', faculty);
-            await AsyncStorage.setItem('userSpecialization', specialization);
-            await AsyncStorage.setItem('userYear', year);
-            await AsyncStorage.setItem('userGroup', group);
-        } catch (error) {
-            console.error("Error saving user preferences", error);
-        }
-    };
-
-    const onSelectionComplete = () => {
-        saveUserPreferences(selectedFaculty, selectedSpecialization, selectedYear, selectedGroup);
-    };
 
     function generateExistentYears(specialisation) {
         const year1Specialisations = ['INGINERIA INFORMATIEI MAGHIARA', 'INTELIGENTA ARTIFICIALA ENGLEZA', 'INGINERIA INFORMATIEI ENGLEZA', 'PSIHOLOGIE'];
@@ -141,30 +129,31 @@ const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
     };
 
     const populateWeeks = async () => {
-        try {
-            const data = await apiProxy.get(`/courses/filter?groupId=${selectedGroup}&specialisationId=${selectedSpecialization}&year=${selectedYear}`);
-            let week1Data = [];
-            let week2Data = [];
-            data.forEach((course) => {
-                if (course.frequency === "sapt. 1") {
-                    week1Data.push(course);
-                } else if (course.frequency === "sapt. 2") {
-                    week2Data.push(course);
-                } else {
-                    week1Data.push(course);
-                    week2Data.push(course);
-                }
-            });
-            week1Data.sort(compareData);
-            week2Data.sort(compareData);
-            setDataWeek1(week1Data);
-            setDataWeek2(week2Data);
-            onSelectionComplete();
-            navigation.navigate("Acasa");
-        } catch (error) {
-            console.error("Error fetching courses:", error);
-        }
-    };
+		try {
+			const data = await apiProxy.get(
+				`/courses/filter?groupId=${selectedGroup}&specialisationId=${selectedSpecialization}&year=${selectedYear}`
+			);
+			let week1Data = [];
+			let week2Data = [];
+			data.forEach((course) => {
+				if (course.frequency === "1") {
+					week1Data.push(course);
+				} else if (course.frequency === "2") {
+					week2Data.push(course);
+				} else {
+					week1Data.push(course);
+					week2Data.push(course);
+				}
+			});
+			week1Data.sort(compareData);
+			week2Data.sort(compareData);
+
+			saveSchedule(week1Data, week2Data);
+			navigation.navigate("Acasa");
+		} catch (error) {
+			console.error("Error fetching courses:", error);
+		}
+	};
 
     return (
         <View style={theme === "dark" ? darkStyle.container : lightStyle.container}>
@@ -290,6 +279,5 @@ const ChoosePage = ({ setDataWeek1, setDataWeek2 }) => {
         );
     }
 
-};
 
 export default ChoosePage;
