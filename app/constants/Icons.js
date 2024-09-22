@@ -1,7 +1,7 @@
 import Svg, {Path, Rect, G, Circle, Polygon} from "react-native-svg";
 import React from "react";
 import colors from "./colors";
-import {COLORS} from "../constants/theme";
+import {COLORS} from "./theme";
 export function Icon1(props) {
     return (
         <Svg width={40} height={40} viewBox="0 0 24 24" fill="none" {...props}>

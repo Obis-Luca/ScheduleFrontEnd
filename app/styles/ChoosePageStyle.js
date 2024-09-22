@@ -23,7 +23,6 @@ export const darkStyle = StyleSheet.create({
 		backgroundColor: colors.darkBackground,
 	},
 	alldropdowns: {
-		backgroundColor: "#2E2E2E",
 		marginTop: 10,
 		alignItems: "center",
 		justifyContent: "center",

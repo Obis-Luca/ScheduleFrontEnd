@@ -78,6 +78,22 @@ export const lightStyle = StyleSheet.create({
 		borderRadius: 10,
 		backgroundColor: colors.lightAccent,
 	},
+	weekButton: {
+		backgroundColor: colors.lightWeekButton,
+		padding: 5,
+		margin: 5,
+		marginTop: 10,
+		alignItems: "center",
+		width: '50%', 
+		// or use width: '50%' for half the screen width
+		alignSelf: "center",
+		borderRadius: 10,  
+	},	
+	weekButtonText: {
+		color: colors.lightText,
+		fontSize: 18,
+		fontWeight: "bold",
+	}
 });
 
 export const darkStyle = StyleSheet.create({
@@ -159,6 +175,21 @@ export const darkStyle = StyleSheet.create({
 		borderRadius: 10,
 		backgroundColor: colors.darkBackground,
 	},
+	weekButton: {
+		backgroundColor: colors.darkBackground,
+		padding: 5,
+		margin: 5,
+		marginTop: 10,
+		alignItems: "center",
+		width: '50%', 
+		alignSelf: "center",
+		borderRadius: 10,  
+	},	
+	weekButtonText: {
+		color: colors.darkText,
+		fontSize: 18,
+		fontWeight: "bold",
+	}
 });
 
 export const modalstyles = StyleSheet.create({

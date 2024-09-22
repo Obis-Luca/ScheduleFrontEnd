@@ -2,13 +2,16 @@ import { StatusBar } from "expo-status-bar";
 import React, { useState, useEffect } from "react";
 import { SelectList } from "react-native-dropdown-select-list";
 
-import { View, Button, TouchableOpacity, Text } from "react-native";
+import { View, TouchableOpacity, Text } from "react-native";
 import { useTheme } from "../context/ThemeContext";
 import { useSchedule } from "../context/ScheduleContext";
 import { useNavigation } from "@react-navigation/native";
 import { compareData } from "../utils/utils";
 import { apiProxy } from "../utils/apiProxy";
 import { darkStyle, lightStyle, dropdownStyles, buttonStyles } from "../styles/ChoosePageStyle";
+import Icon from "react-native-vector-icons/FontAwesome";
+import { colors } from "../constants/colors";
+
 
 const ChoosePage = () => {
 	const { saveSchedule } = useSchedule();
@@ -110,7 +113,6 @@ const ChoosePage = () => {
 				value: specialization.name,
 			}));
 			setSpecializations(formattedSpecializations);
-			console.log(formattedSpecializations);
 		} catch (error) {
 			console.error("Error fetching specializations:", error);
 		}
@@ -121,8 +123,6 @@ const ChoosePage = () => {
 			const data = await apiProxy.get(`/groups/filter?specialisationId=${selectedSpecialization}&year=${selectedYear}`);
 			const formattedGroups = data.map((group) => ({ key: group.id.toString(), value: group.groupNumber }));
 			setGroups(formattedGroups);
-			console.log(formattedGroups);
-			console.log(selectedSpecialization, selectedYear);
 		} catch (error) {
 			console.error("Error fetching groups:", error);
 		}
@@ -155,6 +155,39 @@ const ChoosePage = () => {
 		}
 	};
 
+	const renderSearchIcon = () => {
+		return (
+			<Icon
+			name="search"
+			size={18}
+			paddingRight={5}
+			color={theme === "dark" ? colors.darkText : colors.lightText}
+			/>
+		);
+	}
+
+	const renderArrowIcon = () => {
+		return (
+			<Icon
+			name="angle-down"
+			size={18}
+			paddingLeft={5}
+			color={theme === "dark" ? colors.darkText : colors.lightText}
+			/>
+		);
+	}
+
+	const renderCloseIcon = () => {
+		return (
+			<Icon
+			name="times"
+			size={18}
+			paddingLeft={5}
+			color={theme === "dark" ? colors.darkText : colors.lightText}
+			/>
+		);
+	}
+
 	return (
 		<View style={theme === "dark" ? darkStyle.container : lightStyle.container}>
 			<StatusBar style="auto" />
@@ -183,6 +216,11 @@ const ChoosePage = () => {
 				selected={selectedFaculty}
 				save="key"
 				setSelected={setSelectedFaculty}
+
+				searchicon={renderSearchIcon()}
+				arrowicon={renderArrowIcon()}
+				closeicon={renderCloseIcon()}
+
 				onSelect={() => {
 					fetchSpecializations();
 					setShowSpecializationDropdown(true);
@@ -206,6 +244,11 @@ const ChoosePage = () => {
 				data={specializations}
 				save="key"
 				selected={selectedSpecialization}
+
+				searchicon={renderSearchIcon()}
+				arrowicon={renderArrowIcon()}
+				closeicon={renderCloseIcon()}
+				
 				onSelect={() => {
 					resetYearDropdown();
 					setShowYearDropdown(true);
@@ -237,6 +280,11 @@ const ChoosePage = () => {
 				data={years}
 				save="key"
 				selected={selectedYear}
+
+				searchicon={renderSearchIcon()}
+				arrowicon={renderArrowIcon()}
+				closeicon={renderCloseIcon()}
+
 				onSelect={() => {
 					resetGroupDropdown();
 					fetchGroups();
@@ -267,6 +315,10 @@ const ChoosePage = () => {
 				save="value"
 				setSelected={setSelectedGroup}
 				defaultOption={{ key: "", value: "Selecteaza grupa" }}
+
+				searchicon={renderSearchIcon()}
+				arrowicon={renderArrowIcon()}
+				closeicon={renderCloseIcon()}
 			/>
 		);
 	}

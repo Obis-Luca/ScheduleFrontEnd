@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { View, Button, SectionList, Text, Linking } from "react-native";
+import { View, SectionList, Text, Linking } from "react-native";
 import { lightStyle, darkStyle } from "../../styles/HomePageStyles";
 import { useTheme } from "../../context/ThemeContext";
 import { useNavigation } from "@react-navigation/native";
@@ -7,6 +7,7 @@ import EmptyState from "./EmptyState";
 import CourseItem from "./CourseItem";
 import LocationModal from "./LocationModal";
 import { useSchedule } from "../../context/ScheduleContext";
+import { TouchableOpacity } from "react-native";
 
 const HomeScreen = () => {
 	const navigation = useNavigation();
@@ -79,9 +80,18 @@ const HomeScreen = () => {
 				<EmptyState theme={theme} navigation={navigation} />
 			) : (
 				<View style={{ flex: 1 }}>
-					<View style={theme === "dark" ? darkStyle.buttonContainer : lightStyle.buttonContainer}>
-						<Button title={weekShown ? "Week 1" : "Week 2"} onPress={toggleWeeks} />
-					</View>
+
+						{/* development \/ */}
+
+						<TouchableOpacity style={theme === "dark" ? darkStyle.weekButton : lightStyle.weekButton}
+						onPress={toggleWeeks}>
+							<Text style={theme === "dark" ? darkStyle.weekButtonText : lightStyle.weekButtonText}>
+								{weekShown ? "Week 1" : "Week 2"}
+							</Text>
+						</TouchableOpacity>
+
+						{/* development ^ */}
+
 					<SectionList
 						ref={sectionListRef}
 						style={{ width: "100%" }}
