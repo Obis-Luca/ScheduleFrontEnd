@@ -110,7 +110,6 @@ const ChoosePage = () => {
             const data = await apiProxy.get(`/specialisations/filter?faculty_id=${selectedFaculty}`);
             const formattedSpecializations = data.map((specialization) => ({ key: specialization.id.toString(), value: specialization.name }));
             setSpecializations(formattedSpecializations);
-            console.log(formattedSpecializations);
         } catch (error) {
             console.error("Error fetching specializations:", error);
         }
@@ -121,8 +120,6 @@ const ChoosePage = () => {
             const data = await apiProxy.get(`/groups/filter?specialisationId=${selectedSpecialization}&year=${selectedYear}`);
             const formattedGroups = data.map((group) => ({ key: group.id.toString(), value: group.groupNumber }));
             setGroups(formattedGroups);
-            console.log(formattedGroups);
-            console.log(selectedSpecialization, selectedYear)
         } catch (error) {
             console.error("Error fetching groups:", error);
         }
@@ -136,10 +133,12 @@ const ChoosePage = () => {
 			let week1Data = [];
 			let week2Data = [];
 			data.forEach((course) => {
-				if (course.frequency === "1") {
+				if (course.frequency === "sapt. 1") {
 					week1Data.push(course);
-				} else if (course.frequency === "2") {
+                    console.log(`Week 1 : ${course}`);
+				} else if (course.frequency === "sapt. 2") {
 					week2Data.push(course);
+                    console.log(`Week 2 : ${course}`);
 				} else {
 					week1Data.push(course);
 					week2Data.push(course);

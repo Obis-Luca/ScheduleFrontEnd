@@ -205,3 +205,79 @@ export const modalstyles = StyleSheet.create({
 		textAlign: "center",
 	},
 });
+
+export const floatingButtonStyles = StyleSheet.create({
+	floatingButton: {
+		position: 'absolute',
+		bottom: 20,
+		left: 20,
+		width: 60,
+		height: 60,
+		borderRadius: 30,
+		alignItems: 'center',
+		justifyContent: 'center',
+		elevation: 5,
+		shadowColor: '#000',
+		shadowOffset: { width: 0, height: 2 },
+		shadowOpacity: 0.8,
+		shadowRadius: 2,
+	},
+	lightButton: {
+		backgroundColor: '#ff6347',
+	},
+	darkButton: {
+		backgroundColor: '#1e90ff',
+	},
+	buttonText: {
+		fontSize: 20,
+		color: '#fff',
+	},
+
+	ConfigureModalOverlay: {
+		flex: 1,
+		backgroundColor: 'rgba(0,0,0,0.5)',
+		justifyContent: 'center',
+		alignItems: 'center',
+		paddingVertical: 50,
+	  },
+	  ConfigureModalContainer: {
+		width: '80%',               
+		maxHeight: '80%',            
+		backgroundColor: colors.darkBackground,
+		borderRadius: 20,
+		padding: 20,
+		alignItems: 'center',
+		justifyContent: 'flex-start', 
+		elevation: 10,
+		shadowColor: '#000',
+		shadowOffset: { width: 0, height: 2 },
+		shadowOpacity: 0.8,
+		shadowRadius: 5,
+	  },
+	  modalContent: {
+		paddingBottom: 0,
+	  },
+	  modalText: {
+		fontSize: 18,
+		marginBottom: 1,
+		marginRight: 1,    
+		flexWrap: 'wrap',
+		width: "90%",
+		color: "white",
+	  },
+	  courseRow: {
+		flexDirection: 'row',  
+		alignItems: 'center',   
+		width: '70%',        
+		marginBottom: 10,
+		justifyContent: 'flex-start',
+		flex: 1,
+		borderRadius: 25,
+		paddingVertical: 15,
+		paddingHorizontal: 13,
+		backgroundColor: "rgb(129, 133, 137)",
+	  },
+	  checkboxStyle: {
+    	alignSelf: 'flex-start',
+  	},
+});
