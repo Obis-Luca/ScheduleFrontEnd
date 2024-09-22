@@ -22,7 +22,8 @@ const HomeScreen = () => {
 	const [isModalVisible, setIsModalVisible] = useState(false);
 	const [isConfigureModalVisible, setIsConfigureModalVisible] = useState(false);
 	const sectionListRef = useRef(null);
-	const [selectedCourses, setSelectedCourses] = useState(hiddenCourses);
+	const [selectedCourses, setSelectedCourses] = useState(hiddenCourses || []);
+
 
 	useEffect(() => {
 		if (!isLoading) {
@@ -33,7 +34,7 @@ const HomeScreen = () => {
 
 	useEffect(() => {
 		//getNames(weekShown ? DataWeek2 : DataWeek1);
-		setSelectedCourses(hiddenCourses);
+		setSelectedCourses(hiddenCourses || []);
 		filterAndSetDataToShow();
 		//setDataToShow(formatDataForSectionList(weekShown ? DataWeek2 : DataWeek1));
 	}, [DataWeek1, DataWeek2, weekShown, hiddenCourses]);
@@ -121,7 +122,7 @@ const HomeScreen = () => {
 				updatedSelectedCourses = [...prevSelectedCourses, selectedCourse];
 			}
 			
-			saveSchedule(DataWeek1, DataWeek2, updatedSelectedCourses);
+			saveSchedule(DataWeek1, DataWeek2, updatedSelectedCourses || []);
 			return updatedSelectedCourses;
 		});
 	};
@@ -169,16 +170,19 @@ const HomeScreen = () => {
 			>
 				<View style={floatingButtonStyles.ConfigureModalOverlay}>
 					<View style={floatingButtonStyles.ConfigureModalContainer}>
-						<ScrollView contentContainerStyle={floatingButtonStyles.modalContent}>
+						<ScrollView showsVerticalScrollIndicator={false} style={floatingButtonStyles.modalContent}>
 							{courseNames.map((course, index) => (
 								<TouchableOpacity key={index} onPress={() => handleCheckboxToggle(index)}>
-									<View style={floatingButtonStyles.courseRow}>
-										<Text style={floatingButtonStyles.modalText}>{course}</Text>
-										<BouncyCheckbox
-											style={floatingButtonStyles.checkboxStyle}
-											isChecked={selectedCourses.includes(course)}
-											onPress={() => handleCheckboxToggle(index)}
-										/>
+								<View style={[
+								floatingButtonStyles.courseRow, 
+								index === courseNames.length - 1 ? { marginBottom: 0 } : null
+								]}>
+									<Text style={floatingButtonStyles.modalText}>{course}</Text>
+									<BouncyCheckbox
+										style={floatingButtonStyles.checkboxStyle}
+										isChecked={selectedCourses.includes(course)}
+										onPress={() => handleCheckboxToggle(index)}
+									/>
 									</View>
 								</TouchableOpacity>
 							))}

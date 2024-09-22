@@ -11,13 +11,18 @@ export const ScheduleProvider = ({ children }) => {
 
 	const saveSchedule = async (schedule1, schedule2, hiddenCourses) => {
 		try {
-		  saveWeek1Schedule(schedule1);
-		  saveWeek2Schedule(schedule2);
-		  setHiddenCourses(hiddenCourses);
-	
-		  await AsyncStorage.setItem("week1Schedule", JSON.stringify(schedule1));
-		  await AsyncStorage.setItem("week2Schedule", JSON.stringify(schedule2));
-		  await AsyncStorage.setItem("hiddenCourses", JSON.stringify(hiddenCourses));
+		
+			const validSchedule1 = schedule1 || [];
+			const validSchedule2 = schedule2 || [];
+			const validHiddenCourses = hiddenCourses || [];
+
+			saveWeek1Schedule(schedule1);
+			saveWeek2Schedule(schedule2);
+			setHiddenCourses(hiddenCourses);
+		
+			await AsyncStorage.setItem("week1Schedule", JSON.stringify(validSchedule1));
+			await AsyncStorage.setItem("week2Schedule", JSON.stringify(validSchedule2));
+			await AsyncStorage.setItem("hiddenCourses", JSON.stringify(validHiddenCourses));
 		  
 		} catch (error) {
 		  console.error("Error saving schedule:", error);
