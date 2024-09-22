@@ -148,6 +148,7 @@ const ChoosePage = () => {
 			week1Data.sort(compareData);
 			week2Data.sort(compareData);
 
+
 			saveSchedule(week1Data, week2Data);
 			navigation.navigate("Acasa");
 		} catch (error) {

@@ -20,6 +20,7 @@ const HomeScreen = () => {
 	const [dataToShow, setDataToShow] = useState([]);
 	const [isModalVisible, setIsModalVisible] = useState(false);
 	const sectionListRef = useRef(null);
+	const [location, setLocation] = useState(null);
 
 	useEffect(() => {
 		if (!isLoading) {
@@ -57,17 +58,20 @@ const HomeScreen = () => {
 		setExpandedItem((prevItem) => (prevItem === item ? null : item));
 	};
 
-	const handleOpenMaps = () => {
-		const location = "Universitatea+Babeș-Bolyai+din+Cluj-Napoca";
-		Linking.canOpenURL(`https://maps.apple.com/?q=${location}`).then((supported) => {
+	const handleOpenMaps = (currentLocation) => {
+
+
+		setLocation(currentLocation);
+		Linking.canOpenURL(`https://maps.apple.com/?q=${currentLocation}`).then((supported) => {
 			supported ? setIsModalVisible(true) : console.log("Maps app is not available.");
 		});
 	};
 
 	const handleModalConfirm = () => {
 		setIsModalVisible(false);
-		const location = "Universitatea+Babeș-Bolyai+din+Cluj-Napoca";
-		Linking.openURL(`https://maps.apple.com/?q=${location}`);
+		location ? Linking.openURL(`https://maps.apple.com/?q=${location}`) : 
+		Linking.openURL(`https://maps.apple.com/?q=Cluj-Napoca`) 
+
 	};
 
 	const renderSectionHeader = ({ section: { title } }) => (
@@ -103,7 +107,7 @@ const HomeScreen = () => {
 								expandedItem={expandedItem}
 								toggleItem={toggleItem}
 								theme={theme}
-								handleOpenMaps={handleOpenMaps}
+								handleOpenMaps={() => handleOpenMaps(item.location)}
 							/>
 						)}
 						renderSectionHeader={renderSectionHeader}
