@@ -50,6 +50,7 @@ const HomeScreen = () => {
 	};
 
 	const toggleWeeks = () => {
+		console.log("Weeks toggled");
 		setWeekShown((prevState) => !prevState);
 		setExpandedItem(null);
 	};
@@ -59,8 +60,6 @@ const HomeScreen = () => {
 	};
 
 	const handleOpenMaps = (currentLocation) => {
-
-
 		setLocation(currentLocation);
 		Linking.canOpenURL(`https://maps.apple.com/?q=${currentLocation}`).then((supported) => {
 			supported ? setIsModalVisible(true) : console.log("Maps app is not available.");
@@ -86,7 +85,7 @@ const HomeScreen = () => {
 				<View style={{ flex: 1 }}>
 
 						{/* development \/ */}
-
+						
 						<TouchableOpacity style={theme === "dark" ? darkStyle.weekButton : lightStyle.weekButton}
 						onPress={toggleWeeks}>
 							<Text style={theme === "dark" ? darkStyle.weekButtonText : lightStyle.weekButtonText}>
