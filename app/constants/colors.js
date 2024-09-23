@@ -14,4 +14,5 @@ export const colors = {
 	error: "#FF5C5C", // Soft Red
 	buttonColor: "#3f51b5", // Royal Blue for buttons
 	white: "#FFFFFF",
+	lightWeekButton: "#EBEBEB",
 };
