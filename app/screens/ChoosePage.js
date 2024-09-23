@@ -136,9 +136,9 @@ const ChoosePage = () => {
 			let week1Data = [];
 			let week2Data = [];
 			data.forEach((course) => {
-				if (course.frequency === "1") {
+				if (course.frequency === "sapt. 1") {
 					week1Data.push(course);
-				} else if (course.frequency === "2") {
+				} else if (course.frequency === "sapt. 2") {
 					week2Data.push(course);
 				} else {
 					week1Data.push(course);

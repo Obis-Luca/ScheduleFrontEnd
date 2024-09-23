@@ -50,12 +50,11 @@ const HomeScreen = () => {
 	};
 
 	const toggleWeeks = () => {
-		console.log("Weeks toggled");
 		setWeekShown((prevState) => !prevState);
 		setExpandedItem(null);
 	};
 
-	const toggleItem = (item) => {
+	const toggleItem = (item) => {	
 		setExpandedItem((prevItem) => (prevItem === item ? null : item));
 	};
 
@@ -84,16 +83,12 @@ const HomeScreen = () => {
 			) : (
 				<View style={{ flex: 1 }}>
 
-						{/* development \/ */}
-						
 						<TouchableOpacity style={theme === "dark" ? darkStyle.weekButton : lightStyle.weekButton}
 						onPress={toggleWeeks}>
 							<Text style={theme === "dark" ? darkStyle.weekButtonText : lightStyle.weekButtonText}>
 								{weekShown ? "Week 1" : "Week 2"}
 							</Text>
 						</TouchableOpacity>
-
-						{/* development ^ */}
 
 					<SectionList
 						ref={sectionListRef}
