@@ -18,117 +18,117 @@ const ChoosePage = () => {
 	const { theme } = useTheme();
 	const navigation = useNavigation();
 
-	const [showSpecializationDropdown, setShowSpecializationDropdown] = useState(false);
-	const [showGroupDropdown, setShowGroupDropdown] = useState(false);
-	const [showYearDropdown, setShowYearDropdown] = useState(false);
-	const [showSubmitOptionsButton, setShowSubmitOptionsButton] = useState(false);
+    const [showSpecializationDropdown, setShowSpecializationDropdown] = useState(false);
+    const [showGroupDropdown, setShowGroupDropdown] = useState(false);
+    const [showYearDropdown, setShowYearDropdown] = useState(false);
+    const [showSubmitOptionsButton, setShowSubmitOptionsButton] = useState(false);
 
-	const [selectedFaculty, setSelectedFaculty] = useState(null);
-	const [specializationName, setSpecializationName] = useState("");
-	const [selectedSpecialization, setSelectedSpecialization] = useState(null);
-	const [selectedYear, setSelectedYear] = useState(null);
-	const [selectedGroup, setSelectedGroup] = useState(null);
-	const [faculties, setFaculties] = useState([]);
-	const [specializations, setSpecializations] = useState([]);
-	const [groups, setGroups] = useState([]);
-	const [years, setYears] = useState([]);
+    const [selectedFaculty, setSelectedFaculty] = useState(null);
+    const [specializationName, setSpecializationName] = useState("");
+    const [selectedSpecialization, setSelectedSpecialization] = useState(null);
+    const [selectedYear, setSelectedYear] = useState(null);
+    const [selectedGroup, setSelectedGroup] = useState(null);
+    const [faculties, setFaculties] = useState([]);
+    const [specializations, setSpecializations] = useState([]);
+    const [groups, setGroups] = useState([]);
+    const [years, setYears] = useState([]);
 
-	useEffect(() => {
-		fetchFaculties();
-	}, []);
+    useEffect(() => {
+        fetchFaculties();
+    }, []);
 
-	useEffect(() => {
-		if (selectedSpecialization) {
-			setShowYearDropdown(true);
-			generateExistentYears(specializationName);
-		} else {
-			setShowYearDropdown(false);
-		}
-	}, [selectedSpecialization]);
+    useEffect(() => {
+        if (selectedSpecialization) {
+            setShowYearDropdown(true);
+            generateExistentYears(specializationName);
+        }
+        else {
+        setShowYearDropdown(false);  
+        }
+    }, [selectedSpecialization]);
 
-	useEffect(() => {
-		if (selectedYear) {
-			setShowGroupDropdown(true);
-		} else setShowGroupDropdown(false);
-	}, [selectedYear]);
+    useEffect(() => {
+        if (selectedYear) {
+            setShowGroupDropdown(true);
+        }
+        else setShowGroupDropdown(false);
+    }, [selectedYear]);
 
-	useEffect(() => {
-		if (selectedGroup) {
-			setShowSubmitOptionsButton(true);
-		} else {
-			setShowSubmitOptionsButton(false);
-		}
-	}, [selectedGroup]);
+    useEffect(() => {
+        if (selectedGroup) {
+            setShowSubmitOptionsButton(true);
+        }
+        else
+        {
+            setShowSubmitOptionsButton(false);
+        }
+    }, [selectedGroup]);
 
-	const resetYearDropdown = () => {
-		setSelectedYear(null);
-		setShowGroupDropdown(false);
-		setGroups([]);
-		setShowSubmitOptionsButton(false);
-	};
 
-	const resetGroupDropdown = () => {
-		setSelectedGroup(null);
-		setGroups([]);
-		setShowSubmitOptionsButton(false);
-	};
+    const resetYearDropdown = () => {
+        setSelectedYear(null); 
+        setShowGroupDropdown(false);
+        setGroups([]);
+        setShowSubmitOptionsButton(false);
+    };
 
-	function generateExistentYears(specialisation) {
-		const year1Specialisations = [
-			"INGINERIA INFORMATIEI MAGHIARA",
-			"INTELIGENTA ARTIFICIALA ENGLEZA",
-			"INGINERIA INFORMATIEI ENGLEZA",
-			"PSIHOLOGIE",
-		];
+    const resetGroupDropdown = () => {
+        setSelectedGroup(null);
+        setGroups([]);
+        setShowSubmitOptionsButton(false);
+    };
 
-		let currentYears = [];
 
-		if (year1Specialisations.includes(specialisation.toUpperCase())) {
-			currentYears = [{ key: "1", value: "   1   " }];
-		} else {
-			currentYears = [
-				{ key: "1", value: "   1   " },
-				{ key: "2", value: "   2   " },
-				{ key: "3", value: "   3   " },
-			];
-		}
-		setYears(currentYears);
-	}
+    function generateExistentYears(specialisation) {
+        const year1Specialisations = ['INGINERIA INFORMATIEI MAGHIARA', 'INTELIGENTA ARTIFICIALA ENGLEZA', 'INGINERIA INFORMATIEI ENGLEZA', 'PSIHOLOGIE'];
+        
+        let currentYears = [];
 
-	const fetchFaculties = async () => {
-		try {
-			const data = await apiProxy.get("/faculties");
-			const formattedFaculties = data.map((faculty) => ({ key: faculty.id.toString(), value: faculty.name }));
-			setFaculties(formattedFaculties);
-		} catch (error) {
-			console.error("Error fetching faculties:", error);
-		}
-	};
+        if(year1Specialisations.includes(specialisation.toUpperCase())) {
+            currentYears = [
+                { key: "1", value: "   1   " },
+            ];
+        } else {
+            currentYears = [
+                { key: "1", value: "   1   " },
+                { key: "2", value: "   2   " },
+                { key: "3", value: "   3   " },
+            ];
+        }
+        setYears(currentYears);
+    }
 
-	const fetchSpecializations = async () => {
-		try {
-			const data = await apiProxy.get(`/specialisations/filter?faculty_id=${selectedFaculty}`);
-			const formattedSpecializations = data.map((specialization) => ({
-				key: specialization.id.toString(),
-				value: specialization.name,
-			}));
-			setSpecializations(formattedSpecializations);
-		} catch (error) {
-			console.error("Error fetching specializations:", error);
-		}
-	};
+    const fetchFaculties = async () => {
+        try {
+            const data = await apiProxy.get("/faculties");
+            const formattedFaculties = data.map((faculty) => ({ key: faculty.id.toString(), value: faculty.name }));
+            setFaculties(formattedFaculties);
+        } catch (error) {
+            console.error("Error fetching faculties:", error);
+        }
+    };
 
-	const fetchGroups = async () => {
-		try {
-			const data = await apiProxy.get(`/groups/filter?specialisationId=${selectedSpecialization}&year=${selectedYear}`);
-			const formattedGroups = data.map((group) => ({ key: group.id.toString(), value: group.groupNumber }));
-			setGroups(formattedGroups);
-		} catch (error) {
-			console.error("Error fetching groups:", error);
-		}
-	};
+    const fetchSpecializations = async () => {
+        try {
+            const data = await apiProxy.get(`/specialisations/filter?faculty_id=${selectedFaculty}`);
+            const formattedSpecializations = data.map((specialization) => ({ key: specialization.id.toString(), value: specialization.name }));
+            setSpecializations(formattedSpecializations);
+        } catch (error) {
+            console.error("Error fetching specializations:", error);
+        }
+    };
 
-	const populateWeeks = async () => {
+    const fetchGroups = async () => {
+        try {
+            const data = await apiProxy.get(`/groups/filter?specialisationId=${selectedSpecialization}&year=${selectedYear}`);
+            const formattedGroups = data.map((group) => ({ key: group.id.toString(), value: group.groupNumber }));
+            setGroups(formattedGroups);
+        } catch (error) {
+            console.error("Error fetching groups:", error);
+        }
+    };
+
+    const populateWeeks = async () => {
 		try {
 			const data = await apiProxy.get(
 				`/courses/filter?groupId=${selectedGroup}&specialisationId=${selectedSpecialization}&year=${selectedYear}`
@@ -140,6 +140,7 @@ const ChoosePage = () => {
 					week1Data.push(course);
 				} else if (course.frequency === "sapt. 2") {
 					week2Data.push(course);
+                    console.log(`Week 2 : ${course}`);
 				} else {
 					week1Data.push(course);
 					week2Data.push(course);
