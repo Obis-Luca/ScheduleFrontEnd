@@ -41,4 +41,22 @@ const animatedView = StyleSheet.create({
 	},
 });
 
-export { darkMode, lightMode, animatedView };
+const modalStyles = StyleSheet.create({
+	modalContainer: {
+		flex: 1,
+		backgroundColor: 'white', // Add background color to make content visible
+		padding: 20,
+	},
+	chooseColorDiv: {
+		marginBottom: 20,
+	},
+	text: {
+		fontSize: 16,
+		marginBottom: 10,
+	},
+	closeButton: {
+		backgroundColor: '#007bff', // Add background color for better visibility
+	},
+})
+
+export { darkMode, lightMode, animatedView, modalStyles };

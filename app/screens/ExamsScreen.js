@@ -5,7 +5,7 @@ import { useTheme } from "../context/ThemeContext";
 import Icon from "react-native-vector-icons/FontAwesome";
 import Modal from "react-native-modal";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import { Calendar, Clock, Pen, TrashCan, LocationPin } from "../config/Icons";
+import { Calendar, Clock, Pen, TrashCan, LocationPin } from "../constants/Icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Swipeable from "react-native-gesture-handler/Swipeable";
 import { Vibration } from "react-native";

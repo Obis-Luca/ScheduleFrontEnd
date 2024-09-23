@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Modal, View, Button, SectionList, Text, Linking, TouchableOpacity, ScrollView } from "react-native";
 import { lightStyle, darkStyle, floatingButtonStyles } from "../../styles/HomePageStyles";
+import { View, SectionList, Text, Linking } from "react-native";
+import { lightStyle, darkStyle } from "../../styles/HomePageStyles";
 import { useTheme } from "../../context/ThemeContext";
 import { useNavigation } from "@react-navigation/native";
 import EmptyState from "./EmptyState";
@@ -8,6 +10,7 @@ import CourseItem from "./CourseItem";
 import LocationModal from "./LocationModal";
 import { useSchedule } from "../../context/ScheduleContext";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
+import { TouchableOpacity } from "react-native";
 
 const HomeScreen = () => {
 	const navigation = useNavigation();
@@ -23,7 +26,7 @@ const HomeScreen = () => {
 	const [isConfigureModalVisible, setIsConfigureModalVisible] = useState(false);
 	const sectionListRef = useRef(null);
 	const [selectedCourses, setSelectedCourses] = useState(hiddenCourses || []);
-
+	const [location, setLocation] = useState(null);
 
 	useEffect(() => {
 		if (!isLoading) {
@@ -67,21 +70,22 @@ const HomeScreen = () => {
 		setExpandedItem(null);
 	};
 
-	const toggleItem = (item) => {
+	const toggleItem = (item) => {	
 		setExpandedItem((prevItem) => (prevItem === item ? null : item));
 	};
 
-	const handleOpenMaps = () => {
-		const location = "Universitatea+Babeș-Bolyai+din+Cluj-Napoca";
-		Linking.canOpenURL(`https://maps.apple.com/?q=${location}`).then((supported) => {
+	const handleOpenMaps = (currentLocation) => {
+		setLocation(currentLocation);
+		Linking.canOpenURL(`https://maps.apple.com/?q=${currentLocation}`).then((supported) => {
 			supported ? setIsModalVisible(true) : console.log("Maps app is not available.");
 		});
 	};
 
 	const handleModalConfirm = () => {
 		setIsModalVisible(false);
-		const location = "Universitatea+Babeș-Bolyai+din+Cluj-Napoca";
-		Linking.openURL(`https://maps.apple.com/?q=${location}`);
+		location ? Linking.openURL(`https://maps.apple.com/?q=${location}`) : 
+		Linking.openURL(`https://maps.apple.com/?q=Cluj-Napoca`) 
+
 	};
 
 	const renderSectionHeader = ({ section: { title } }) => (
@@ -133,9 +137,13 @@ const HomeScreen = () => {
 				<EmptyState theme={theme} navigation={navigation} />
 			) : (
 				<View style={{ flex: 1 }}>
-					<View style={theme === "dark" ? darkStyle.buttonContainer : lightStyle.buttonContainer}>
-						<Button title={weekShown ? "Week 2" : "Week 1"} onPress={toggleWeeks} />
-					</View>
+						<TouchableOpacity style={theme === "dark" ? darkStyle.weekButton : lightStyle.weekButton}
+						onPress={toggleWeeks}>
+							<Text style={theme === "dark" ? darkStyle.weekButtonText : lightStyle.weekButtonText}>
+								{weekShown ? "Week 1" : "Week 2"}
+							</Text>
+						</TouchableOpacity>
+
 					<SectionList
 						ref={sectionListRef}
 						style={{ width: "100%" }}
@@ -147,7 +155,7 @@ const HomeScreen = () => {
 								expandedItem={expandedItem}
 								toggleItem={toggleItem}
 								theme={theme}
-								handleOpenMaps={handleOpenMaps}
+								handleOpenMaps={() => handleOpenMaps(item.location)}
 							/>
 						)}
 						renderSectionHeader={renderSectionHeader}

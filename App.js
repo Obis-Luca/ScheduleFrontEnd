@@ -1,7 +1,6 @@
 import { MaterialCommunityIcons } from "@expo/vector-icons"; 
 import "react-native-gesture-handler";
 import * as React from "react";
-import { useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import HomeScreen from "./app/screens/Home/HomeScreen";
