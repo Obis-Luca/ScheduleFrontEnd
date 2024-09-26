@@ -98,7 +98,6 @@ export const lightStyle = StyleSheet.create({
 
 export const darkStyle = StyleSheet.create({
 	itemContainer: {
-		backgroundColor: colors.darkBackground,
 		color: colors.darkText,
 		padding: 15,
 		marginVertical: 6,
