@@ -30,7 +30,8 @@ const CourseItem = ({ item, expandedItem, toggleItem, theme, handleOpenMaps }) =
         return theme === "dark" ? colors.darkBackground : colors.lightBackground;
     }
   }
-	
+
+	// test
 	return(
 		<TouchableOpacity onPress={() => toggleItem(item)}>
 			<View style={
@@ -38,7 +39,9 @@ const CourseItem = ({ item, expandedItem, toggleItem, theme, handleOpenMaps }) =
           { backgroundColor: getBackgroundColor(item.courseType) }]
 }>
 				<View style={theme === "dark" ? darkStyle.itemHeader : lightStyle.itemHeader}>
-					<Text style={theme === "dark" ? darkStyle.title : lightStyle.title}>{t(`course_names.${item.courseName}`)}</Text>
+					<Text style={theme === "dark" ? darkStyle.title : lightStyle.title}>{
+          expandedItem ? t(`course_names.${item.courseName}`) : truncateCourseName(t(`course_names.${item.courseName}`))
+          }</Text>
 					<View
 						style={
 							theme === "dark" ? darkStyle.div_for_hour_and_dropdownArrow : lightStyle.div_for_hour_and_dropdownArrow

@@ -1,13 +1,12 @@
 import React, { useState } from "react";
-import { View, Text, Switch, ScrollView } from "react-native";
-import { animatedView, darkMode, lightMode } from "../styles/SettingsStyle";
-import Animated, { FadeInDown } from "react-native-reanimated";
+import { View, Text, Switch, ScrollView, TouchableOpacity } from "react-native";
+import {  darkMode, lightMode } from "../styles/SettingsStyle";
 import { useTheme } from "../context/ThemeContext";
 import { useTranslation } from 'react-i18next';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { SelectList } from "react-native-dropdown-select-list";
 import { dropdownStyles } from "../styles/ChoosePageStyle"; 
-
+import { styles } from "../styles/SettingsStyle";
 import { Modal, Portal, Provider } from 'react-native-paper';
 import ColorPicker, { HueSlider, Panel1 } from 'reanimated-color-picker';
 import { useColors } from '../context/ColorsContext';
@@ -32,15 +31,10 @@ const SettingsScreen = () => {
     { label: 'Français', value: 'Français' },
     { label: 'Espagnol', value: 'Espagnol' },
   ];
-
-
   
-  
-  
-  
-    const toggleModal = (pickerType) => {
-    setActivePicker(pickerType);
-    setIsModalVisible(!isModalVisible);
+  const toggleModal = (pickerType) => {
+  setActivePicker(pickerType);
+  setIsModalVisible(!isModalVisible);
   };
 
   const handleColorChange = (color) => {
@@ -63,10 +57,6 @@ const SettingsScreen = () => {
       <View style={[styles.colorPreview, { backgroundColor: colors[colorKey] }]} />
     </TouchableOpacity>
   );
-
-
-
-
 
 
   const handleLanguageChange = async (language) => {
@@ -120,9 +110,9 @@ const SettingsScreen = () => {
     <Provider>
       <ScrollView style={[styles.container, themeStyles.bigView]}>
         <View style={styles.section}>
-          <Text style={[styles.sectionTitle, themeStyles.text
+          <Text style={[styles.sectionTitle, themeStyles.text]}>
              {t('settings_page.choose_theme')}
-            </Text>
+          </Text>
           <View style={styles.themeToggle}>
             <Switch
               trackColor={{ false: '#767577', true: '#81b0ff' }}
@@ -133,13 +123,6 @@ const SettingsScreen = () => {
           </View>
         </View>
 
-        
-        <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginBottom: 0, marginRight: 10 }}>
-          <Text style={theme === "dark" ? darkMode.text : lightMode.text}>
-            {t('settings_page.choose_language')}
-          </Text>
-          <LanguageDropdown />
-        </View>
       
 
         <View style={styles.section}>
@@ -172,6 +155,17 @@ const SettingsScreen = () => {
             </TouchableOpacity>
           </Modal>
         </Portal>
+
+
+        
+        <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginBottom: 0, marginRight: 10 }}>
+          <Text style={theme === "dark" ? darkMode.text : lightMode.text}>
+            {t('settings_page.choose_language')}
+          </Text>
+          <LanguageDropdown />
+        </View>
+
+
       </ScrollView>
     </Provider>
   );
