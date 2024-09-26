@@ -10,13 +10,15 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import Swipeable from "react-native-gesture-handler/Swipeable";
 import { Vibration } from "react-native";
 import Animated, { FadeInDown } from "react-native-reanimated";
+import { useTranslation } from 'react-i18next';
 
 const ExamsScreen = () => {
 	const { theme } = useTheme();
 	const [date, setDate] = useState(new Date());
 	const [time, setTime] = useState(new Date());
-	const [dateDisplay, setDateDisplay] = useState("Alege data");
-	const [timeDisplay, setTimeDisplay] = useState("Alege ora");
+	const { t, i18n } = useTranslation();
+	const [dateDisplay, setDateDisplay] = useState(t('exam_page.enter_date'));
+	const [timeDisplay, setTimeDisplay] = useState(t('exam_page.enter_hour'));
 	const [roomNumber, setRoomNumber] = useState("");
 	const [modalVisible, setModalVisible] = useState(false);
 	const [inputText, setInputText] = useState("");
@@ -29,32 +31,34 @@ const ExamsScreen = () => {
 	const [timeDisplayError, setTimeDisplayError] = useState("");
 	const [roomNumberError, setRoomNumberError] = useState("");
 
+	
+
 	const validateFields = () => {
 		let isValid = true;
 
 		if (inputText.trim() === "") {
-			setInputTextError("Please enter the exam name.");
+			setInputTextError(t('exam_page.enter_exam_name'));
 			isValid = false;
 		} else {
 			setInputTextError("");
 		}
 
-		if (dateDisplay === "Alege data" || dateDisplay === "Choose date") {
-			setDateDisplayError("Please select a date.");
+		if (dateDisplay === t('exam_page.enter_date')) {
+			setDateDisplayError(t('exam_page.enter_date'));
 			isValid = false;
 		} else {
 			setDateDisplayError("");
 		}
 
-		if (timeDisplay === "Alege ora" || timeDisplay === "Choose time") {
-			setTimeDisplayError("Please select a time.");
+		if (timeDisplay === t('exam_page.enter_hour')) {
+			setTimeDisplayError("t('exam_page.enter_hour')");
 			isValid = false;
 		} else {
 			setTimeDisplayError("");
 		}
 
 		if (roomNumber.trim() === "") {
-			setRoomNumberError("Please enter the room number.");
+			setRoomNumberError("t('exam_page.enter_location')");
 			isValid = false;
 		} else {
 			setRoomNumberError("");
@@ -94,7 +98,7 @@ const ExamsScreen = () => {
 		if (validateFields()) {
 			console.log("Fields are valid, adding exam...");
 			const newExam = {
-				id: Math.random().toString(), // Add a unique id
+				id: Math.random().toString(), 
 				name: inputText,
 				date: dateDisplay,
 				time: timeDisplay,
@@ -111,8 +115,8 @@ const ExamsScreen = () => {
 			setExams(updatedExams);
 			setInputText("");
 			setRoomNumber("");
-			setDateDisplay("Choose date");
-			setTimeDisplay("Choose time");
+			setDateDisplay(t('exam_page.enter_date'));
+			setTimeDisplay(t('exam_page.enter_hour'));
 			setModalVisible(false);
 			setEditingExamIndex(null);
 			await AsyncStorage.setItem("exams", JSON.stringify(updatedExams)); // Save exams to AsyncStorage
@@ -155,7 +159,7 @@ const ExamsScreen = () => {
 					fontSize: 20,
 					fontWeight: "bold",
 				}}>
-				{"No added exams.."}
+				{t('exam_page.empty_message')}
 			</Text>
 		</Animated.View>
 	);
@@ -251,7 +255,7 @@ const ExamsScreen = () => {
 				<TextInput
 					style={{ height: 40, borderColor: "gray", borderWidth: 1, borderRadius: 10, paddingLeft: 10, marginTop: 10 }}
 					onChangeText={(text) => setInputText(text)}
-					placeholder={"Introdu numele examenului"}
+					placeholder={t('exam_page.enter_exam_name')}
 					value={inputText}
 				/>
 
@@ -308,7 +312,7 @@ const ExamsScreen = () => {
 							justifyContent: "center",
 						}}
 						onChangeText={(text) => setRoomNumber(text)}
-						placeholder={"Introdu locatia"}
+						placeholder={t('exam_page.enter_location')}
 						value={roomNumber}
 					/>
 					<View style={{ marginLeft: 20 }}>
@@ -329,7 +333,7 @@ const ExamsScreen = () => {
 							alignItems: "center",
 						}}
 						onPress={() => addExam()}>
-						<Text style={{ color: "black", textAlign: "center" }}>{"Adauga examen"}</Text>
+						<Text style={{ color: "black", textAlign: "center" }}>{t('exam_page.add_exam_button')}</Text>
 					</TouchableOpacity>
 				</View>
 			</View>

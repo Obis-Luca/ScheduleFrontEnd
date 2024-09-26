@@ -1,7 +1,7 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useState, useEffect } from "react";
 import { SelectList } from "react-native-dropdown-select-list";
-
+import { useTranslation } from 'react-i18next';
 import { View, TouchableOpacity, Text } from "react-native";
 import { useTheme } from "../context/ThemeContext";
 import { useSchedule } from "../context/ScheduleContext";
@@ -14,6 +14,8 @@ const ChoosePage = () => {
 	const { saveSchedule } = useSchedule();
 	const { theme } = useTheme();
 	const navigation = useNavigation();
+
+    const { t, i18n } = useTranslation();
 
     const [showSpecializationDropdown, setShowSpecializationDropdown] = useState(false);
     const [showGroupDropdown, setShowGroupDropdown] = useState(false);
@@ -148,7 +150,7 @@ const ChoosePage = () => {
 			week2Data.sort(compareData);
 
 			saveSchedule(week1Data, week2Data);
-			navigation.navigate("Acasa");
+			navigation.navigate(t('home_page.top_title'));
 		} catch (error) {
 			console.error("Error fetching courses:", error);
 		}
@@ -171,14 +173,20 @@ const ChoosePage = () => {
         const itemHeight = 55; 
         const dropdownHeight = faculties.length * itemHeight;
     
+        
+        const translatedFaculties = faculties.map(faculty => ({
+            key: faculty.key, 
+            value: t(`faculties.${faculty.value}`) 
+        }));
+    
         return (
             <SelectList
                 boxStyles={dropdownStyles[theme].box}
                 dropdownStyles={{ ...dropdownStyles[theme].dropdown, height: dropdownHeight }}
                 inputStyles={dropdownStyles[theme].text}
                 dropdownTextStyles={dropdownStyles[theme].text}
-                placeholder={"Selecteaza facultatea"}
-                data={faculties}
+                placeholder={t('choose_page.select_faculty')} 
+                data={translatedFaculties} 
                 selected={selectedFaculty}
                 save="key"
                 setSelected={setSelectedFaculty}
@@ -189,10 +197,17 @@ const ChoosePage = () => {
             />
         );
     }
+    
 
     function SpecializationDropdown() {
         const itemHeight = 45; 
         const dropdownHeight = Math.min(specializations.length * itemHeight, 200);
+    
+       
+        const translatedSpecializations = specializations.map(specialization => ({
+            key: specialization.key, 
+            value: t(`specializations.${specialization.value}`) 
+        }));
     
         return (
             <SelectList
@@ -200,9 +215,9 @@ const ChoosePage = () => {
                 dropdownStyles={dropdownStyles[theme].dropdown}
                 inputStyles={dropdownStyles[theme].text}
                 dropdownTextStyles={dropdownStyles[theme].text}
-                placeholder={"Selecteaza specializarea"}
+                placeholder={t('choose_page.select_specialisation')} 
                 maxHeight={dropdownHeight}
-                data={specializations}
+                data={translatedSpecializations}
                 save="key"
                 selected={selectedSpecialization}
                 onSelect={() => {
@@ -216,10 +231,11 @@ const ChoosePage = () => {
                         setSpecializationName(selected.value);
                     }
                 }}
-                defaultOption={{ key: "", value: "Selecteaza specializarea" }}
+                defaultOption={{ key: "", value: t('choose_page.select_specialisation') }}
             />
         );
     }
+    
 
     function YearDropdown() {
         const itemHeight = 44; 
@@ -232,7 +248,7 @@ const ChoosePage = () => {
                 dropdownStyles={{ ...dropdownStyles[theme].dropdown, height: dropdownHeight }}
                 inputStyles={dropdownStyles[theme].text}
                 dropdownTextStyles={dropdownStyles[theme].text}
-                placeholder={"Selecteaza anul"}
+                placeholder={t('choose_page.select_year')}
                 data={years}
                 save="key"
                 selected={selectedYear}
@@ -243,7 +259,7 @@ const ChoosePage = () => {
                 setSelected={(key) => {
                     setSelectedYear(key);
                 }}
-                defaultOption={{ key: "", value: "Selecteaza anul" }} 
+                defaultOption={{ key: "", value: t('choose_page.select_year') }} 
             />
         );
     }
@@ -259,13 +275,13 @@ const ChoosePage = () => {
                 dropdownStyles={{ ...dropdownStyles[theme].dropdown, height: dropdownHeight }}
                 inputStyles={dropdownStyles[theme].text}
                 dropdownTextStyles={dropdownStyles[theme].text}
-                placeholder={"Selecteaza grupa"}
+                placeholder={t('choose_page.select_group')}
                 maxHeight={dropdownHeight}
                 data={groups}
                 selected={selectedGroup}
                 save="value"
                 setSelected={setSelectedGroup}
-                defaultOption={{ key: "", value: "Selecteaza grupa" }} 
+                defaultOption={{ key: "", value: t('choose_page.select_group') }} 
             />
         );
     }
@@ -273,7 +289,7 @@ const ChoosePage = () => {
     function SubmitButton() {
         return (
             <TouchableOpacity style={buttonStyles.button} onPress={populateWeeks}>
-                <Text style={buttonStyles.buttonText}>Submit</Text>
+                <Text style={buttonStyles.buttonText}>{t('choose_page.top_title')}</Text>
             </TouchableOpacity>
         );
     }

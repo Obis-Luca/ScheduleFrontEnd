@@ -3,8 +3,13 @@ import { Text, Image, TouchableOpacity } from "react-native";
 import Animated, { FadeInDown } from "react-native-reanimated";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { lightStyle, darkStyle } from "../../styles/HomePageStyles";
+import { useTranslation } from 'react-i18next';
 
-const EmptyState = ({ theme, navigation }) => (
+const EmptyState = ({ theme, navigation }) => {
+	
+	const { t, i18n } = useTranslation();
+
+	return(
 	<>
 		<Animated.View entering={FadeInDown.duration(800).springify()}>
 			<Image
@@ -30,15 +35,16 @@ const EmptyState = ({ theme, navigation }) => (
 					fontSize: 20,
 					fontWeight: "bold",
 				}}>
-				{"Nu ai cursuri adaugate.."}
+				{t("home_page.empty_state")}
 			</Text>
 		</Animated.View>
 		<TouchableOpacity
 			style={theme === "dark" ? darkStyle.addButton : lightStyle.addButton}
-			onPress={() => navigation.navigate("Alege orar")}>
+			onPress={() => navigation.navigate(t("choose_page.top_title"))}>
 			<Icon name="plus" size={24} color="#fff" />
 		</TouchableOpacity>
 	</>
-);
+	)
+};
 
 export default EmptyState;

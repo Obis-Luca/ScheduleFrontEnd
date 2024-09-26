@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Modal, View, Button, SectionList, Text, Linking, TouchableOpacity, ScrollView } from "react-native";
+import { Image, Modal, View, Button, SectionList, Text, Linking, TouchableOpacity, ScrollView } from "react-native";
 import { lightStyle, darkStyle, floatingButtonStyles } from "../../styles/HomePageStyles";
 import { useTheme } from "../../context/ThemeContext";
 import { useNavigation } from "@react-navigation/native";
@@ -8,6 +8,8 @@ import CourseItem from "./CourseItem";
 import LocationModal from "./LocationModal";
 import { useSchedule } from "../../context/ScheduleContext";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
+import { useTranslation } from 'react-i18next';
+
 
 const HomeScreen = () => {
 	const navigation = useNavigation();
@@ -23,7 +25,7 @@ const HomeScreen = () => {
 	const [isConfigureModalVisible, setIsConfigureModalVisible] = useState(false);
 	const sectionListRef = useRef(null);
 	const [selectedCourses, setSelectedCourses] = useState(hiddenCourses || []);
-
+	const { t, i18n } = useTranslation();
 
 	useEffect(() => {
 		if (!isLoading) {
@@ -33,14 +35,12 @@ const HomeScreen = () => {
 	}, [isLoading, asyncStorageWeek1Schedule, asyncStorageWeek2Schedule]);
 
 	useEffect(() => {
-		//getNames(weekShown ? DataWeek2 : DataWeek1);
 		setSelectedCourses(hiddenCourses || []);
 		filterAndSetDataToShow();
-		//setDataToShow(formatDataForSectionList(weekShown ? DataWeek2 : DataWeek1));
 	}, [DataWeek1, DataWeek2, weekShown, hiddenCourses]);
 
 	const filterAndSetDataToShow = () => {
-		const data = weekShown ? DataWeek2 : DataWeek1;
+		const data = weekShown ? (DataWeek2 || []) : (DataWeek1 || [])
 		getNames(data);
 		const filteredData = data.filter(item => !selectedCourses.includes(item.courseName));
 		setDataToShow(formatDataForSectionList(filteredData));
@@ -85,7 +85,7 @@ const HomeScreen = () => {
 	};
 
 	const renderSectionHeader = ({ section: { title } }) => (
-		<Text style={theme === "dark" ? darkStyle.dayHeader : lightStyle.dayHeader}>{title}</Text>
+		<Text style={theme === "dark" ? darkStyle.dayHeader : lightStyle.dayHeader}>{t(`home_page.${title}`)}</Text>
 	);
 
 	const getNames = (data) =>
@@ -134,7 +134,7 @@ const HomeScreen = () => {
 			) : (
 				<View style={{ flex: 1 }}>
 					<View style={theme === "dark" ? darkStyle.buttonContainer : lightStyle.buttonContainer}>
-						<Button title={weekShown ? "Week 2" : "Week 1"} onPress={toggleWeeks} />
+						<Button title={weekShown ? t("home_page.week_2") : t("home_page.week_1")} onPress={toggleWeeks} />
 					</View>
 					<SectionList
 						ref={sectionListRef}
@@ -156,10 +156,12 @@ const HomeScreen = () => {
 			)}
 
 			<TouchableOpacity
-				style={[floatingButtonStyles.floatingButton, theme === "dark" ? floatingButtonStyles.darkButton : floatingButtonStyles.lightButton]}
-				onPress={handleOpenConfigureModal}
-			>
-				<Text style={floatingButtonStyles.buttonText}>-</Text>
+			style={[floatingButtonStyles.floatingButton, theme === "dark" ? floatingButtonStyles.darkButton : floatingButtonStyles.lightButton]}
+			onPress={handleOpenConfigureModal}>
+				<Image 
+					source={require('../../images/hide.png')} 
+					style={{ width: 35, height: 35 }}           
+				/>
 			</TouchableOpacity>
 
 			<Modal
@@ -177,7 +179,7 @@ const HomeScreen = () => {
 								floatingButtonStyles.courseRow, 
 								index === courseNames.length - 1 ? { marginBottom: 0 } : null
 								]}>
-									<Text style={floatingButtonStyles.modalText}>{course}</Text>
+									<Text style={floatingButtonStyles.modalText}>{t(`course_names.${course}`)}</Text>
 									<BouncyCheckbox
 										style={floatingButtonStyles.checkboxStyle}
 										isChecked={selectedCourses.includes(course)}
