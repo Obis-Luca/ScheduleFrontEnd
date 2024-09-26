@@ -1,7 +1,7 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useState, useEffect } from "react";
 import { SelectList } from "react-native-dropdown-select-list";
-
+import { useTranslation } from 'react-i18next';
 import { View, TouchableOpacity, Text } from "react-native";
 import { useTheme } from "../context/ThemeContext";
 import { useSchedule } from "../context/ScheduleContext";
@@ -17,6 +17,8 @@ const ChoosePage = () => {
 	const { saveSchedule } = useSchedule();
 	const { theme } = useTheme();
 	const navigation = useNavigation();
+
+    const { t, i18n } = useTranslation();
 
     const [showSpecializationDropdown, setShowSpecializationDropdown] = useState(false);
     const [showGroupDropdown, setShowGroupDropdown] = useState(false);
@@ -151,12 +153,170 @@ const ChoosePage = () => {
 
 
 			saveSchedule(week1Data, week2Data);
-			navigation.navigate("Acasa");
+			navigation.navigate(t('home_page.top_title'));
 		} catch (error) {
 			console.error("Error fetching courses:", error);
 		}
 	};
 
+    return (
+        <View style={theme === "dark" ? darkStyle.container : lightStyle.container}>
+            <StatusBar style="auto" />
+            <View style={theme === "dark" ? darkStyle.alldropdowns : lightStyle.alldropdowns}>
+                {FacultyDropdown()}
+                {showSpecializationDropdown && SpecializationDropdown()}
+                {showYearDropdown && YearDropdown()}
+                {showGroupDropdown && GroupDropdown()}
+                {showSubmitOptionsButton && SubmitButton()}
+            </View>
+        </View>
+    );
+
+    function FacultyDropdown() {
+        const itemHeight = 55; 
+        const dropdownHeight = faculties.length * itemHeight;
+    
+        
+        const translatedFaculties = faculties.map(faculty => ({
+            key: faculty.key, 
+            value: t(`faculties.${faculty.value}`) 
+        }));
+    
+        return (
+            <SelectList
+                boxStyles={dropdownStyles[theme].box}
+                dropdownStyles={{ ...dropdownStyles[theme].dropdown, height: dropdownHeight }}
+                inputStyles={dropdownStyles[theme].text}
+                dropdownTextStyles={dropdownStyles[theme].text}
+                placeholder={t('choose_page.select_faculty')} 
+                data={translatedFaculties} 
+                selected={selectedFaculty}
+                save="key"
+                setSelected={setSelectedFaculty}
+
+                searchicon={renderSearchIcon()}
+                arrowicon={renderArrowIcon()}
+                closeicon={renderCloseIcon()}
+                
+                onSelect={() => {
+                    fetchSpecializations();
+                    setShowSpecializationDropdown(true);
+                }}
+            />
+        );
+    }
+    
+
+    function SpecializationDropdown() {
+        const itemHeight = 45; 
+        const dropdownHeight = Math.min(specializations.length * itemHeight, 200);
+    
+       
+        const translatedSpecializations = specializations.map(specialization => ({
+            key: specialization.key, 
+            value: t(`specializations.${specialization.value}`) 
+        }));
+    
+        return (
+            <SelectList
+                boxStyles={dropdownStyles[theme].box}
+                dropdownStyles={dropdownStyles[theme].dropdown}
+                inputStyles={dropdownStyles[theme].text}
+                dropdownTextStyles={dropdownStyles[theme].text}
+                placeholder={t('choose_page.select_specialisation')} 
+                maxHeight={dropdownHeight}
+                data={translatedSpecializations}
+                save="key"
+                selected={selectedSpecialization}
+
+                searchicon={renderSearchIcon()}
+                arrowicon={renderArrowIcon()}
+                closeicon={renderCloseIcon()}
+
+                onSelect={() => {
+                    resetYearDropdown();
+                    setShowYearDropdown(true);
+                }}
+                setSelected={(selectedId) => {
+                    setSelectedSpecialization(selectedId); 
+                    const selected = specializations.find(item => item.key === selectedId);
+                    if (selected) {
+                        setSpecializationName(selected.value);
+                    }
+                }}
+                defaultOption={{ key: "", value: t('choose_page.select_specialisation') }}
+            />
+        );
+    }
+    
+
+    function YearDropdown() {
+        const itemHeight = 44; 
+        const dropdownHeight = years.length * itemHeight; 
+
+        return (
+            <SelectList
+                key={selectedYear === null ? "resetYear" : "originalYear"}
+                boxStyles={dropdownStyles[theme].box}
+                dropdownStyles={{ ...dropdownStyles[theme].dropdown, height: dropdownHeight }}
+                inputStyles={dropdownStyles[theme].text}
+                dropdownTextStyles={dropdownStyles[theme].text}
+                placeholder={t('choose_page.select_year')}
+                data={years}
+                save="key"
+                selected={selectedYear}
+
+      				searchicon={renderSearchIcon()}
+              arrowicon={renderArrowIcon()}
+              closeicon={renderCloseIcon()}
+
+                onSelect={() => {
+                    resetGroupDropdown();   
+                    fetchGroups();
+                }}
+                setSelected={(key) => {
+                    setSelectedYear(key);
+                }}
+                defaultOption={{ key: "", value: t('choose_page.select_year') }} 
+            />
+        );
+    }
+    
+    function GroupDropdown() {
+        const itemHeight = 45; 
+        const dropdownHeight = 200 > groups.length * itemHeight ? groups.length * itemHeight : 200;
+    
+        return (
+            <SelectList
+                key={selectedGroup === null ? "resetGroup" : "originaGroup"}
+                boxStyles={dropdownStyles[theme].box}
+                dropdownStyles={{ ...dropdownStyles[theme].dropdown, height: dropdownHeight }}
+                inputStyles={dropdownStyles[theme].text}
+                dropdownTextStyles={dropdownStyles[theme].text}
+                placeholder={t('choose_page.select_group')}
+                maxHeight={dropdownHeight}
+                data={groups}
+                selected={selectedGroup}
+                save="value"
+                setSelected={setSelectedGroup}
+                defaultOption={{ key: "", value: t('choose_page.select_group') }} 
+                
+                searchicon={renderSearchIcon()}
+                arrowicon={renderArrowIcon()}
+                closeicon={renderCloseIcon()}
+            />
+        );
+    }
+
+    function SubmitButton() {
+        return (
+            <TouchableOpacity style={buttonStyles.button} onPress={populateWeeks}>
+                <Text style={buttonStyles.buttonText}>{t('choose_page.top_title')}</Text>
+            </TouchableOpacity>
+        );
+    }
+    
+  
 	const renderSearchIcon = () => {
 		return (
 			<Icon
@@ -190,140 +350,6 @@ const ChoosePage = () => {
 		);
 	}
 
-	return (
-		<View style={theme === "dark" ? darkStyle.container : lightStyle.container}>
-			<StatusBar style="auto" />
-			<View style={theme === "dark" ? darkStyle.alldropdowns : lightStyle.alldropdowns}>
-				{FacultyDropdown()}
-				{showSpecializationDropdown && SpecializationDropdown()}
-				{showYearDropdown && YearDropdown()}
-				{showGroupDropdown && GroupDropdown()}
-				{showSubmitOptionsButton && SubmitButton()}
-			</View>
-		</View>
-	);
-
-	function FacultyDropdown() {
-		const itemHeight = 55;
-		const dropdownHeight = faculties.length * itemHeight;
-
-		return (
-			<SelectList
-				boxStyles={dropdownStyles[theme].box}
-				dropdownStyles={{ ...dropdownStyles[theme].dropdown, height: dropdownHeight }}
-				inputStyles={dropdownStyles[theme].text}
-				dropdownTextStyles={dropdownStyles[theme].text}
-				placeholder={"Selecteaza facultatea"}
-				data={faculties}
-				selected={selectedFaculty}
-				save="key"
-				setSelected={setSelectedFaculty}
-
-				searchicon={renderSearchIcon()}
-				arrowicon={renderArrowIcon()}
-				closeicon={renderCloseIcon()}
-
-				onSelect={() => {
-					fetchSpecializations();
-					setShowSpecializationDropdown(true);
-				}}
-			/>
-		);
-	}
-
-	function SpecializationDropdown() {
-		const itemHeight = 45;
-		const dropdownHeight = Math.min(specializations.length * itemHeight, 200);
-
-		return (
-			<SelectList
-				boxStyles={dropdownStyles[theme].box}
-				dropdownStyles={dropdownStyles[theme].dropdown}
-				inputStyles={dropdownStyles[theme].text}
-				dropdownTextStyles={dropdownStyles[theme].text}
-				placeholder={"Selecteaza specializarea"}
-				maxHeight={dropdownHeight}
-				data={specializations}
-				save="key"
-				selected={selectedSpecialization}
-
-				searchicon={renderSearchIcon()}
-				arrowicon={renderArrowIcon()}
-				closeicon={renderCloseIcon()}
-				
-				onSelect={() => {
-					resetYearDropdown();
-					setShowYearDropdown(true);
-				}}
-				setSelected={(selectedId) => {
-					setSelectedSpecialization(selectedId);
-					const selected = specializations.find((item) => item.key === selectedId);
-					if (selected) {
-						setSpecializationName(selected.value);
-					}
-				}}
-				defaultOption={{ key: "", value: "Selecteaza specializarea" }}
-			/>
-		);
-	}
-
-	function YearDropdown() {
-		const itemHeight = 44;
-		const dropdownHeight = years.length * itemHeight;
-
-		return (
-			<SelectList
-				key={selectedYear === null ? "resetYear" : "originalYear"}
-				boxStyles={dropdownStyles[theme].box}
-				dropdownStyles={{ ...dropdownStyles[theme].dropdown, height: dropdownHeight }}
-				inputStyles={dropdownStyles[theme].text}
-				dropdownTextStyles={dropdownStyles[theme].text}
-				placeholder={"Selecteaza anul"}
-				data={years}
-				save="key"
-				selected={selectedYear}
-
-				searchicon={renderSearchIcon()}
-				arrowicon={renderArrowIcon()}
-				closeicon={renderCloseIcon()}
-
-				onSelect={() => {
-					resetGroupDropdown();
-					fetchGroups();
-				}}
-				setSelected={(key) => {
-					setSelectedYear(key);
-				}}
-				defaultOption={{ key: "", value: "Selecteaza anul" }}
-			/>
-		);
-	}
-
-	function GroupDropdown() {
-		const itemHeight = 45;
-		const dropdownHeight = 200 > groups.length * itemHeight ? groups.length * itemHeight : 200;
-
-		return (
-			<SelectList
-				key={selectedGroup === null ? "resetGroup" : "originaGroup"}
-				boxStyles={dropdownStyles[theme].box}
-				dropdownStyles={{ ...dropdownStyles[theme].dropdown, height: dropdownHeight }}
-				inputStyles={dropdownStyles[theme].text}
-				dropdownTextStyles={dropdownStyles[theme].text}
-				placeholder={"Selecteaza grupa"}
-				maxHeight={dropdownHeight}
-				data={groups}
-				selected={selectedGroup}
-				save="value"
-				setSelected={setSelectedGroup}
-				defaultOption={{ key: "", value: "Selecteaza grupa" }}
-
-				searchicon={renderSearchIcon()}
-				arrowicon={renderArrowIcon()}
-				closeicon={renderCloseIcon()}
-			/>
-		);
-	}
 
 	function SubmitButton() {
 		return (

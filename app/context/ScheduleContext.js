@@ -59,4 +59,5 @@ export const ScheduleProvider = ({ children }) => {
 	);
 };
 
+
 export const useSchedule = () => useContext(ScheduleContext);
