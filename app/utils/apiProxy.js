@@ -4,9 +4,9 @@ The issue you're encountering is common when using localhost in an Android Virtu
 To fix this, you need to use a special IP address that the Android emulator provides to access the host machine. 
 */
 
-// const BASE_URL = "http://10.0.2.2:8080";
+const BASE_URL = "http://10.0.2.2:8080";
 // const BASE_URL = "http://localhost:8080";
-const BASE_URL = "http://192.168.0.200:8080";
+//const BASE_URL = "http://192.168.0.200:8080";
 
 
 export const apiProxy = {
