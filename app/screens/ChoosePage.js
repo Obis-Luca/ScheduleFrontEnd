@@ -159,6 +159,40 @@ const ChoosePage = () => {
 		}
 	};
 
+    const renderSearchIcon = () => {
+		return (
+			<Icon
+			name="search"
+			size={18}
+			paddingRight={5}
+			color={theme === "dark" ? colors.darkText : colors.lightText}
+			/>
+		);
+	}
+
+	const renderArrowIcon = () => {
+		return (
+			<Icon
+			name="angle-down"
+			size={18}
+			paddingLeft={5}
+			color={theme === "dark" ? colors.darkText : colors.lightText}
+			/>
+		);
+	}
+
+	const renderCloseIcon = () => {
+		return (
+			<Icon
+			name="times"
+			size={18}
+			paddingLeft={5}
+			color={theme === "dark" ? colors.darkText : colors.lightText}
+			/>
+		);
+	}
+
+
     return (
         <View style={theme === "dark" ? darkStyle.container : lightStyle.container}>
             <StatusBar style="auto" />
@@ -315,49 +349,6 @@ const ChoosePage = () => {
             </TouchableOpacity>
         );
     }
-    
-  
-	const renderSearchIcon = () => {
-		return (
-			<Icon
-			name="search"
-			size={18}
-			paddingRight={5}
-			color={theme === "dark" ? colors.darkText : colors.lightText}
-			/>
-		);
-	}
-
-	const renderArrowIcon = () => {
-		return (
-			<Icon
-			name="angle-down"
-			size={18}
-			paddingLeft={5}
-			color={theme === "dark" ? colors.darkText : colors.lightText}
-			/>
-		);
-	}
-
-	const renderCloseIcon = () => {
-		return (
-			<Icon
-			name="times"
-			size={18}
-			paddingLeft={5}
-			color={theme === "dark" ? colors.darkText : colors.lightText}
-			/>
-		);
-	}
-
-
-	function SubmitButton() {
-		return (
-			<TouchableOpacity style={buttonStyles.button} onPress={populateWeeks}>
-				<Text style={buttonStyles.buttonText}>Submit</Text>
-			</TouchableOpacity>
-		);
-	}
 };
 
 export default ChoosePage;

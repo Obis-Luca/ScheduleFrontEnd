@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import { View, Text, Switch, ScrollView } from "react-native";
-import { animatedView, darkMode, lightMode } from "../styles/SettingsStyle";
-import Animated, { FadeInDown } from "react-native-reanimated";
+import { View, Text, Switch, ScrollView, TouchableOpacity } from "react-native";
+import {  darkMode, lightMode } from "../styles/SettingsStyle";
 import { useTheme } from "../context/ThemeContext";
 import { useTranslation } from 'react-i18next';
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -11,6 +10,7 @@ import { dropdownStyles } from "../styles/ChoosePageStyle";
 import { Modal, Portal, Provider } from 'react-native-paper';
 import ColorPicker, { HueSlider, Panel1 } from 'reanimated-color-picker';
 import { useColors } from '../context/ColorsContext';
+import { styles } from "../styles/SettingsStyle";
 
 const SettingsScreen = () => {
   const { theme, toggleTheme } = useTheme();
@@ -120,7 +120,7 @@ const SettingsScreen = () => {
     <Provider>
       <ScrollView style={[styles.container, themeStyles.bigView]}>
         <View style={styles.section}>
-          <Text style={[styles.sectionTitle, themeStyles.text
+          <Text style={[styles.sectionTitle, themeStyles.text]}>
              {t('settings_page.choose_theme')}
             </Text>
           <View style={styles.themeToggle}>
@@ -133,13 +133,6 @@ const SettingsScreen = () => {
           </View>
         </View>
 
-        
-        <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginBottom: 0, marginRight: 10 }}>
-          <Text style={theme === "dark" ? darkMode.text : lightMode.text}>
-            {t('settings_page.choose_language')}
-          </Text>
-          <LanguageDropdown />
-        </View>
       
 
         <View style={styles.section}>
@@ -172,6 +165,17 @@ const SettingsScreen = () => {
             </TouchableOpacity>
           </Modal>
         </Portal>
+
+
+        
+        <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginBottom: 0, marginRight: 10 }}>
+          <Text style={theme === "dark" ? darkMode.text : lightMode.text}>
+            {t('settings_page.choose_language')}
+          </Text>
+          <LanguageDropdown />
+        </View>
+
+        
       </ScrollView>
     </Provider>
   );
