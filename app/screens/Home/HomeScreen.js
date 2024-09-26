@@ -1,8 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Modal, View, Button, SectionList, Text, Linking, TouchableOpacity, ScrollView } from "react-native";
 import { lightStyle, darkStyle, floatingButtonStyles } from "../../styles/HomePageStyles";
-import { View, SectionList, Text, Linking } from "react-native";
-import { lightStyle, darkStyle } from "../../styles/HomePageStyles";
 import { useTheme } from "../../context/ThemeContext";
 import { useNavigation } from "@react-navigation/native";
 import EmptyState from "./EmptyState";
@@ -10,7 +8,6 @@ import CourseItem from "./CourseItem";
 import LocationModal from "./LocationModal";
 import { useSchedule } from "../../context/ScheduleContext";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
-import { TouchableOpacity } from "react-native";
 
 const HomeScreen = () => {
 	const navigation = useNavigation();

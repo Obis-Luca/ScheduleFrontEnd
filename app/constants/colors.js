@@ -1,6 +1,6 @@
 export const colors = {
-	lightBackground: "#F5F5F5",
-	darkBackground: "#1C1C1C", // Deep Navy Blue
+	lightBackground: "#F5F5F5", // also course item
+	darkBackground: "#1C1C1C", //also course item
 	dayAccent: "#1ABC9C",
 	dropDownLineAccent: "#E67E22",
 	primary: "#1ABC9C", // Teal

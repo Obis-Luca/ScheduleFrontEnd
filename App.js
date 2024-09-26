@@ -9,6 +9,7 @@ import ChoosePage from "./app/screens/ChoosePage";
 import ExamsScreen from "./app/screens/ExamsScreen";
 import { ThemeProvider } from "./app/context/ThemeContext";
 import { ScheduleProvider } from "./app/context/ScheduleContext";
+import { ColorsProvider } from "./app/context/ColorsContext";
 
 export default function MyApp() {
 	const Drawer = createDrawerNavigator();
@@ -16,6 +17,7 @@ export default function MyApp() {
 	return (
 		<ThemeProvider>
 			<ScheduleProvider>
+				<ColorsProvider>
 				<NavigationContainer>
 					<Drawer.Navigator
 						initialRouteName="Acasa"
@@ -59,6 +61,7 @@ export default function MyApp() {
 						/>
 					</Drawer.Navigator>
 				</NavigationContainer>
+				</ColorsProvider>
 			</ScheduleProvider>
 		</ThemeProvider>
 	);

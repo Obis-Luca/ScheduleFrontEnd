@@ -1,15 +1,37 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { lightStyle, darkStyle, modalstyles } from "../../styles/HomePageStyles";
+import { colors } from "../../constants/colors";
+import { useColors } from "../../context/ColorsContext";
 
 const truncateCourseName = (name) => {
-  return name.length > 20 ? name.substring(0, 15) + '...' : name;
+  return name.length > 44 ? name.substring(0, 40) + ' ...' : name;
 };
 
-const CourseItem = ({ item, expandedItem, toggleItem, theme, handleOpenMaps }) => (
+const CourseItem = ({ item, expandedItem, toggleItem, theme, handleOpenMaps }) => {
+  const { course, seminar, lab } = useColors();
+  
+
+  const getBackgroundColor = (courseType) => {
+    console.log(course);
+    switch(courseType) {
+      case "Curs":
+        return course;
+      case "Seminar": 
+        return seminar
+      case "Laborator":
+        return lab;
+      default:
+        return theme === "dark" ? colors.darkBackground : colors.lightBackground;
+    }
+  }
+
+  return (
   <TouchableOpacity onPress={() => toggleItem(item)}>
-    <View style={theme === "dark" ? darkStyle.itemContainer : lightStyle.itemContainer}>
+    <View style={[theme === "dark" ? darkStyle.itemContainer : lightStyle.itemContainer,
+      { backgroundColor: getBackgroundColor(item.courseType) }
+    ]}>
       <View style={theme === "dark" ? darkStyle.itemHeader : lightStyle.itemHeader}>
         <Text style={theme === "dark" ? darkStyle.title : lightStyle.title}>
           {expandedItem === item ? item.courseName : truncateCourseName(item.courseName)}
@@ -38,6 +60,7 @@ const CourseItem = ({ item, expandedItem, toggleItem, theme, handleOpenMaps }) =
       )}
     </View>
   </TouchableOpacity>
-);
+  );
+};
 
 export default CourseItem;
