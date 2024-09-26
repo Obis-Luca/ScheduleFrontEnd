@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, Switch } from "react-native";
+import { View, Text, Switch, ScrollView } from "react-native";
 import { animatedView, darkMode, lightMode } from "../styles/SettingsStyle";
 import Animated, { FadeInDown } from "react-native-reanimated";
 import { useTheme } from "../context/ThemeContext";
@@ -8,10 +8,23 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { SelectList } from "react-native-dropdown-select-list";
 import { dropdownStyles } from "../styles/ChoosePageStyle"; 
 
+import { Modal, Portal, Provider } from 'react-native-paper';
+import ColorPicker, { HueSlider, Panel1 } from 'reanimated-color-picker';
+import { useColors } from '../context/ColorsContext';
+
 const SettingsScreen = () => {
   const { theme, toggleTheme } = useTheme();
   const { t, i18n } = useTranslation();
   const [selectedLanguage, setSelectedLanguage] = useState(null);
+  
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [activePicker, setActivePicker] = useState('');
+  const { course, seminar, lab, setColors } = useColors();
+  const [colors, setNewColors] = useState({
+    course: course || '#FF5733',
+    seminar: seminar || '#33FF57',
+    lab: lab || '#3357FF',
+  });
 
   const languages = [
     { label: 'English', value: 'English' },
@@ -19,6 +32,42 @@ const SettingsScreen = () => {
     { label: 'Français', value: 'Français' },
     { label: 'Espagnol', value: 'Espagnol' },
   ];
+
+
+  
+  
+  
+  
+    const toggleModal = (pickerType) => {
+    setActivePicker(pickerType);
+    setIsModalVisible(!isModalVisible);
+  };
+
+  const handleColorChange = (color) => {
+    setNewColors((prevColors) => ({
+      ...prevColors,
+      [activePicker]: color.hex,
+    }));
+    
+    setColors(activePicker, color.hex);
+  };
+  
+  const themeStyles = theme === 'dark' ? darkMode : lightMode;
+
+  const ColorButton = ({ label, colorKey }) => (
+    <TouchableOpacity
+      style={[styles.colorButton, themeStyles.colorButton]}
+      onPress={() => toggleModal(colorKey)}
+    >
+      <Text style={[styles.colorButtonText, themeStyles.text]}>{label}</Text>
+      <View style={[styles.colorPreview, { backgroundColor: colors[colorKey] }]} />
+    </TouchableOpacity>
+  );
+
+
+
+
+
 
   const handleLanguageChange = async (language) => {
     const languageCode = language.toLowerCase().substring(0, 2);
@@ -68,34 +117,64 @@ const SettingsScreen = () => {
   
 
   return (
-    <View style={theme === "dark" ? darkMode.bigView : lightMode.bigView}>
-  
-      <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginRight: 30 }}>
-        <Text style={theme === "dark" ? darkMode.text : lightMode.text}>
-          {t('settings_page.choose_theme')}
-        </Text>
-        <Animated.View entering={FadeInDown.duration(500).springify()}>
-          <View style={animatedView.animatedView}>
+    <Provider>
+      <ScrollView style={[styles.container, themeStyles.bigView]}>
+        <View style={styles.section}>
+          <Text style={[styles.sectionTitle, themeStyles.text
+             {t('settings_page.choose_theme')}
+            </Text>
+          <View style={styles.themeToggle}>
             <Switch
-              trackColor={{ false: "#000000", true: "#fdfdfd" }}
-              thumbColor={theme === "dark" ? "#000000" : "#f4f3f4"}
-              ios_backgroundColor="#3e3e3e"
+              trackColor={{ false: '#767577', true: '#81b0ff' }}
+              thumbColor={theme === 'dark' ? '#f5dd4b' : '#f4f3f4'}
               onValueChange={toggleTheme}
-              value={theme === "dark"}
+              value={theme === 'dark'}
             />
           </View>
-        </Animated.View>
-      </View>
-  
-      <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginBottom: 0, marginRight: 10 }}>
-        <Text style={theme === "dark" ? darkMode.text : lightMode.text}>
-          {t('settings_page.choose_language')}
-        </Text>
-        <LanguageDropdown />
-      </View>
-    </View>
+        </View>
+
+        
+        <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginBottom: 0, marginRight: 10 }}>
+          <Text style={theme === "dark" ? darkMode.text : lightMode.text}>
+            {t('settings_page.choose_language')}
+          </Text>
+          <LanguageDropdown />
+        </View>
+      
+
+        <View style={styles.section}>
+          <Text style={[styles.sectionTitle, themeStyles.text]}>Color Settings</Text>
+          <ColorButton label="Course Color" colorKey="course" />
+          <ColorButton label="Seminar Color" colorKey="seminar" />
+          <ColorButton label="Lab Color" colorKey="lab" />
+        </View>
+
+        <Portal>
+          <Modal
+            visible={isModalVisible}
+            onDismiss={() => setIsModalVisible(false)}
+            contentContainerStyle={[styles.modalContainer, themeStyles.modalContainer]}
+          >
+            <Text style={[styles.modalTitle, themeStyles.text]}>Pick a {activePicker} color</Text>
+            <ColorPicker
+              value={colors[activePicker]}
+              onComplete={handleColorChange}
+              style={{ width: '100%', height: 300 }}
+            >
+              <Panel1 />
+              <HueSlider />
+            </ColorPicker>
+            <TouchableOpacity
+              style={[styles.closeButton, themeStyles.closeButton]}
+              onPress={() => setIsModalVisible(false)}
+            >
+              <Text style={[styles.closeButtonText, themeStyles.closeButtonText]}>Close</Text>
+            </TouchableOpacity>
+          </Modal>
+        </Portal>
+      </ScrollView>
+    </Provider>
   );
-  
 };
 
 export default SettingsScreen;
