@@ -30,7 +30,8 @@ const CourseItem = ({ item, expandedItem, toggleItem, theme, handleOpenMaps }) =
         return theme === "dark" ? colors.darkBackground : colors.lightBackground;
     }
   }
-	
+
+	// test
 	return(
 		<TouchableOpacity onPress={() => toggleItem(item)}>
 			<View style={
