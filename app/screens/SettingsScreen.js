@@ -10,7 +10,6 @@ import { styles } from "../styles/SettingsStyle";
 import { Modal, Portal, Provider } from 'react-native-paper';
 import ColorPicker, { HueSlider, Panel1 } from 'reanimated-color-picker';
 import { useColors } from '../context/ColorsContext';
-import { styles } from "../styles/SettingsStyle";
 
 const SettingsScreen = () => {
   const { theme, toggleTheme } = useTheme();
@@ -166,7 +165,7 @@ const SettingsScreen = () => {
           <LanguageDropdown />
         </View>
 
-        
+
       </ScrollView>
     </Provider>
   );
