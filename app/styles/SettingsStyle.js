@@ -8,17 +8,17 @@ const styles = StyleSheet.create({
   },
   section: {
     marginBottom: 24,
-    borderWidth: 1,         // Adds a border
-    borderColor: '#ccc',    // Border color, you can customize it
-    borderRadius: 8,        // Rounded corners (optional)
-    padding: 10             // Padding inside the section for a better appearance
+    borderWidth: 1,         
+    borderColor: '#ccc',    
+    borderRadius: 8,        
+    padding: 10             
   },
   colorButtonContainer: {
-    borderWidth: 1,         // Adds a border around each button
-    borderColor: '#ccc',    // Customize the border color
-    borderRadius: 8,        // Optional: for rounded corners
-    padding: 10,            // Add padding inside the button
-    marginBottom: 12        // Add some space between buttons
+    borderWidth: 1,         
+    borderColor: '#ccc',  
+    borderRadius: 8,        
+    padding: 10,          
+    marginBottom: 12       
   },
   sectionTitle: {
     fontSize: 20,

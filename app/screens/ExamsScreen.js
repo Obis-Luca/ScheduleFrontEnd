@@ -323,17 +323,17 @@ const ExamsScreen = () => {
 				<View style={{ marginTop: 80, alignItems: "center" }}>
 					<TouchableOpacity
 						style={{
-							height: 40,
+							height: 50,
 							width: 100,
 							borderColor: "gray",
-							borderWidth: 1,
+							borderWidth: 2,
 							borderRadius: 10,
-							backgroundColor: "#b5efa2",
+							backgroundColor: "#3f51b5",
 							justifyContent: "center",
 							alignItems: "center",
 						}}
 						onPress={() => addExam()}>
-						<Text style={{ color: "black", textAlign: "center" }}>{t('exam_page.add_exam_button')}</Text>
+						<Text style={{ color: "white", textAlign: "center" }}>{t('exam_page.add_exam_button')}</Text>
 					</TouchableOpacity>
 				</View>
 			</View>
@@ -341,7 +341,7 @@ const ExamsScreen = () => {
 	);
 
 	return (
-		<View style={{ flex: 1, backgroundColor: theme === "dark" ? "#000000" : "#FFFFFF" }}>
+		<View style={{ flex: 1, backgroundColor: theme === "dark" ? "#1C1C1C" : "#F5F5F5" }}>
 			<ScrollView>{exams.length === 0 ? renderEmptyExams() : renderExamsList()}</ScrollView>
 			{renderAddExamButton()}
 			{renderAddExamModal()}
