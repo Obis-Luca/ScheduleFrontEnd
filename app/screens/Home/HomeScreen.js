@@ -78,13 +78,18 @@ const HomeScreen = () => {
 			supported ? setIsModalVisible(true) : console.log("Maps app is not available.");
 		});
 	};
+	
 
 	const handleModalConfirm = () => {
 		setIsModalVisible(false);
-		location ? Linking.openURL(`https://maps.apple.com/?q=${location}`) : 
-		Linking.openURL(`https://maps.apple.com/?q=Cluj-Napoca`) 
-
+		if (location) {
+			Linking.openURL(`https://maps.apple.com/?q=${location}`);
+		} else {
+			console.log("Location is not set, falling back to default.");
+			Linking.openURL(`https://maps.apple.com/?q=Cluj-Napoca`);
+		}
 	};
+	
 
 	const renderSectionHeader = ({ section: { title } }) => (
 		<Text style={theme === "dark" ? darkStyle.dayHeader : lightStyle.dayHeader}>{t(`home_page.${title}`)}</Text>
@@ -153,7 +158,7 @@ const HomeScreen = () => {
 								expandedItem={expandedItem}
 								toggleItem={toggleItem}
 								theme={theme}
-								handleOpenMaps={() => handleOpenMaps(item.location)}
+								handleOpenMaps={() => handleOpenMaps(item.roomDetails)}
 							/>
 						)}
 						renderSectionHeader={renderSectionHeader}

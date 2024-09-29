@@ -66,6 +66,26 @@ const ChoosePage = () => {
         }
     }, [selectedGroup]);
 
+    const formattedFaculties = [
+        { key: "1", value: "Facultatea de Matematica si Informatica" }
+    ];
+
+    const formattedSpecializations = [
+        { key: "1", value: "Matematica Romana" },
+        { key: "2", value: "Informatica Romana" },
+        { key: "3", value: "Matematica Informatica Romana" },
+        { key: "4", value: "Matematica Informatica Engleza" },
+        { key: "5", value: "Matematica Maghiara" },
+        { key: "6", value: "Informatica Maghiara" },
+        { key: "7", value: "Matematica Informatica Maghiara" },
+        { key: "8", value: "Ingineria informatiei Maghiara" },
+        { key: "9", value: "Informatica Germana" },
+        { key: "10", value: "Informatica Engleza" },
+        { key: "11", value: "Inteligenta Artificiala Engleza" },
+        { key: "12", value: "Ingineria informatiei Engleza" },
+        { key: "13", value: "Psihologie" }
+      ];
+      
 
     const resetYearDropdown = () => {
         setSelectedYear(null); 
@@ -133,24 +153,28 @@ const ChoosePage = () => {
         setYears(currentYears);
     }
 
-    const fetchFaculties = async () => {
-        try {
-            const data = await apiProxy.get("/faculties");
-            const formattedFaculties = data.map((faculty) => ({ key: faculty.id.toString(), value: faculty.name }));
-            setFaculties(formattedFaculties);
-        } catch (error) {
-            console.error("Error fetching faculties:", error);
-        }
+    const fetchFaculties = () => {
+        // try {
+        //     const data = await apiProxy.get("/faculties");
+        //     const formattedFaculties = data.map((faculty) => ({ key: faculty.id.toString(), value: faculty.name }));
+        //     setFaculties(formattedFaculties);
+        //     console.log(formattedFaculties);
+        // } catch (error) {
+        //     console.error("Error fetching faculties:", error);
+        // }
+        setFaculties(formattedFaculties);
     };
 
-    const fetchSpecializations = async () => {
-        try {
-            const data = await apiProxy.get(`/specialisations/filter?faculty_id=${selectedFaculty}`);
-            const formattedSpecializations = data.map((specialization) => ({ key: specialization.id.toString(), value: specialization.name }));
-            setSpecializations(formattedSpecializations);
-        } catch (error) {
-            console.error("Error fetching specializations:", error);
-        }
+    const fetchSpecializations = () => {
+        // try {
+        //     const data = await apiProxy.get(`/specialisations/filter?faculty_id=${selectedFaculty}`);
+        //     const formattedSpecializations = data.map((specialization) => ({ key: specialization.id.toString(), value: specialization.name }));
+        //     setSpecializations(formattedSpecializations);
+        //     console.log(formattedSpecializations);
+        // } catch (error) {
+        //     console.error("Error fetching specializations:", error);
+        // }
+        setSpecializations(formattedSpecializations);
     };
 
     const fetchGroups = async () => {
@@ -175,7 +199,6 @@ const ChoosePage = () => {
 					week1Data.push(course);
 				} else if (course.frequency === "sapt. 2") {
 					week2Data.push(course);
-                    console.log(`Week 2 : ${course}`);
 				} else {
 					week1Data.push(course);
 					week2Data.push(course);
