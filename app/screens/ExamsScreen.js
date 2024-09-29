@@ -256,6 +256,7 @@ const ExamsScreen = () => {
 					style={{ height: 40, borderColor: "gray", borderWidth: 1, borderRadius: 10, paddingLeft: 10, marginTop: 10 }}
 					onChangeText={(text) => setInputText(text)}
 					placeholder={t('exam_page.enter_exam_name')}
+					placeholderTextColor="black"
 					value={inputText}
 				/>
 
@@ -313,6 +314,7 @@ const ExamsScreen = () => {
 						}}
 						onChangeText={(text) => setRoomNumber(text)}
 						placeholder={t('exam_page.enter_location')}
+						placeholderTextColor="black"
 						value={roomNumber}
 					/>
 					<View style={{ marginLeft: 20 }}>

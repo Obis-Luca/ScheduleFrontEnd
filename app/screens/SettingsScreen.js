@@ -96,7 +96,7 @@ const SettingsScreen = () => {
           inputStyles={dropdownStyles[theme].text}  
           dropdownTextStyles={dropdownStyles[theme].text}  
           data={languages} 
-          placeholder="               -" 
+          placeholder="             -" 
           save="value"
           selected={selectedLanguage}
           setSelected={(val) => {
