@@ -162,6 +162,7 @@ const HomeScreen = () => {
 							/>
 						)}
 						renderSectionHeader={renderSectionHeader}
+						stickySectionHeadersEnabled={false}
 					/>
 				</View>
 			)}
@@ -189,9 +190,13 @@ const HomeScreen = () => {
 				{ maxHeight: '80%', width: '90%' } 
 				]}>
 
-				<ScrollView 
+				<ScrollView
+				 	horizontal={false}  
+    				scrollEnabled={true}
+					bounces={false}  
+    				showsHorizontalScrollIndicator={false}
 					style={floatingButtonStyles.modalContent} 
-					contentContainerStyle={{ flexGrow: 1 }} 
+					contentContainerStyle={{ flexGrow: 1, width: "100%" }} 
 				>
 					{courseNames.map((course, index) => (
 					<TouchableOpacity key={index} onPress={() => handleCheckboxToggle(index)}>
