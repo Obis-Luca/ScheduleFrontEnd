@@ -78,13 +78,18 @@ const HomeScreen = () => {
 			supported ? setIsModalVisible(true) : console.log("Maps app is not available.");
 		});
 	};
+	
 
 	const handleModalConfirm = () => {
 		setIsModalVisible(false);
-		location ? Linking.openURL(`https://maps.apple.com/?q=${location}`) : 
-		Linking.openURL(`https://maps.apple.com/?q=Cluj-Napoca`) 
-
+		if (location) {
+			Linking.openURL(`https://maps.apple.com/?q=${location}`);
+		} else {
+			console.log("Location is not set, falling back to default.");
+			Linking.openURL(`https://maps.apple.com/?q=Cluj-Napoca`);
+		}
 	};
+	
 
 	const renderSectionHeader = ({ section: { title } }) => (
 		<Text style={theme === "dark" ? darkStyle.dayHeader : lightStyle.dayHeader}>{t(`home_page.${title}`)}</Text>
@@ -153,7 +158,7 @@ const HomeScreen = () => {
 								expandedItem={expandedItem}
 								toggleItem={toggleItem}
 								theme={theme}
-								handleOpenMaps={() => handleOpenMaps(item.location)}
+								handleOpenMaps={() => handleOpenMaps(item.roomDetails)}
 							/>
 						)}
 						renderSectionHeader={renderSectionHeader}
@@ -166,41 +171,56 @@ const HomeScreen = () => {
 			onPress={handleOpenConfigureModal}>
 				<Image 
 					source={require('../../images/hide.png')} 
-					style={{ width: 35, height: 35 }}           
+					style={{ width: 30, height: 30 }}           
 				/>
 			</TouchableOpacity>
 
 			<Modal
-				transparent={true}
-				visible={isConfigureModalVisible}
-				animationType="fade"
-				onRequestClose={handeClosedConfigureModal}
+			transparent={true}
+			visible={isConfigureModalVisible}
+			animationType="fade"
+			onRequestClose={handeClosedConfigureModal}
 			>
-				<View style={floatingButtonStyles.ConfigureModalOverlay}>
-					<View style={floatingButtonStyles.ConfigureModalContainer}>
-						<ScrollView showsVerticalScrollIndicator={false} style={floatingButtonStyles.modalContent}>
-							{courseNames.map((course, index) => (
-								<TouchableOpacity key={index} onPress={() => handleCheckboxToggle(index)}>
-								<View style={[
-								floatingButtonStyles.courseRow, 
-								index === courseNames.length - 1 ? { marginBottom: 0 } : null
-								]}>
-									<Text style={floatingButtonStyles.modalText}>{t(`course_names.${course}`)}</Text>
-									<BouncyCheckbox
-										style={floatingButtonStyles.checkboxStyle}
-										isChecked={selectedCourses.includes(course)}
-										onPress={() => handleCheckboxToggle(index)}
-									/>
-									</View>
-								</TouchableOpacity>
-							))}
-						</ScrollView>
-						<View style={{ marginTop: 20 }}>
-							<Button title="Close" onPress={handeClosedConfigureModal} />
+			<View style={floatingButtonStyles.ConfigureModalOverlay}>
+				<View style={[
+				theme === "dark" 
+					? floatingButtonStyles.ConfigureModalContainerDark 
+					: floatingButtonStyles.ConfigureModalContainerLight,
+				{ maxHeight: '80%', width: '90%' } 
+				]}>
+
+				<ScrollView 
+					style={floatingButtonStyles.modalContent} 
+					contentContainerStyle={{ flexGrow: 1 }} 
+				>
+					{courseNames.map((course, index) => (
+					<TouchableOpacity key={index} onPress={() => handleCheckboxToggle(index)}>
+						<View style={[
+						theme === "dark" 
+							? floatingButtonStyles.courseRowDark 
+							: floatingButtonStyles.courseRowLight, 
+						index === courseNames.length - 1 ? { marginBottom: 0 } : null
+						]}>
+						<Text style={floatingButtonStyles.modalText}>{t(`course_names.${course}`)}</Text>
+						<BouncyCheckbox
+							style={floatingButtonStyles.checkboxStyle}
+							isChecked={selectedCourses.includes(course)}
+							onPress={() => handleCheckboxToggle(index)}
+							fillColor="#3f51b5"
+							unfillColor="#FFFFFF"
+						/>
 						</View>
-					</View>
+					</TouchableOpacity>
+					))}
+				</ScrollView>
+				
+				<View style={{ marginTop: 20 }}>
+					<Button title="Close" onPress={handeClosedConfigureModal} color="#3f51b5" />
 				</View>
+				</View>
+			</View>
 			</Modal>
+
 
 			<LocationModal
 				isVisible={isModalVisible}
