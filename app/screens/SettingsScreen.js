@@ -11,6 +11,7 @@ import { Modal, Portal, Provider } from 'react-native-paper';
 import ColorPicker, { HueSlider, Panel1 } from 'reanimated-color-picker';
 import { useColors } from '../context/ColorsContext';
 
+
 const SettingsScreen = () => {
   const { theme, toggleTheme } = useTheme();
   const { t, i18n } = useTranslation();
@@ -73,42 +74,46 @@ const SettingsScreen = () => {
   const LanguageDropdown = () => {
     const itemHeight = 40;
     const dropdownHeight = languages.length * itemHeight;
-
+  
     return (
-      <View style={{ position: 'relative', width: 150 }}>
-      <SelectList
-        boxStyles={{ 
-          ...dropdownStyles[theme].box, 
-          width: 150,           
-          minWidth: 150,       
-        }}
-        dropdownStyles={{ 
-          ...dropdownStyles[theme].dropdown, 
-          height: dropdownHeight,
-          position: 'absolute',
-          top: 60,  
-          zIndex: 1000,         
-          width: 150,          
-        }}
-        inputStyles={dropdownStyles[theme].text}
-        dropdownTextStyles={dropdownStyles[theme].text}
-        data={languages}
-        placeholder="               -"
-        save="value"
-        selected={selectedLanguage}
-        setSelected={(val) => {
-          setSelectedLanguage(val);  
-          handleLanguageChange(val);
-        }}
-      />
+      <View style={{ position: 'relative', width: 150, zIndex: 1000 }}> 
+        <SelectList
+          boxStyles={{ 
+            ...dropdownStyles[theme].box, 
+            width: 150,        
+            minWidth: 150,
+            zIndex: 1000,  
+          }}
+          dropdownStyles={{ 
+            ...dropdownStyles[theme].dropdown, 
+            position: 'absolute',  
+            top: 60,              
+            zIndex: 1000,          
+            width: 150,
+            maxHeight: dropdownHeight,
+            overflow: 'visible' 
+          }}
+          inputStyles={dropdownStyles[theme].text}  
+          dropdownTextStyles={dropdownStyles[theme].text}  
+          data={languages} 
+          placeholder="               -" 
+          save="value"
+          selected={selectedLanguage}
+          setSelected={(val) => {
+            setSelectedLanguage(val);  
+            handleLanguageChange(val);
+          }}
+        />
       </View>
     );
   };
   
-
   return (
     <Provider>
-      <ScrollView style={[styles.container, themeStyles.bigView]}>
+      <ScrollView 
+        style={[styles.container, themeStyles.bigView]} 
+        contentContainerStyle={{ flexGrow: 1 }}
+      >
         <View style={styles.section}>
           <Text style={[styles.sectionTitle, themeStyles.text]}>
              {t('settings_page.choose_theme')}
@@ -123,13 +128,11 @@ const SettingsScreen = () => {
           </View>
         </View>
 
-      
-
         <View style={styles.section}>
-          <Text style={[styles.sectionTitle, themeStyles.text]}>Color Settings</Text>
-          <ColorButton label="Course Color" colorKey="course" />
-          <ColorButton label="Seminar Color" colorKey="seminar" />
-          <ColorButton label="Lab Color" colorKey="lab" />
+          <Text style={[styles.sectionTitle, themeStyles.text]}>{t("settings_page.color_settings")}</Text>
+          <ColorButton label={t("settings_page.course_color")} colorKey="course" />
+          <ColorButton label={t("settings_page.seminar_color")} colorKey="seminar" />
+          <ColorButton label={t("settings_page.lab_color")} colorKey="lab" />
         </View>
 
         <Portal>
@@ -156,16 +159,17 @@ const SettingsScreen = () => {
           </Modal>
         </Portal>
 
-
-        
-        <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginBottom: 0, marginRight: 10 }}>
-          <Text style={theme === "dark" ? darkMode.text : lightMode.text}>
-            {t('settings_page.choose_language')}
-          </Text>
-          <LanguageDropdown />
+        <View style={[styles.section]}>
+          <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+            <Text style={[styles.sectionTitle, themeStyles.text]}>
+              {t('settings_page.choose_language')}
+            </Text>
+            <View style={[styles.themeToggle]}>
+              <LanguageDropdown />
+            </View>
+          </View>
         </View>
-
-
+        
       </ScrollView>
     </Provider>
   );

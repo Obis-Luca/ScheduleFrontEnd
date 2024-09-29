@@ -20,19 +20,20 @@ export const lightStyle = StyleSheet.create({
 		alignItems: "center",
 	},
 	dayHeader: {
-		flexDirection: "row",
-		justifyContent: "space-between",
-		alignItems: "center",
-		fontSize: 18,
-		backgroundColor: colors.primary,
-		color: colors.white,
-		paddingHorizontal: 15,
-		paddingVertical: 10,
-		marginVertical: 5,
-		marginHorizontal: 10,
-		borderRadius: 5,
-		fontWeight: "bold",
-	},
+	justifyContent: "center",    // Center the content
+	alignItems: "center",        // Center vertically
+	textAlign: "center",         // Center the text horizontally
+	fontSize: 18,
+	backgroundColor: colors.primary,
+	color: colors.white,
+	paddingHorizontal: 15,
+	paddingVertical: 10,
+	marginVertical: 5,
+	marginHorizontal: 10,
+	borderRadius: 5,
+	fontWeight: "bold",
+},
+
 	title: {
 		width: 200,
 		fontSize: 20,
@@ -102,7 +103,7 @@ export const darkStyle = StyleSheet.create({
 		padding: 15,
 		marginVertical: 6,
 		marginHorizontal: 10,
-		borderRadius: 5,
+		borderRadius: 40,
 		shadowColor: colors.lightText,
 		shadowOffset: { width: 0, height: 2 },
 		shadowOpacity: 0.05,
@@ -117,13 +118,15 @@ export const darkStyle = StyleSheet.create({
 	},
 	dayHeader: {
 		flexDirection: "row",
-		justifyContent: "space-between",
+		justifyContent: "center",
 		alignItems: "center",
-		color: colors.darkText,
-		fontSize: 28,
-		backgroundColor: "#4A90E2",
+		textAlign: "center",
+		color: "colors.darkText",
+		fontSize: 18,
+		backgroundColor: "#3f51b5",
 		padding: 5,
 		paddingHorizontal: 15,
+		paddingVertical: 10,
 		marginVertical: 5,
 		marginHorizontal: 10,
 		borderRadius: 5,
@@ -253,10 +256,10 @@ export const floatingButtonStyles = StyleSheet.create({
 		shadowRadius: 2,
 	},
 	lightButton: {
-		backgroundColor: '#ff6347',
+		backgroundColor: '#1ABC9C',
 	},
 	darkButton: {
-		backgroundColor: '#1e90ff',
+		backgroundColor: '#3f51b5',
 	},
 	buttonText: {
 		fontSize: 20,
@@ -270,10 +273,25 @@ export const floatingButtonStyles = StyleSheet.create({
 		alignItems: 'center',
 		paddingVertical: 50,
 	  },
-	  ConfigureModalContainer: {
+	  ConfigureModalContainerDark: {
 		width: '80%',               
 		maxHeight: '80%',            
 		backgroundColor: colors.darkBackground,
+		borderRadius: 20,
+		padding: 20,
+		alignItems: 'center',
+		justifyContent: 'flex-start', 
+		elevation: 10,
+		shadowColor: '#000',
+		shadowOffset: { width: 0, height: 2 },
+		shadowOpacity: 0.8,
+		shadowRadius: 5,
+		flex: 1
+	  },
+	  ConfigureModalContainerLight: {
+		width: '80%',               
+		maxHeight: '80%',            
+		backgroundColor: colors.lightBackground,
 		borderRadius: 20,
 		padding: 20,
 		alignItems: 'center',
@@ -298,7 +316,7 @@ export const floatingButtonStyles = StyleSheet.create({
 		numberOfLines: 1,     
 		ellipsizeMode: 'tail' 
 	  },
-	  courseRow: {
+	  courseRowDark: {
 		flexDirection: 'row',
 		alignItems: 'center',    
 		justifyContent: 'space-between',  
@@ -307,6 +325,17 @@ export const floatingButtonStyles = StyleSheet.create({
 		paddingVertical: 15,
 		paddingHorizontal: 13,
 		backgroundColor: "rgb(129, 133, 137)",
+		borderRadius: 25,
+	  },
+	  courseRowLight: {
+		flexDirection: 'row',
+		alignItems: 'center',    
+		justifyContent: 'space-between',  
+		width: '95%',           
+		marginBottom: 10,
+		paddingVertical: 15,
+		paddingHorizontal: 13,
+		backgroundColor: "#1ABC9C",
 		borderRadius: 25,
 	  },
 	  checkboxStyle: {

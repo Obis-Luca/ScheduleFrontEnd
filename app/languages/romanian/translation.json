@@ -33,7 +33,11 @@
     "settings_page": {
       "top_title": "Setări",
       "choose_theme": "Alege tema",
-      "choose_language": "Alege limba"
+      "choose_language": "Alege limba",
+      "color_settings": "Setari culori",
+      "course_color": "Culoare curs",
+      "lab_color": "Culoare laborator",
+      "seminar_color": "Culoare seminar"
     },
     "exam_page": {
       "top_title": "Examene",
@@ -136,7 +140,8 @@
       "Android Things": "Android Things",
       "Tehnici de calcul cuantice cu aplicatii in criptografie si IA": "Tehnici de calcul cuantice cu aplicații în criptografie și IA",
       "Introducere in prelucrarea limbajului natural": "Introducere în prelucrarea limbajului natural",
-      "Instrumentatie virtuala": "Instrumentație virtuală"
+      "Instrumentatie virtuala": "Instrumentație virtuală",
+      "Business Intelligence": "Business Intelligence"
     }
   }
   

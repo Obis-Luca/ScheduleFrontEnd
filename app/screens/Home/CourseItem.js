@@ -33,7 +33,8 @@ const CourseItem = ({ item, expandedItem, toggleItem, theme, handleOpenMaps }) =
 
 	// test
 	return(
-		<TouchableOpacity onPress={() => toggleItem(item)}>
+		<TouchableOpacity onPress={() => toggleItem(item)}
+		activeOpacity={1}>
 			<View style={
         [theme === "dark" ? darkStyle.itemContainer : lightStyle.itemContainer, 
           { backgroundColor: getBackgroundColor(item.courseType) }]
