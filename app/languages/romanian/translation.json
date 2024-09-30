@@ -37,7 +37,11 @@
       "color_settings": "Setari culori",
       "course_color": "Culoare curs",
       "lab_color": "Culoare laborator",
-      "seminar_color": "Culoare seminar"
+      "seminar_color": "Culoare seminar",
+      "close_button": "Închide",
+      "pick_color_course": "Alege culoarea pentru curs",
+      "pick_color_lab": "Alege culoarea pentru laborator",
+      "pick_color_seminar": "Alege culoarea pentru seminar"
     },
     "exam_page": {
       "top_title": "Examene",

@@ -20,9 +20,9 @@ export const lightStyle = StyleSheet.create({
 		alignItems: "center",
 	},
 	dayHeader: {
-	justifyContent: "center",    // Center the content
-	alignItems: "center",        // Center vertically
-	textAlign: "center",         // Center the text horizontally
+	justifyContent: "center",    
+	alignItems: "center",        
+	textAlign: "center",        
 	fontSize: 18,
 	backgroundColor: colors.primary,
 	color: colors.white,
@@ -86,7 +86,6 @@ export const lightStyle = StyleSheet.create({
 		marginTop: 10,
 		alignItems: "center",
 		width: '50%', 
-		// or use width: '50%' for half the screen width
 		alignSelf: "center",
 		borderRadius: 10,  
 	},	

@@ -37,7 +37,10 @@
     "color_settings": "Color settings",
     "course_color": "Course color",
     "lab_color": "Lab color",
-    "seminar_color": "Seminar color"
+    "seminar_color": "Seminar color",
+    "pick_color_course": "Pick a color for the course",
+    "pick_color_lab": "Pick a color for the lab",
+    "pick_color_seminar": "Pick a color for the seminar"
   },
   "exam_page": {
     "top_title": "Exams",

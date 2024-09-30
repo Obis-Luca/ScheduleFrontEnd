@@ -25,7 +25,6 @@ export const lightStyle = StyleSheet.create({
 		padding: 20,
 		borderRadius: 10,
 		height: 260,
-		// width: 400,
 	},
 });
 

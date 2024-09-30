@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { lightStyle, darkStyle, modalstyles } from "../../styles/HomePageStyles";
-
 import { useTranslation } from 'react-i18next';
 import { colors } from "../../constants/colors";
 import { useColors } from "../../context/ColorsContext";
@@ -18,20 +17,23 @@ const CourseItem = ({ item, expandedItem, toggleItem, theme, handleOpenMaps }) =
   const { course, seminar, lab } = useColors();
   
   const getBackgroundColor = (courseType) => {
-    
-    switch(courseType) {
-      case "Curs":
-        return course;
-      case "Seminar": 
-        return seminar
-      case "Laborator":
-        return lab;
-      default:
-        return theme === "dark" ? colors.darkBackground : colors.lightBackground;
-    }
+	const defaultCourseColor = theme === "dark" ? '#1C1C1C' :  "#EBEBEB";
+	const defaultSeminarColor = theme === "dark" ? '#1C1C1C' :  "#EBEBEB";
+	const defaultLabColor = theme === "dark" ? '#1C1C1C' :  "#EBEBEB";
+  
+	switch(courseType) {
+	  case "Curs":
+		return course || defaultCourseColor;  
+	  case "Seminar": 
+		return seminar || defaultSeminarColor; 
+	  case "Laborator":
+		return lab || defaultLabColor;  
+	  default:
+		return theme === "dark" ? colors.darkBackground : colors.lightBackground;
+	}
   }
+  
 
-	// test
 	return(
 		<TouchableOpacity onPress={() => toggleItem(item)}
 		activeOpacity={1}>

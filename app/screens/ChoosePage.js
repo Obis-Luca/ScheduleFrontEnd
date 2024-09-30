@@ -181,7 +181,18 @@ const ChoosePage = () => {
         try {
             const data = await apiProxy.get(`/groups/filter?specialisationId=${selectedSpecialization}&year=${selectedYear}`);
             const formattedGroups = data.map((group) => ({ key: group.id.toString(), value: group.groupNumber }));
-            setGroups(formattedGroups);
+
+            const sortedGroups = formattedGroups.sort((a, b) => {
+                const [aFirst, aSecond] = a.value.split('/').map(Number); 
+                const [bFirst, bSecond] = b.value.split('/').map(Number);
+                
+                if (aFirst !== bFirst) {
+                    return aFirst - bFirst; 
+                }
+                return aSecond - bSecond; 
+            });
+
+            setGroups(sortedGroups);
         } catch (error) {
             console.error("Error fetching groups:", error);
         }
