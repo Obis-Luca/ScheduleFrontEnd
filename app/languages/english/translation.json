@@ -52,21 +52,21 @@
     "add_exam_button": "Add exam"
   },
   "faculties": {
-    "Facultatea de Matematica si Informatica": "Faculty of Mathematics and Informatics"
+    "Facultatea de Matematica si Informatica": "Faculty of Mathematics and Computer Science"
   },
   "specializations": {
     "Matematica Romana": "Mathematics Romanian",
-    "Informatica Romana": "Informatics Romanian",
-    "Matematica Informatica Romana": "Mathematics and Informatics Romanian",
-    "Matematica Informatica Engleza": "Mathematics and Informatics English",
+    "Informatica Romana": "Computer Science (Romanian)",
+    "Matematica Informatica Romana": "Mathematics and Computer Science (Romanian)",
+    "Matematica Informatica Engleza": "Mathematics and Computer Science (English)",
     "Matematica Maghiara": "Mathematics Hungarian",
-    "Informatica Maghiara": "Informatics Hungarian",
-    "Matematica Informatica Maghiara": "Mathematics and Informatics Hungarian",
-    "Ingineria informatiei Maghiara": "Information Engineering Hungarian",
-    "Informatica Germana": "Informatics German",
-    "Informatica Engleza": "Informatics English",
-    "Inteligenta Artificiala Engleza": "Artificial Intelligence English",
-    "Ingineria informatiei Engleza": "Information Engineering English",
+    "Informatica Maghiara": "Computer Science (Hungarian)",
+    "Matematica Informatica Maghiara": "Mathematics and Computer Science (Hungarian)",
+    "Ingineria informatiei Maghiara": "Information Engineering (Hungarian)",
+    "Informatica Germana": "Computer Science (German)",
+    "Informatica Engleza": "Computer Science (English)",
+    "Inteligenta Artificiala Engleza": "Artificial Intelligence (English)",
+    "Ingineria informatiei Engleza": "Information Engineering (English)",
     "Psihologie": "Psychology"
   },
   "course_names": {
