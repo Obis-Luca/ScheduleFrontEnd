@@ -21,9 +21,9 @@ const SettingsScreen = () => {
   const [activePicker, setActivePicker] = useState('');
   const { course, seminar, lab, setColors } = useColors();
   const [colors, setNewColors] = useState({
-    course: course || '#FF5733',
-    seminar: seminar || '#33FF57',
-    lab: lab || '#3357FF',
+    course: course || '#FFFF00',
+    seminar: seminar || '#FFFF00',
+    lab: lab || '#FFFF00',
   });
 
   const languages = [
@@ -141,7 +141,16 @@ const SettingsScreen = () => {
             onDismiss={() => setIsModalVisible(false)}
             contentContainerStyle={[styles.modalContainer, themeStyles.modalContainer]}
           >
-            <Text style={[styles.modalTitle, themeStyles.text]}>Pick a {activePicker} color</Text>
+            <Text style={[styles.modalTitle, themeStyles.text]}>
+              {activePicker === 'course' 
+                ? t("settings_page.pick_color_course")
+                : activePicker === 'seminar' 
+                ? t("settings_page.pick_color_seminar") 
+                : activePicker === 'lab' 
+                ? t("settings_page.pick_color_lab")
+                : 'Pick a color'}
+            </Text>
+
             <ColorPicker
               value={colors[activePicker]}
               onComplete={handleColorChange}
@@ -154,7 +163,7 @@ const SettingsScreen = () => {
               style={[styles.closeButton, themeStyles.closeButton]}
               onPress={() => setIsModalVisible(false)}
             >
-              <Text style={[styles.closeButtonText, themeStyles.closeButtonText]}>Close</Text>
+              <Text style={[styles.closeButtonText, themeStyles.closeButtonText]}>{t("home_page.close_button")}</Text>
             </TouchableOpacity>
           </Modal>
         </Portal>

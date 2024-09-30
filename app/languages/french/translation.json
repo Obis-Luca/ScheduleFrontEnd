@@ -37,7 +37,10 @@
     "color_settings": "Paramètres de couleur",
     "course_color": "Couleur des cours",
     "lab_color": "Couleur des laboratoires",
-    "seminar_color": "Couleur des séminaires"
+    "seminar_color": "Couleur des séminaires",
+    "pick_color_course": "Choisissez une couleur pour le cours",
+    "pick_color_lab": "Choisissez une couleur pour le laboratoire",
+    "pick_color_seminar": "Choisissez une couleur pour le séminaire"
   },
   "exam_page": {
     "top_title": "Examens",

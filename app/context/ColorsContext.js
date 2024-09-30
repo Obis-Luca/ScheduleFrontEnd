@@ -57,4 +57,3 @@ export const ColorsProvider = ({ children }) => {
 };
 
 export const useColors = () => useContext(ColorsContext);
-

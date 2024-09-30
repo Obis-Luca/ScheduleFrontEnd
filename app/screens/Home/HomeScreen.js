@@ -9,6 +9,7 @@ import LocationModal from "./LocationModal";
 import { useSchedule } from "../../context/ScheduleContext";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import { useTranslation } from 'react-i18next';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
 const HomeScreen = () => {
@@ -110,6 +111,7 @@ const HomeScreen = () => {
 	
 
 	const handleOpenConfigureModal = () => {
+		//AsyncStorage.clear();
 		setIsConfigureModalVisible(true);
 	};
 
@@ -220,7 +222,7 @@ const HomeScreen = () => {
 				</ScrollView>
 				
 				<View style={{ marginTop: 20 }}>
-					<Button title="Close" onPress={handeClosedConfigureModal} color="#3f51b5" />
+					<Button title={t("home_page.close_button")} onPress={handeClosedConfigureModal} color="#3f51b5" />
 				</View>
 				</View>
 			</View>
