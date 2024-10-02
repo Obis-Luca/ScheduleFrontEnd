@@ -43,7 +43,7 @@ const CourseItem = ({ item, expandedItem, toggleItem, theme, handleOpenMaps }) =
 }>
 				<View style={theme === "dark" ? darkStyle.itemHeader : lightStyle.itemHeader}>
 					<Text style={theme === "dark" ? darkStyle.title : lightStyle.title}>{
-          expandedItem ? t(`course_names.${item.courseName}`) : truncateCourseName(t(`course_names.${item.courseName}`))
+          expandedItem && expandedItem.id === item.id ? t(`course_names.${item.courseName}`) : truncateCourseName(t(`course_names.${item.courseName}`))
           }</Text>
 					<View
 						style={
