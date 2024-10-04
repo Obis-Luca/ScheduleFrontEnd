@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, TextInput, TouchableOpacity, Button, Platform, ScrollView, Image, Switch } from "react-native";
+import { View, Text, TextInput, TouchableOpacity, Platform, ScrollView, Image} from "react-native";
 import { lightStyle, darkStyle } from "../styles/ExamPageStyle";
 import { useTheme } from "../context/ThemeContext";
 import Icon from "react-native-vector-icons/FontAwesome";
@@ -94,9 +94,7 @@ const ExamsScreen = () => {
 	}, []);
 
 	const addExam = async () => {
-		console.log("Validating fields...");
 		if (validateFields()) {
-			console.log("Fields are valid, adding exam...");
 			const newExam = {
 				id: Math.random().toString(), 
 				name: inputText,
@@ -111,7 +109,6 @@ const ExamsScreen = () => {
 			} else {
 				updatedExams = [...exams, newExam];
 			}
-			console.log("Updated exams:", updatedExams);
 			setExams(updatedExams);
 			setInputText("");
 			setRoomNumber("");
@@ -120,7 +117,6 @@ const ExamsScreen = () => {
 			setModalVisible(false);
 			setEditingExamIndex(null);
 			await AsyncStorage.setItem("exams", JSON.stringify(updatedExams)); // Save exams to AsyncStorage
-			console.log("Exam added and saved to storage.");
 		} else {
 			console.log("Fields validation failed.");
 		}
