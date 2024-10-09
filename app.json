@@ -20,6 +20,8 @@
     "android": {
       "package": "com.ubb.schedule",
       "versionCode": 1,
+      "jsEngine" : "hermes",
+      "minifyEnabled": true,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
